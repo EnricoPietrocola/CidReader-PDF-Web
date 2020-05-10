@@ -1,4 +1,7 @@
-navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function (stream) {
+//npm run signalhub
+//npm start
+
+//navigator.mediaDevices.getUserMedia({ video: false, audio: false }).then(function (stream) {
 
     const signalhub = require('signalhub')
     const createSwarm = require('webrtc-swarm')
@@ -6,22 +9,23 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function 
         'http://localhost:8080'
     ])
     const swarm = createSwarm(hub, {
-        stream: stream
+        //stream: stream //
     })
 
     const User = require('./User.js')
     const you = new User()
-    you.addStream(stream)
+    //you.addStream(stream)
 
     const users = {}
     swarm.on('connect', function (peer, id) {
         if (!users[id]) {
-            users[id] = new Player()
+            users[id] = new User()
             peer.on('data', function (data) {
                 data = JSON.parse(data.toString())
                 users[id].update(data)
+                console.log("turnPage " + data)
             })
-            users[id].addStream(peer.stream)
+            //users[id].addStream(peer.stream) //
         }
     })
 
@@ -32,41 +36,30 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function 
         }
     })
 
-    // hub.subscribe('update').on('data', function (data) {
-    //   if (data.color === you.color) return
-    //   if (!players[data.color]) {
-    //     players[data.color] = new Player(data)
-    //   }
-    //   players[data.color].update(data)
-    //   //console.log(data)
-    // })
-
     setInterval(function () {
         //hub.broadcast('update', window.location.hash)
         you.update()
         //hub.broadcast('update', you)
         //const youString = JSON.stringify(you)
+        const youString = JSON.stringify(you.page)
         swarm.peers.forEach(function (peer) {
-            peer.send("test")
+            peer.send(youString)
         })
     }, 100)
 
-    /*document.addEventListener('keypress', function (e) {
-        const speed = 16
+    document.addEventListener('keypress', function (e) {
         switch (e.key) {
             case 'a':
-                you.x -= speed
+                you.page--
                 break
             case 'd':
-                you.x += speed
+                you.page++
                 break
             case 'w':
-                you.y -= speed
                 break
             case 's':
-                you.y += speed
                 break
         }
     }, false)
-    */
-})
+
+//})
