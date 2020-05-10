@@ -9,26 +9,26 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function 
         stream: stream
     })
 
-    const Player = require('./player.js')
-    const you = new Player()
+    const User = require('./User.js')
+    const you = new User()
     you.addStream(stream)
 
-    const players = {}
+    const users = {}
     swarm.on('connect', function (peer, id) {
-        if (!players[id]) {
-            players[id] = new Player()
+        if (!users[id]) {
+            users[id] = new Player()
             peer.on('data', function (data) {
                 data = JSON.parse(data.toString())
-                players[id].update(data)
+                users[id].update(data)
             })
-            players[id].addStream(peer.stream)
+            users[id].addStream(peer.stream)
         }
     })
 
     swarm.on('disconnect', function (peer, id) {
-        if (players[id]) {
-            players[id].element.parentNode.removeChild(players[id].element)
-            delete players[id]
+        if (users[id]) {
+            users[id].element.parentNode.removeChild(users[id].element)
+            delete users[id]
         }
     })
 
@@ -45,13 +45,13 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function 
         //hub.broadcast('update', window.location.hash)
         you.update()
         //hub.broadcast('update', you)
-        const youString = JSON.stringify(you)
+        //const youString = JSON.stringify(you)
         swarm.peers.forEach(function (peer) {
-            peer.send(youString)
+            peer.send("test")
         })
     }, 100)
 
-    document.addEventListener('keypress', function (e) {
+    /*document.addEventListener('keypress', function (e) {
         const speed = 16
         switch (e.key) {
             case 'a':
@@ -68,5 +68,5 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function 
                 break
         }
     }, false)
-
+    */
 })
