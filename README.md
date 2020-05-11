@@ -9,4 +9,4 @@ Useful things I am using to develop:
 * [This video where I took the first lines of code (By Kile Robinson Young)](https://www.youtube.com/watch?v=IqPJb6o_S1Q)
 
 I would like to thank JetBrains for giving me their open source license in order to work on CidReader
-![https://raw.githubusercontent.com/EnricoPietrocola/Cid/master/jetbrains512.png](https://www.jetbrains.com/?from=CidReader(AndroidandWeb))
+![[JetBrainLogo](https://raw.githubusercontent.com/EnricoPietrocola/Cid/master/jetbrains512.png)](https://www.jetbrains.com/?from=CidReader(AndroidandWeb))
