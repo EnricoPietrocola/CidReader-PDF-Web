@@ -10,9 +10,11 @@
   "author": "Kyle Robinson Young <kyle@dontkry.com> (http://dontkry.com)",
   "license": "MIT",
   "devDependencies": {
-    "budo": "^11.2.0"
+    "budo": "^11.2.0",
+    "pdfjs-dist": "^2.3.200"
   },
   "dependencies": {
+    "gulp": "^4.0.2",
     "signalhub": "^4.9.0",
     "webrtc-swarm": "^2.9.0"
   }

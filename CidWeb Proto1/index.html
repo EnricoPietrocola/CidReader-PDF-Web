@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="./styles.css" />
+
+<div id="app">
+    <div id="toolbar">
+        <div id="pager">
+            <button data-pager="prev">prev</button>
+            <button data-pager="next">next</button>
+        </div>
+        <div id="page-mode">
+            <label>Page Mode <input type="number" value="1" min="1"/></label>
+        </div>
+    </div>
+    <div id="viewport" role="main"></div>
+</div>
+
+<script src="https://unpkg.com/pdfjs-dist@latest/build/pdf.min.js"></script>
+<script src="./index.js"></script>
+<script>
+    window.onload = () => {
+        initPDFViewer("https://github.com/EnricoPietrocola/Cid/raw/master/Instructions.pdf");
+    };
+</script>
+

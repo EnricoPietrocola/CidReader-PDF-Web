@@ -1,6 +1,71 @@
 //npm run signalhub
 //npm start
 
+
+let currentPageIndex = 0;
+let pdfInstance = null;
+let totalPagesCount = 0;
+
+window.initPDFViewer = function(pdfURL) {
+    pdfjsLib.getDocument(pdfURL).then(pdf => {
+        pdfInstance = pdf;
+        totalPagesCount = pdf.numPages;
+        initPager();
+        render();
+    });
+};
+
+function renderPage(page) {
+    let pdfViewport = page.getViewport(1);
+
+    const container = viewport.children[0];
+
+    // Render at the page size scale.
+    pdfViewport = page.getViewport(container.offsetWidth / pdfViewport.width);
+    const canvas = container.children[0];
+    const context = canvas.getContext("2d");
+    canvas.height = pdfViewport.height;
+    canvas.width = pdfViewport.width;
+
+    page.render({
+        canvasContext: context,
+        viewport: pdfViewport
+    });
+}
+
+function onPagerButtonsClick(event) {
+    const action = event.target.getAttribute("data-pager");
+    if (action === "prev") {
+        if (currentPageIndex === 0) {
+            return;
+        }
+        currentPageIndex -= pageMode;
+        if (currentPageIndex < 0) {
+            currentPageIndex = 0;
+        }
+        render();
+    }
+    if (action === "next") {
+        if (currentPageIndex === totalPagesCount - 1) {
+            return;
+        }
+        currentPageIndex += pageMode;
+        if (currentPageIndex > totalPagesCount - 1) {
+            currentPageIndex = totalPagesCount - 1;
+        }
+        render();
+    }
+}
+
+const viewport = document.querySelector("#viewport");
+
+function render() {
+    pdfInstance.getPage(currentPageIndex + 1).then(page => {
+        viewport.innerHTML = `<div><canvas></canvas></div>`;
+        renderPage(page);
+    });
+}
+
 //navigator.mediaDevices.getUserMedia({ video: false, audio: false }).then(function (stream) {
 
     const signalhub = require('signalhub')
@@ -63,3 +128,5 @@
     }, false)
 
 //})
+
+
