@@ -7,6 +7,7 @@ Useful things I am using to develop:
 * [Awesome P2P Repo](https://github.com/kgryte/awesome-peer-to-peer)
 * [PDF.js](https://mozilla.github.io/pdf.js/)
 * [This video where I took the first lines of code (By Kile Robinson Young)](https://www.youtube.com/watch?v=IqPJb6o_S1Q)
+* [Nice (and updated) EnvatoTuts tutorial on building your pdfjs page](https://code.tutsplus.com/tutorials/how-to-create-a-pdf-viewer-in-javascript--cms-32505)
 
 I would like to thank JetBrains for giving me their open source license in order to work on CidReader
 
