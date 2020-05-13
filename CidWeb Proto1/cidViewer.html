@@ -9,7 +9,7 @@
     <style>
         #canvas_container {
             width: 800px;
-            height: 450px;
+            height: 800px;
             overflow: auto;
         }
         #canvas_container {
@@ -77,6 +77,7 @@
         });
     }
 
+    /*
     document.getElementById('go_previous')
         .addEventListener('click', (e) => {
             if(myState.pdf == null
@@ -85,6 +86,11 @@
             document.getElementById("current_page")
                 .value = myState.currentPage;
             render();
+
+            let dataString = JSON.stringify(myState.currentPage)
+                swarm.peers.forEach(function (peer) {
+                    peer.send(dataString)
+                })
             });
 
     document.getElementById('go_next')
@@ -98,6 +104,12 @@
             document.getElementById("current_page")
                 .value = myState.currentPage;
             render();
+
+            let dataString = JSON.stringify(myState.currentPage)
+            swarm.peers.forEach(function (peer) {
+                peer.send(dataString)
+            })
+
         });
 
     document.getElementById('current_page')
@@ -123,6 +135,8 @@
                 }
             }
         });
+        */
+
 </script>
 
 <script type="text/javascript" src="index.js">
