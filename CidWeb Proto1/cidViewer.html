@@ -21,6 +21,9 @@
 </head>
 <body>
     <div id="my_pdf_viewer">
+        <input type="text" id="documentLink" name="Document URL">
+        <button onclick="startDoc()" id="changeDocument">Load</button>
+
         <div id="canvas_container">
             <canvas id="pdf_renderer"></canvas>
         </div>
@@ -48,14 +51,24 @@
         zoom: 1
     }
 
-    pdfjsLib.getDocument('[Free-scores.com]_mozart-wolfgang-amadeus-turkish-march-662.pdf').then((pdf) => {
+    function startDoc() {
 
-        // more code here
-        myState.pdf = pdf;
-        render();
+        var documentLink = document.getElementById("documentLink").value;
 
-    });
-    // more code here
+        pdfjsLib.getDocument(documentLink).then((pdf) => {
+            myState.pdf = pdf;
+
+            // more code here
+            render();
+        });
+
+        myState.currentPage = 1;
+        myState.zoom = 1;
+
+        document.getElementById("current_page")
+            .value = myState.currentPage;
+    }
+
 
     function render() {
         myState.pdf.getPage(myState.currentPage).then((page) => {
@@ -75,67 +88,8 @@
             });
 
         });
+
     }
-
-    /*
-    document.getElementById('go_previous')
-        .addEventListener('click', (e) => {
-            if(myState.pdf == null
-                || myState.currentPage == 1) return;
-            myState.currentPage -= 1;
-            document.getElementById("current_page")
-                .value = myState.currentPage;
-            render();
-
-            let dataString = JSON.stringify(myState.currentPage)
-                swarm.peers.forEach(function (peer) {
-                    peer.send(dataString)
-                })
-            });
-
-    document.getElementById('go_next')
-        .addEventListener('click', (e) => {
-            if(myState.pdf == null
-                || myState.currentPage > myState.pdf
-                    ._pdfInfo.numPages)
-                return;
-
-            myState.currentPage += 1;
-            document.getElementById("current_page")
-                .value = myState.currentPage;
-            render();
-
-            let dataString = JSON.stringify(myState.currentPage)
-            swarm.peers.forEach(function (peer) {
-                peer.send(dataString)
-            })
-
-        });
-
-    document.getElementById('current_page')
-        .addEventListener('keypress', (e) => {
-            if(myState.pdf == null) return;
-
-            // Get key code
-            var code = (e.keyCode ? e.keyCode : e.which);
-
-            // If key code matches that of the Enter key
-            if(code == 13) {
-                var desiredPage =
-                    document.getElementById('current_page')
-                        .valueAsNumber;
-
-                if(desiredPage >= 1
-                    && desiredPage <= myState.pdf
-                        ._pdfInfo.numPages) {
-                    myState.currentPage = desiredPage;
-                    document.getElementById("current_page")
-                        .value = desiredPage;
-                    render();
-                }
-            }
-        });
-        */
 
 </script>
 

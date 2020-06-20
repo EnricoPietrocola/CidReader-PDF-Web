@@ -21,15 +21,36 @@
         if (!users[id]) {
             users[id] = new User()
             peer.on('data', function (data) {
+
                 data = JSON.parse(data.toString())
                 users[id].update(data)
-                myState.currentPage = data;
-                document.getElementById("current_page")
-                    .value = myState.currentPage;
-                render();
-                console.log("turnPage " + data)
+
+                var cmd = data.split(",");
+
+                switch (cmd[0]) {
+                    case "changeDocument":
+                        myState.pdf = cmd[1];
+                        startDoc();
+                        console.log("Visualizing new document");
+                        break;
+
+                    case "goForward":
+                        myState.currentPage = parseInt(cmd[1]);
+                        document.getElementById("current_page").value = myState.currentPage;
+                        render();
+                        console.log("turnPage " + cmd[1] + " " + myState.currentPage);
+                        break;
+
+                    case "goBackward":
+                        myState.currentPage = parseInt(cmd[1]);
+                        document.getElementById("current_page").value = myState.currentPage;
+                        render();
+                        console.log("turnPage " + cmd[1] + " " + myState.currentPage);
+                        break;
+                }
+
             })
-            //users[id].addStream(peer.stream) //
+
         }
     })
 
@@ -40,17 +61,6 @@
         }
     })
 
-    /*setInterval(function () {
-        //hub.broadcast('update', window.location.hash)
-        you.update()
-        //hub.broadcast('update', you)
-        //const youString = JSON.stringify(you)
-        const youString = JSON.stringify(you.page)
-        swarm.peers.forEach(function (peer) {
-            peer.send(youString)
-        })
-    }, 100)*/
-
     document.getElementById('go_previous')
         .addEventListener('click', (e) => {
             if(myState.pdf == null
@@ -60,7 +70,7 @@
                 .value = myState.currentPage;
             render();
 
-            let dataString = JSON.stringify(myState.currentPage)
+            let dataString = JSON.stringify("goBackward," + myState.currentPage)
             swarm.peers.forEach(function (peer) {
                 peer.send(dataString)
             })
@@ -78,12 +88,26 @@
                 .value = myState.currentPage;
             render();
 
-            let dataString = JSON.stringify(myState.currentPage)
+            let dataString = JSON.stringify("goForward," + myState.currentPage)
             swarm.peers.forEach(function (peer) {
                 peer.send(dataString)
             })
 
         });
+
+    //document.getElementById('documentLink').addEventListener('click', (e) => {
+    document.getElementById('changeDocument')
+        .addEventListener('click', (e) => {
+
+        console.log("is this happening?");
+
+        let dataString = JSON.stringify("changeDocument," + myState.pdf)
+        swarm.peers.forEach(function (peer) {
+            peer.send(dataString)
+        })
+        //});
+    });
+
 
     document.addEventListener('keypress', function (e) {
         switch (e.key) {
