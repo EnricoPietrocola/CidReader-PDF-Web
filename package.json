@@ -1,5 +1,5 @@
 {
-  "name": "simple-p2p-with-webrtc",
+  "name": "CidReaderWeb(Viewer)",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "budo index.js",
     "signalhub": "signalhub listen -p 8080"
   },
-  "author": "Kyle Robinson Young <kyle@dontkry.com> (http://dontkry.com)",
+  "author": "Enrico Pietrocola <enricopietrocola@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "budo": "^11.2.0",
