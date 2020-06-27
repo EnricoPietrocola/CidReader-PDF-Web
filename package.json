@@ -14,6 +14,8 @@
     "pdfjs-dist": "^2.3.200"
   },
   "dependencies": {
+    "budo": "^11.2.0",
+    "pdfjs-dist": "^2.3.200",
     "gulp": "^4.0.2",
     "signalhub": "^4.9.0",
     "webrtc-swarm": "^2.9.0"
