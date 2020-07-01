@@ -9,8 +9,8 @@ Useful things I am using to develop:
 * [This video where I took the first lines of code (By Kile Robinson Young)](https://www.youtube.com/watch?v=IqPJb6o_S1Q)
 * [Nice (and updated) EnvatoTuts tutorial on building your pdfjs page](https://code.tutsplus.com/tutorials/how-to-create-a-pdf-viewer-in-javascript--cms-32505)
 
-* [Signalhub](https://www.npmjs.com/package/signalhub)
-* [Swarm-webrtc](https://www.npmjs.com/package/webrtc-swarm)
+* [NpmJS Signalhub](https://www.npmjs.com/package/signalhub)
+* [NpmJS Swarm-webrtc](https://www.npmjs.com/package/webrtc-swarm)
 
 I would like to thank JetBrains for giving me their open source license in order to work on CidReader
 
