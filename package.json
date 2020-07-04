@@ -1,22 +1,22 @@
 {
-  "name": "CidReaderWeb(Viewer)",
-  "version": "0.1.0",
+  "name": "test",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js",
-    "signalhub": "signalhub listen -p 8080"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Enrico Pietrocola <enricopietrocola@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "budo": "^11.2.0",
-    "pdfjs-dist": "^2.3.200"
+  "engines": {
+    "node": "10.x"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "budo": "^11.2.0",
-    "pdfjs-dist": "^2.3.200",
-    "gulp": "^4.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "pdfjs-dist": "^2.4.456",
     "signalhub": "^4.9.0",
     "webrtc-swarm": "^2.9.0"
   }

@@ -1,148 +1,35 @@
-//npm run signalhub
-//npm start
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs');
+const https = require('https');
+const app = express();
 
-//navigator.mediaDevices.getUserMedia({ video: false, audio: false }).then(function (stream) {
+app.use(cors());
+app.use(express.static(__dirname + '/public'));
 
-    const signalhub = require('signalhub')
-    const createSwarm = require('webrtc-swarm')
-    const hub = signalhub('CidReader', [
-        'http://localhost:8080'
-    ])
-    const swarm = createSwarm(hub, {
-        //stream: stream //
-    })
+const PORT = process.env.PORT || 5000;
 
-    const User = require('./User.js')
-    const you = new User()
-    //you.addStream(stream)
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
-    const users = {}
-    swarm.on('connect', function (peer, id) {
-        if (!users[id]) {
-            users[id] = new User()
-            peer.on('data', function (data) {
+app.get('/get-document', (req, res) => {
+  const documentUrl = req.query.url;
 
-                data = JSON.parse(data.toString())
-                users[id].update(data)
+  const fileName = Date.now() + '.pdf';
+  const file = fs.createWriteStream(__dirname + '/public/' + fileName);
 
-                var cmd = data.split(",");
+  https.get(documentUrl, (response) => {
+    response.pipe(file);
 
-                switch (cmd[0]) {
-                    case "changeDocument":
-                        myState.pdf = cmd[1];
-                        startDoc();
-                        console.log("Visualizing new document");
-                        break;
-
-                    case "goForward":
-                        myState.currentPage = parseInt(cmd[1]);
-                        document.getElementById("current_page").value = myState.currentPage;
-                        render();
-                        console.log("turnPage " + cmd[1] + " " + myState.currentPage);
-                        break;
-
-                    case "goBackward":
-                        myState.currentPage = parseInt(cmd[1]);
-                        document.getElementById("current_page").value = myState.currentPage;
-                        render();
-                        console.log("turnPage " + cmd[1] + " " + myState.currentPage);
-                        break;
-                }
-
-            })
-
-        }
-    })
-
-    swarm.on('disconnect', function (peer, id) {
-        if (users[id]) {
-            users[id].element.parentNode.removeChild(users[id].element)
-            delete users[id]
-        }
-    })
-
-    document.getElementById('go_previous')
-        .addEventListener('click', (e) => {
-            if(myState.pdf == null
-                || myState.currentPage == 1) return;
-            myState.currentPage -= 1;
-            document.getElementById("current_page")
-                .value = myState.currentPage;
-            render();
-
-            let dataString = JSON.stringify("goBackward," + myState.currentPage)
-            swarm.peers.forEach(function (peer) {
-                peer.send(dataString)
-            })
-        });
-
-    document.getElementById('go_next')
-        .addEventListener('click', (e) => {
-            if(myState.pdf == null
-                || myState.currentPage > myState.pdf
-                    ._pdfInfo.numPages)
-                return;
-
-            myState.currentPage += 1;
-            document.getElementById("current_page")
-                .value = myState.currentPage;
-            render();
-
-            let dataString = JSON.stringify("goForward," + myState.currentPage)
-            swarm.peers.forEach(function (peer) {
-                peer.send(dataString)
-            })
-
-        });
-
-    //document.getElementById('documentLink').addEventListener('click', (e) => {
-    document.getElementById('changeDocument')
-        .addEventListener('click', (e) => {
-
-        console.log("is this happening?");
-
-        let dataString = JSON.stringify("changeDocument," + myState.pdf)
-        swarm.peers.forEach(function (peer) {
-            peer.send(dataString)
-        })
-        //});
+    file.on('finish', () => {
+      file.close();
+      res.json({ fileName })
     });
 
+  });
+});
 
-    document.addEventListener('keypress', function (e) {
-        switch (e.key) {
-            case 'a':
-
-                /*
-                document.getElementById("current_page")
-                    .value = myState.currentPage;
-
-                var youString = JSON.stringify(you.page)
-                swarm.peers.forEach(function (peer) {
-                    peer.send(youString)
-                })
-                */
-                break
-            case 'd':
-                /*
-                you.page++
-                document.getElementById("current_page")
-                    .value = you.page + 1;
-
-                var youString = JSON.stringify(you.page)
-                swarm.peers.forEach(function (peer) {
-                    peer.send(youString)
-                })
-                */
-
-                break
-            case 'w':
-                break
-            case 's':
-                break
-        }
-    }, false)
-
-//})
-
-
+app.listen(PORT, () => {
+  console.log("Server starting on port : " + PORT)
+});
