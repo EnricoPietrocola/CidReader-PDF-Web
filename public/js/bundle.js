@@ -6500,52 +6500,6 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":31,"_process":11,"inherits":30}],33:[function(require,module,exports){
-//test code to be bundled by browserify in order to be serviced on client
-
-const createSwarm = require('webrtc-swarm')
-
-const signalhub = require('signalhub')
-const hub = signalhub('CidTest', ['https://signalhub-jccqtwhdwc.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
-
-console.log('communication is running')
-
-const swarm = createSwarm(hub, {
-    wrtc: require('wrtc') // don't need this if used in the browser
-})
-
-swarm.on('peer', function (peer, id) {
-    console.log('connected to a new peer:', id)
-    console.log('total peers:', swarm.peers.length)
-})
-
-swarm.on('connect', function (peer, id) {
-    //datachannel
-    peer.on('data', function (data) {
-        data = JSON.parse(data.toString())
-        const cmd = data.split(",");
-        console.log(cmd[0])
-    })
-})
-
-swarm.on('disconnect', function (peer, id) {
-    console.log('disconnected from a peer:', id)
-    console.log('total peers:', swarm.peers.length)
-})
-
-setTimeout(() => swarm.peers.forEach(function (peer) {
-    console.log("saying hi to the others")
-    peer.send(JSON.stringify(JSON.stringify('hi')))
-}), 10000);
-
-},{"signalhub":63,"webrtc-swarm":76,"wrtc":34}],34:[function(require,module,exports){
-'use strict';
-
-exports.MediaStream = window.MediaStream;
-exports.RTCIceCandidate = window.RTCIceCandidate;
-exports.RTCPeerConnection = window.RTCPeerConnection;
-exports.RTCSessionDescription = window.RTCSessionDescription;
-
-},{}],35:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -6656,7 +6610,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("C:/Users/Enrico/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"C:/Users/Enrico/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":8}],36:[function(require,module,exports){
+},{"C:/Users/Enrico/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":8}],34:[function(require,module,exports){
 /**
  * cuid.js
  * Collision-resistant UID generator for browsers and node.
@@ -6768,7 +6722,7 @@ function objectToString(o) {
 
 }(this.applitude || this));
 
-},{}],37:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -6957,7 +6911,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":38,"_process":11}],38:[function(require,module,exports){
+},{"./debug":36,"_process":11}],36:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -7161,7 +7115,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":46}],39:[function(require,module,exports){
+},{"ms":44}],37:[function(require,module,exports){
 (function (process){
 var once = require('once');
 
@@ -7259,7 +7213,7 @@ var eos = function(stream, opts, callback) {
 module.exports = eos;
 
 }).call(this,require('_process'))
-},{"_process":11,"once":48}],40:[function(require,module,exports){
+},{"_process":11,"once":46}],38:[function(require,module,exports){
 var stream = require('readable-stream')
 
 module.exports = function(url, opts) {
@@ -7303,7 +7257,7 @@ module.exports = function(url, opts) {
   return rs
 }
 
-},{"readable-stream":61}],41:[function(require,module,exports){
+},{"readable-stream":59}],39:[function(require,module,exports){
 // originally pulled out of simple-peer
 
 module.exports = function getBrowserRTC () {
@@ -7320,7 +7274,7 @@ module.exports = function getBrowserRTC () {
   return wrtc
 }
 
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 var win;
 
@@ -7337,9 +7291,9 @@ if (typeof window !== "undefined") {
 module.exports = win;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 arguments[4][7][0].apply(exports,arguments)
-},{"dup":7}],44:[function(require,module,exports){
+},{"dup":7}],42:[function(require,module,exports){
 module.exports = isFunction
 
 var toString = Object.prototype.toString
@@ -7359,9 +7313,9 @@ function isFunction (fn) {
       fn === window.prompt))
 };
 
-},{}],45:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 arguments[4][9][0].apply(exports,arguments)
-},{"dup":9}],46:[function(require,module,exports){
+},{"dup":9}],44:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -7515,7 +7469,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],47:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (process,Buffer){
 var req = require('request')
 
@@ -7543,7 +7497,7 @@ function Nets (opts, cb) {
 }
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":11,"buffer":3,"request":80}],48:[function(require,module,exports){
+},{"_process":11,"buffer":3,"request":79}],46:[function(require,module,exports){
 var wrappy = require('wrappy')
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
@@ -7587,7 +7541,7 @@ function onceStrict (fn) {
   return f
 }
 
-},{"wrappy":79}],49:[function(require,module,exports){
+},{"wrappy":77}],47:[function(require,module,exports){
 var trim = function(string) {
   return string.replace(/^\s+|\s+$/g, '');
 }
@@ -7621,9 +7575,9 @@ module.exports = function (headers) {
   return result
 }
 
-},{}],50:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 arguments[4][10][0].apply(exports,arguments)
-},{"_process":11,"dup":10}],51:[function(require,module,exports){
+},{"_process":11,"dup":10}],49:[function(require,module,exports){
 var once = require('once')
 var eos = require('end-of-stream')
 var fs = require('fs') // we only need fs to get the ReadStream and WriteStream prototypes
@@ -7705,7 +7659,7 @@ var pump = function () {
 
 module.exports = pump
 
-},{"end-of-stream":39,"fs":2,"once":48}],52:[function(require,module,exports){
+},{"end-of-stream":37,"fs":2,"once":46}],50:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -7759,27 +7713,27 @@ function randomBytes (size, cb) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":11,"safe-buffer":62}],53:[function(require,module,exports){
+},{"_process":11,"safe-buffer":60}],51:[function(require,module,exports){
 arguments[4][13][0].apply(exports,arguments)
-},{"./_stream_readable":55,"./_stream_writable":57,"core-util-is":35,"dup":13,"inherits":43,"process-nextick-args":50}],54:[function(require,module,exports){
+},{"./_stream_readable":53,"./_stream_writable":55,"core-util-is":33,"dup":13,"inherits":41,"process-nextick-args":48}],52:[function(require,module,exports){
 arguments[4][14][0].apply(exports,arguments)
-},{"./_stream_transform":56,"core-util-is":35,"dup":14,"inherits":43}],55:[function(require,module,exports){
+},{"./_stream_transform":54,"core-util-is":33,"dup":14,"inherits":41}],53:[function(require,module,exports){
 arguments[4][15][0].apply(exports,arguments)
-},{"./_stream_duplex":53,"./internal/streams/BufferList":58,"./internal/streams/destroy":59,"./internal/streams/stream":60,"_process":11,"core-util-is":35,"dup":15,"events":5,"inherits":43,"isarray":45,"process-nextick-args":50,"safe-buffer":62,"string_decoder/":65,"util":2}],56:[function(require,module,exports){
+},{"./_stream_duplex":51,"./internal/streams/BufferList":56,"./internal/streams/destroy":57,"./internal/streams/stream":58,"_process":11,"core-util-is":33,"dup":15,"events":5,"inherits":41,"isarray":43,"process-nextick-args":48,"safe-buffer":60,"string_decoder/":63,"util":2}],54:[function(require,module,exports){
 arguments[4][16][0].apply(exports,arguments)
-},{"./_stream_duplex":53,"core-util-is":35,"dup":16,"inherits":43}],57:[function(require,module,exports){
+},{"./_stream_duplex":51,"core-util-is":33,"dup":16,"inherits":41}],55:[function(require,module,exports){
 arguments[4][17][0].apply(exports,arguments)
-},{"./_stream_duplex":53,"./internal/streams/destroy":59,"./internal/streams/stream":60,"_process":11,"core-util-is":35,"dup":17,"inherits":43,"process-nextick-args":50,"safe-buffer":62,"timers":28,"util-deprecate":75}],58:[function(require,module,exports){
+},{"./_stream_duplex":51,"./internal/streams/destroy":57,"./internal/streams/stream":58,"_process":11,"core-util-is":33,"dup":17,"inherits":41,"process-nextick-args":48,"safe-buffer":60,"timers":28,"util-deprecate":73}],56:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
-},{"dup":18,"safe-buffer":62,"util":2}],59:[function(require,module,exports){
+},{"dup":18,"safe-buffer":60,"util":2}],57:[function(require,module,exports){
 arguments[4][19][0].apply(exports,arguments)
-},{"dup":19,"process-nextick-args":50}],60:[function(require,module,exports){
+},{"dup":19,"process-nextick-args":48}],58:[function(require,module,exports){
 arguments[4][20][0].apply(exports,arguments)
-},{"dup":20,"events":5}],61:[function(require,module,exports){
+},{"dup":20,"events":5}],59:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":53,"./lib/_stream_passthrough.js":54,"./lib/_stream_readable.js":55,"./lib/_stream_transform.js":56,"./lib/_stream_writable.js":57,"dup":24}],62:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":51,"./lib/_stream_passthrough.js":52,"./lib/_stream_readable.js":53,"./lib/_stream_transform.js":54,"./lib/_stream_writable.js":55,"dup":24}],60:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"buffer":3,"dup":21}],63:[function(require,module,exports){
+},{"buffer":3,"dup":21}],61:[function(require,module,exports){
 (function (process){
 var events = require('events')
 var ess = require('event-source-stream')
@@ -7901,7 +7855,7 @@ function broadcast (app, url, channel, message, cb) {
 function noop () {}
 
 }).call(this,require('_process'))
-},{"_process":11,"event-source-stream":40,"events":5,"inherits":43,"nets":47,"pump":51,"through2":74}],64:[function(require,module,exports){
+},{"_process":11,"event-source-stream":38,"events":5,"inherits":41,"nets":45,"pump":49,"through2":72}],62:[function(require,module,exports){
 (function (Buffer){
 module.exports = Peer
 
@@ -8655,14 +8609,14 @@ Peer.prototype._transformConstraints = function (constraints) {
 function noop () {}
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":3,"debug":37,"get-browser-rtc":41,"inherits":43,"randombytes":52,"readable-stream":61}],65:[function(require,module,exports){
+},{"buffer":3,"debug":35,"get-browser-rtc":39,"inherits":41,"randombytes":50,"readable-stream":59}],63:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
-},{"dup":22,"safe-buffer":62}],66:[function(require,module,exports){
+},{"dup":22,"safe-buffer":60}],64:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],67:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -8755,7 +8709,7 @@ function forEach (xs, f) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_readable":68,"./_stream_writable":70,"_process":11,"core-util-is":35,"inherits":43}],68:[function(require,module,exports){
+},{"./_stream_readable":66,"./_stream_writable":68,"_process":11,"core-util-is":33,"inherits":41}],66:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -9741,7 +9695,7 @@ function indexOf (xs, x) {
 }
 
 }).call(this,require('_process'))
-},{"_process":11,"buffer":3,"core-util-is":35,"events":5,"inherits":43,"isarray":66,"stream":27,"string_decoder/":72}],69:[function(require,module,exports){
+},{"_process":11,"buffer":3,"core-util-is":33,"events":5,"inherits":41,"isarray":64,"stream":27,"string_decoder/":70}],67:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -9953,7 +9907,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":67,"core-util-is":35,"inherits":43}],70:[function(require,module,exports){
+},{"./_stream_duplex":65,"core-util-is":33,"inherits":41}],68:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -10343,10 +10297,10 @@ function endWritable(stream, state, cb) {
 }
 
 }).call(this,require('_process'))
-},{"./_stream_duplex":67,"_process":11,"buffer":3,"core-util-is":35,"inherits":43,"stream":27}],71:[function(require,module,exports){
+},{"./_stream_duplex":65,"_process":11,"buffer":3,"core-util-is":33,"inherits":41,"stream":27}],69:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":69}],72:[function(require,module,exports){
+},{"./lib/_stream_transform.js":67}],70:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -10569,7 +10523,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":3}],73:[function(require,module,exports){
+},{"buffer":3}],71:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -10590,7 +10544,7 @@ function extend() {
     return target
 }
 
-},{}],74:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 (function (process){
 var Transform = require('readable-stream/transform')
   , inherits  = require('util').inherits
@@ -10690,9 +10644,9 @@ module.exports.obj = through2(function (options, transform, flush) {
 })
 
 }).call(this,require('_process'))
-},{"_process":11,"readable-stream/transform":71,"util":32,"xtend":73}],75:[function(require,module,exports){
+},{"_process":11,"readable-stream/transform":69,"util":32,"xtend":71}],73:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"dup":29}],76:[function(require,module,exports){
+},{"dup":29}],74:[function(require,module,exports){
 (function (process){
 var SimplePeer = require('simple-peer')
 var inherits = require('inherits')
@@ -10878,7 +10832,7 @@ function connect (swarm, hub) {
 }
 
 }).call(this,require('_process'))
-},{"_process":11,"cuid":36,"debug":37,"events":5,"inherits":43,"once":48,"simple-peer":64,"through2":77}],77:[function(require,module,exports){
+},{"_process":11,"cuid":34,"debug":35,"events":5,"inherits":41,"once":46,"simple-peer":62,"through2":75}],75:[function(require,module,exports){
 (function (process){
 var Transform = require('readable-stream').Transform
   , inherits  = require('util').inherits
@@ -10978,9 +10932,9 @@ module.exports.obj = through2(function (options, transform, flush) {
 })
 
 }).call(this,require('_process'))
-},{"_process":11,"readable-stream":61,"util":32,"xtend":78}],78:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}],79:[function(require,module,exports){
+},{"_process":11,"readable-stream":59,"util":32,"xtend":76}],76:[function(require,module,exports){
+arguments[4][71][0].apply(exports,arguments)
+},{"dup":71}],77:[function(require,module,exports){
 // Returns a wrapper function that returns a wrapped callback
 // The wrapper function should do some stuff, and return a
 // presumably different callback function.
@@ -11015,7 +10969,15 @@ function wrappy (fn, cb) {
   }
 }
 
-},{}],80:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
+'use strict';
+
+exports.MediaStream = window.MediaStream;
+exports.RTCIceCandidate = window.RTCIceCandidate;
+exports.RTCPeerConnection = window.RTCPeerConnection;
+exports.RTCSessionDescription = window.RTCSessionDescription;
+
+},{}],79:[function(require,module,exports){
 "use strict";
 var window = require("global/window")
 var isFunction = require("is-function")
@@ -11264,6 +11226,158 @@ function getXml(xhr) {
 
 function noop() {}
 
-},{"global/window":42,"is-function":44,"parse-headers":49,"xtend":81}],81:[function(require,module,exports){
-arguments[4][73][0].apply(exports,arguments)
-},{"dup":73}]},{},[33]);
+},{"global/window":40,"is-function":42,"parse-headers":47,"xtend":80}],80:[function(require,module,exports){
+arguments[4][71][0].apply(exports,arguments)
+},{"dup":71}],81:[function(require,module,exports){
+//test code to be bundled by browserify in order to be serviced on client
+
+//when this code is changed: browserify communication.js > bundle.js
+
+//const controls = require('./controls.js')
+
+const createSwarm = require('webrtc-swarm')
+
+const signalhub = require('signalhub')
+const hub = signalhub('CidTest', ['https://signalhub-jccqtwhdwc.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
+
+console.log('communication is running')
+
+const swarm = createSwarm(hub, {
+    wrtc: require('wrtc') // don't need this if used in the browser
+})
+
+swarm.on('peer', function (peer, id) {
+    console.log('connected to a new peer:', id)
+    console.log('total peers:', swarm.peers.length)
+})
+
+
+
+swarm.on('disconnect', function (peer, id) {
+    console.log('disconnected from a peer:', id)
+    console.log('total peers:', swarm.peers.length)
+    /*if (users[id]) {
+        users[id].element.parentNode.removeChild(users[id].element)
+        delete users[id]
+    }*/
+})
+
+/*swarm.peers.forEach(function (peer) {
+    console.log("saying hi to the others")
+    peer.send(JSON.stringify(JSON.stringify('hi')))
+});*/
+
+const user = require('./user.js')
+const you = new user()
+
+const users = {}
+
+swarm.on('connect', function (peer, id) {
+    //datachannel
+    if (!users[id]) {
+        users[id] = new user()
+
+        peer.on('data', function (data) {
+
+            data = JSON.parse(data.toString())
+
+            console.log(data)
+
+
+            const cmd = data.split(",");
+
+            switch (cmd[0]) {
+                case "changeDocument":
+                    myState.pdf = cmd[1];
+                    //startDoc();
+                    visualizeDoc(myState.pdf)
+                    console.log("Visualizing new document " + myState.pdf);
+                    break;
+
+                case "goForward":
+                    myState.currentPage = parseInt(cmd[1]);
+                    document.getElementById("current_page").value = myState.currentPage;
+                    render();
+                    console.log("turnPage " + cmd[1] + " " + myState.currentPage);
+                    break;
+
+                case "goBackward":
+                    myState.currentPage = parseInt(cmd[1]);
+                    document.getElementById("current_page").value = myState.currentPage;
+                    render();
+                    console.log("turnPage " + cmd[1] + " " + myState.currentPage);
+                    break;
+                }
+            }
+        )
+    }
+
+})
+
+document.getElementById('go_previous')
+    .addEventListener('click', (e) => {
+        let dataString = JSON.stringify('goBackward,' + myState.currentPage)
+        swarm.peers.forEach(function (peer){
+            peer.send(dataString)
+        })
+    });
+
+document.getElementById('go_next')
+    .addEventListener('click', (e) => {
+        let dataString = JSON.stringify('goForward,' + myState.currentPage)
+        swarm.peers.forEach(function (peer) {
+            peer.send(dataString)
+        })
+    });
+
+document.getElementById('changeDocument')
+    .addEventListener('click', (e) => {
+        let documentLink = document.getElementById("documentLink").value;
+        console.log("changing document")
+        let dataString = JSON.stringify('changeDocument,' + documentLink)
+        swarm.peers.forEach(function(peer){
+            peer.send(dataString)
+        })
+    });
+
+},{"./user.js":82,"signalhub":61,"webrtc-swarm":74,"wrtc":78}],82:[function(require,module,exports){
+module.exports = User
+
+function User (data) {
+    data = data || {}
+    //this.color = data.color || randomColor()
+    //this.x = 0
+    //this.y = 0
+    this.page = 0;
+    //this.element = document.createElement('video')
+    /*Object.assign(this.element.style, {
+        width: '64px',
+        height: '64px',
+        position: 'absolute',
+        top: '0px',
+        left: '0px',
+        backgroundColor: this.color
+    })*/
+    //document.body.appendChild(this.element)
+}
+
+/*User.prototype.addStream = function (stream) {
+    this.element.srcObject = stream
+    this.element.play()
+}
+*/
+
+User.prototype.update = function (data) {
+    data = data || {}
+    this.x = data.x || this.x
+    this.y = data.y || this.y
+    /*Object.assign(this.element.style, {
+        //top: this.y + 'px',
+        //left: this.x + 'px'
+    })*/
+}
+
+/*function randomColor () {
+    return '#' + Math.random().toString(16).substr(-6)
+}*/
+},{}]},{},[81]);

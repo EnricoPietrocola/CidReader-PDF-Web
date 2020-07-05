@@ -20,5 +20,8 @@
     "pdfjs-dist": "^2.4.456",
     "signalhub": "^4.9.0",
     "webrtc-swarm": "^2.9.0"
+  },
+  "devDependencies": {
+    "wrtc": "^0.4.5"
   }
 }
