@@ -37,9 +37,9 @@ swarm.on('disconnect', function (peer, id) {
 })
 
 setInterval(function () {
-    //hub.broadcast('update', window.location.hash)
+    //myhub.broadcast('update', window.location.hash)
     you.update()
-    //hub.broadcast('update', you)
+    //myhub.broadcast('update', you)
     //const youString = JSON.stringify(you)
     const youString = JSON.stringify(you.page)
     swarm.peers.forEach(function (peer) {
