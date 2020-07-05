@@ -94,6 +94,7 @@ document.getElementById('go_previous')
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
         let dataString = JSON.stringify('goForward,' + myState.currentPage)
+        console.log(dataString)
         swarm.peers.forEach(function (peer) {
             peer.send(dataString)
         })
