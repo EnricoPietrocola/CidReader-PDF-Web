@@ -44,7 +44,7 @@ function startDoc() {
                 });
 
                 // more code here
-                render();
+                //render();
             }).catch((e) => {
                 console.log('Error', e);
             })

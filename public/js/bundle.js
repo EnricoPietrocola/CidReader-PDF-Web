@@ -11282,7 +11282,6 @@ swarm.on('connect', function (peer, id) {
 
             console.log(data)
 
-
             const cmd = data.split(",");
 
             switch (cmd[0]) {
