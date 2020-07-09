@@ -10,6 +10,7 @@ const signalhub = require('signalhub')
 const hub = signalhub('CidTest', ['https://signalhub-jccqtwhdwc.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
 
 console.log('communication is running')
+console.log('room name = ' + window.location.pathname)
 
 const swarm = createSwarm(hub, {
     wrtc: require('wrtc') // don't need this if used in the browser
@@ -49,7 +50,6 @@ swarm.on('connect', function (peer, id) {
             data = JSON.parse(data.toString())
 
             console.log(data)
-
 
             const cmd = data.split(",");
 
