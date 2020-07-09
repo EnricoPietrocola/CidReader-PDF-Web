@@ -89,7 +89,7 @@ function startDoc() {
                     });
 
                     // more code here
-                    render();
+                    //render();
                 }).catch((e) => {
                     console.log('Error', e);
                 })
@@ -114,6 +114,10 @@ function render() {
             viewport: viewport
         });
 
+        /*if (context) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+        }*/
     });
 
 }
