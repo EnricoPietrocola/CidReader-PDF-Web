@@ -1,0 +1,26 @@
+
+<reader>
+    <div id="my_pdf_viewer">
+        <input type="text" id="documentLink" name="Document URL" size = "90">
+        <button onclick="startDoc()" id="changeDocument">Load</button>
+
+        <div id="canvas_container">
+            <canvas id="pdf_renderer"></canvas>
+        </div>
+        <div id="navigation_controls">
+            <button id="go_previous">Previous</button>
+            <input id="current_page" value="1" type="number"/>
+            <button id="go_next">Next</button>
+        </div>
+        <div id="zoom_controls">
+            <button id="zoom_in">+</button>
+            <button id="zoom_out">-</button>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
+<script src ="/js/readerControls.js"> </script>
+<script src ="/js/bundle.js"></script>
+
+</reader>
+

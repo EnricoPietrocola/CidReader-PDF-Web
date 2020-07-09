@@ -31,10 +31,9 @@ app.use(express.static(publicDirectoryPath))
 app.get('', (req, res) => {
   res.render('index', {
     title: 'CidReader',
-    name: 'Test'
+    name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
   })
 })
-
 
 app.get('/get-document', (req, res) => {
   const documentUrl = req.query.url
@@ -57,9 +56,10 @@ app.get('/get-document', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  console.log("hi");
-  //console.log(req)
-  //console.log(res)
+  res.render('room', {
+    title: 'CidReader',
+    name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
+  })
 })
 
 app.listen(PORT, () => {

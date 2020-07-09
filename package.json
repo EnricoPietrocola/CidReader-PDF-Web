@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano ",
   "version": "1.0.0",
   "description": "",
   "main": "src/app.js",
@@ -11,7 +11,7 @@
     "node": "10.x"
   },
   "keywords": [],
-  "author": "",
+  "author": "Enrico Pietrocola enricopietrocola@gmail.com",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

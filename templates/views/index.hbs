@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Doc</title>
+    <title>HomePage</title>
     <!--<link rel="icon" href="/img/weather.png">-->
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -11,37 +11,16 @@
 <body>
     <div class="main-content">
         {{>header}}
-
         <p>The cooperative realtime pdf interaction app</p>
-
-        <div id="my_pdf_viewer">
-            <input type="text" id="documentLink" name="Document URL">
-            <button onclick="startDoc()" id="changeDocument">Load</button>
-
-            <div id="canvas_container">
-                <canvas id="pdf_renderer"></canvas>
-            </div>
-            <div id="navigation_controls">
-                <button id="go_previous">Previous</button>
-                <input id="current_page" value="1" type="number"/>
-                <button id="go_next">Next</button>
-            </div>
-            <div id="zoom_controls">
-                <button id="zoom_in">+</button>
-                <button id="zoom_out">-</button>
-            </div>
+        <div id="inputField"></div>
+            <input type="text" id="roomNameInput" name="Room Name" size = "50">
+            <button onclick="getRoom()" id="getRoom">Load</button>
         </div>
-
     </div>
 
     {{>footer}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
-    <!--<script src="/js/app.js"></script>-->
-
-    <script src ="/js/controls.js"> </script>
-    <script src ="/js/bundle.js"></script>
-
+    <script src ="/js/roomControls.js"> </script>
 </body>
 
 </html>

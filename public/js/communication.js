@@ -2,7 +2,7 @@
 
 //when this code is changed: browserify communication.js > bundle.js
 
-//const controls = require('./controls.js')
+//const controls = require('./readerControls.js')
 
 const createSwarm = require('webrtc-swarm')
 
@@ -19,8 +19,6 @@ swarm.on('peer', function (peer, id) {
     console.log('connected to a new peer:', id)
     console.log('total peers:', swarm.peers.length)
 })
-
-
 
 swarm.on('disconnect', function (peer, id) {
     console.log('disconnected from a peer:', id)
