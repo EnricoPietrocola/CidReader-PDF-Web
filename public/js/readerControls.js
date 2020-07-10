@@ -6,6 +6,7 @@ var myState = {
 
 function startDoc() {
 
+    console.log("StartDoc")
     var documentLink = document.getElementById("documentLink").value;
 
     fetch('/get-document?url=' + documentLink)
@@ -27,7 +28,8 @@ function startDoc() {
                     myState.currentPage -= 1;
                     document.getElementById("current_page")
                         .value = myState.currentPage;
-                    render();
+                    console.log("render from start doc - go previous")
+                    render()
                 });
 
                 document.getElementById('go_next').addEventListener('click', (e) => {
@@ -39,20 +41,24 @@ function startDoc() {
                     myState.currentPage += 1;
                     document.getElementById("current_page")
                         .value = myState.currentPage;
-                    render();
+                    console.log("render from start doc - go next")
+                    render()
 
                 });
 
                 // more code here
-                //render();
+                console.log("render from start doc - load")
+                render()
             }).catch((e) => {
-                console.log('Error', e);
+                console.log('Error', e)
             })
 
         });
     }
 
     function visualizeDoc(documentLink){
+        console.log("VisualizeDoc")
+
         fetch('/get-document?url=' + documentLink)
             .catch(err => console.log(err))
             .then(res => res.json())
@@ -72,7 +78,8 @@ function startDoc() {
                         myState.currentPage -= 1;
                         document.getElementById("current_page")
                             .value = myState.currentPage;
-                        render();
+                        console.log("render from visualize doc - go previous")
+                        render()
                     });
 
                     document.getElementById('go_next').addEventListener('click', (e) => {
@@ -84,12 +91,14 @@ function startDoc() {
                         myState.currentPage += 1;
                         document.getElementById("current_page")
                             .value = myState.currentPage;
-                        render();
+                        console.log("render from visualize doc - go next")
+                        render()
 
                     });
 
                     // more code here
-                    //render();
+                    console.log("render from visualize doc - load")
+                    render()
                 }).catch((e) => {
                     console.log('Error', e);
                 })

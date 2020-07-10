@@ -16,6 +16,8 @@ const swarm = createSwarm(hub, {
     wrtc: require('wrtc') // don't need this if used in the browser
 })
 
+console.log('peer name = ' + swarm.me)
+
 swarm.on('peer', function (peer, id) {
     console.log('connected to a new peer:', id)
     console.log('total peers:', swarm.peers.length)
@@ -84,18 +86,17 @@ swarm.on('connect', function (peer, id) {
 document.getElementById('go_previous')
     .addEventListener('click', (e) => {
         let dataString = JSON.stringify('goBackward,' + myState.currentPage)
-        swarm.peers.forEach(function (peer){
-            peer.send(dataString)
-        })
+        console.log(dataString)
+
+        sendDataToOthers(dataString)
     });
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
         let dataString = JSON.stringify('goForward,' + myState.currentPage)
         console.log(dataString)
-        swarm.peers.forEach(function (peer) {
-            peer.send(dataString)
-        })
+
+        sendDataToOthers(dataString)
     });
 
 document.getElementById('changeDocument')
@@ -103,7 +104,16 @@ document.getElementById('changeDocument')
         let documentLink = document.getElementById("documentLink").value;
         console.log("changing document")
         let dataString = JSON.stringify('changeDocument,' + documentLink)
-        swarm.peers.forEach(function(peer){
-            peer.send(dataString)
-        })
+
+        sendDataToOthers(dataString)
     });
+
+
+function sendDataToOthers(dataString){
+    swarm.peers.forEach(
+        function(peer) {
+            //if(peer != )
+            peer.send(dataString)
+            //console.log(peer)
+        })
+}
