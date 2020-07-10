@@ -28,7 +28,7 @@ function startDoc() {
                     myState.currentPage -= 1;
                     document.getElementById("current_page")
                         .value = myState.currentPage;
-                    console.log("render from start doc - go previous")
+                    //console.log("render from start doc - go previous")
                     render()
                 });
 
@@ -41,13 +41,13 @@ function startDoc() {
                     myState.currentPage += 1;
                     document.getElementById("current_page")
                         .value = myState.currentPage;
-                    console.log("render from start doc - go next")
+                    //console.log("render from start doc - go next")
                     render()
 
                 });
 
                 // more code here
-                console.log("render from start doc - load")
+                //console.log("render from start doc - load")
                 render()
             }).catch((e) => {
                 console.log('Error', e)
@@ -78,7 +78,7 @@ function startDoc() {
                         myState.currentPage -= 1;
                         document.getElementById("current_page")
                             .value = myState.currentPage;
-                        console.log("render from visualize doc - go previous")
+                        //console.log("render from visualize doc - go previous")
                         render()
                     });
 
@@ -91,13 +91,13 @@ function startDoc() {
                         myState.currentPage += 1;
                         document.getElementById("current_page")
                             .value = myState.currentPage;
-                        console.log("render from visualize doc - go next")
+                        //console.log("render from visualize doc - go next")
                         render()
 
                     });
 
                     // more code here
-                    console.log("render from visualize doc - load")
+                    //console.log("render from visualize doc - load")
                     render()
                 }).catch((e) => {
                     console.log('Error', e);

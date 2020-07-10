@@ -11316,7 +11316,7 @@ swarm.on('connect', function (peer, id) {
 
 document.getElementById('go_previous')
     .addEventListener('click', (e) => {
-        let dataString = JSON.stringify('goBackward,' + myState.currentPage)
+        let dataString = JSON.stringify('goBackward,' + myState.currentPage - 1)
         console.log(dataString)
 
         sendDataToOthers(dataString)
@@ -11324,7 +11324,7 @@ document.getElementById('go_previous')
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
-        let dataString = JSON.stringify('goForward,' + myState.currentPage)
+        let dataString = JSON.stringify('goForward,' + myState.currentPage + 1)
         console.log(dataString)
 
         sendDataToOthers(dataString)
@@ -11343,9 +11343,7 @@ document.getElementById('changeDocument')
 function sendDataToOthers(dataString){
     swarm.peers.forEach(
         function(peer) {
-            //if(peer != )
             peer.send(dataString)
-            //console.log(peer)
         })
 }
 },{"./user.js":82,"signalhub":61,"webrtc-swarm":74,"wrtc":78}],82:[function(require,module,exports){
