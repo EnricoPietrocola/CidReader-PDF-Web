@@ -103,9 +103,7 @@ document.getElementById('go_previous')
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
-        if(myState.pdf == null
-            || myState.currentPage > myState.pdf
-                ._pdfInfo.numPages)
+        if(myState.pdf == null || myState.currentPage >= myState.pdf._pdfInfo.numPages)
             return;
 
         myState.currentPage += 1;

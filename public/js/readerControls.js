@@ -32,6 +32,8 @@ function startDoc() {
         });
     }
 
+
+    //this duplicated code should be refactored
     function visualizeDoc(documentLink){
         console.log("VisualizeDoc")
 
