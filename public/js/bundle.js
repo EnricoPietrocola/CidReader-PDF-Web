@@ -11316,7 +11316,17 @@ swarm.on('connect', function (peer, id) {
 
 document.getElementById('go_previous')
     .addEventListener('click', (e) => {
-        let dataString = JSON.stringify('goBackward,' + (myState.currentPage - 1))
+        if(myState.pdf == null
+            || myState.currentPage == 1)
+            return;
+
+        myState.currentPage -= 1;
+        document.getElementById("current_page")
+            .value = myState.currentPage;
+        //console.log("render from visualize doc - go previous")
+        render()
+
+        let dataString = JSON.stringify('goBackward,' + myState.currentPage)
         console.log(dataString)
 
         sendDataToOthers(dataString)
@@ -11324,7 +11334,18 @@ document.getElementById('go_previous')
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
-        let dataString = JSON.stringify('goForward,' + (myState.currentPage + 1))
+        if(myState.pdf == null
+            || myState.currentPage > myState.pdf
+                ._pdfInfo.numPages)
+            return;
+
+        myState.currentPage += 1;
+        document.getElementById("current_page")
+            .value = myState.currentPage;
+        //console.log("render from visualize doc - go next")
+        render()
+
+        let dataString = JSON.stringify('goForward,' + myState.currentPage)
         console.log(dataString)
 
         sendDataToOthers(dataString)
