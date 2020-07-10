@@ -4,6 +4,20 @@ var myState = {
     zoom: 1
 }
 
+document.getElementById('zoom_in')
+    .addEventListener('click', (e) => {
+        if(myState.pdf == null) return;
+        myState.zoom += 0.5;
+        render();
+    });
+
+document.getElementById('zoom_out')
+    .addEventListener('click', (e) => {
+        if(myState.pdf == null) return;
+        myState.zoom -= 0.5;
+        render();
+    });
+
 function startDoc() {
 
     console.log("StartDoc")
