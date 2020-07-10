@@ -22,30 +22,6 @@ function startDoc() {
 
                 document.getElementById("current_page").value = myState.currentPage;
 
-                document.getElementById('go_previous').addEventListener('click', (e) => {
-                    if(myState.pdf == null
-                        || myState.currentPage == 1) return;
-                    myState.currentPage -= 1;
-                    document.getElementById("current_page")
-                        .value = myState.currentPage;
-                    //console.log("render from start doc - go previous")
-                    render()
-                });
-
-                document.getElementById('go_next').addEventListener('click', (e) => {
-                    if(myState.pdf == null
-                        || myState.currentPage > myState.pdf
-                            ._pdfInfo.numPages)
-                        return;
-
-                    myState.currentPage += 1;
-                    document.getElementById("current_page")
-                        .value = myState.currentPage;
-                    //console.log("render from start doc - go next")
-                    render()
-
-                });
-
                 // more code here
                 //console.log("render from start doc - load")
                 render()
