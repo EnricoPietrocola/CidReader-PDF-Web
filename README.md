@@ -18,7 +18,7 @@ This project was possible thanks to the "Orio Carlini" Scholarships from [Consor
 
 ![GarrLogo](https://owncloud.com/wp-content/uploads/2014/04/Garr-400x175.png)
 
-![ConsMILogo](https://scontent.fmxp6-1.fna.fbcdn.net/v/t1.0-9/26114176_1822710708027091_8154726932849490494_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_oc=AQmlMZbHp1C4OoxTZDKWVp18T17M8D7SSQaO2aOU2zvoc-ecIkMe8noQ5gFDV-1h3aSuU9PQJINFETrxXf_sdvt-&_nc_ht=scontent.fmxp6-1.fna&oh=97293d9384db6e4d44de31289ecd01f8&oe=5F3295A0)
+![ConsMILogo](https://raw.githubusercontent.com/EnricoPietrocola/Cid/master/consmilogo1.jpg)
 
 I would like to thank JetBrains for giving me their open source license in order to work on CidReader
 
