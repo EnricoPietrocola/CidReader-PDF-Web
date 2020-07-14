@@ -1,5 +1,5 @@
 # CidReaderWeb 
-A (WIP) open source cooperative realtime PDF annotation editor for the web.
+A (WIP) room based open source cooperative realtime PDF annotation editor for the web.
 
 Here's the [previous Android version](https://github.com/EnricoPietrocola/CidReader-PDF) (using UDP sockets and MuPDF) 
 
