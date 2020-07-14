@@ -1,5 +1,7 @@
 # CidReaderWeb 
-A (WIP) cooperative realtime PDF annotation editor for the web
+A (WIP) open source cooperative realtime PDF annotation editor for the web.
+
+Here's the [previous Android version](https://github.com/EnricoPietrocola/CidReader-PDF) (using UDP sockets and MuPDF) 
 
 Useful things I am using to develop:
 * [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
@@ -9,8 +11,10 @@ Useful things I am using to develop:
 * [This video where I took the first lines of code (By Kile Robinson Young)](https://www.youtube.com/watch?v=IqPJb6o_S1Q)
 * [Nice (and updated) EnvatoTuts tutorial on building your pdfjs page](https://code.tutsplus.com/tutorials/how-to-create-a-pdf-viewer-in-javascript--cms-32505)
 
+* [NpmJS Express.js](https://www.npmjs.com/package/express)
+* [NpmJS hbs](https://www.npmjs.com/package/hbs)
 * [NpmJS Signalhub](https://www.npmjs.com/package/signalhub)
-* [NpmJS Swarm-webrtc](https://www.npmjs.com/package/webrtc-swarm)
+* [NpmJS WebRTC-swarm](https://www.npmjs.com/package/webrtc-swarm)
 
 * [GitHub awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs)
 
