@@ -3,6 +3,12 @@ A (WIP) room based open source cooperative realtime PDF annotation editor for th
 
 Here's the [previous Android version](https://github.com/EnricoPietrocola/CidReader-PDF) (using UDP sockets and MuPDF) 
 
+[Paper/Description page](http://enricopietrocola.com/cidreader/)
+
+[Community Page](https://www.reddit.com/r/CidReaderPDF/)
+
+[Facebook Page](https://www.facebook.com/CidInteraction)
+
 Useful things I am using to develop:
 * [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 * [WebRTC Datachannel](https://www.html5rocks.com/en/tutorials/webrtc/datachannels/)
