@@ -7,7 +7,7 @@
 const createSwarm = require('webrtc-swarm')
 
 const signalhub = require('signalhub')
-const hub = signalhub('CidReader' + window.location.pathname, ['https://signalhub-jccqtwhdwc.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
+const hub = signalhub('CidReader' + window.location.pathname, ['https://signalhub-hzbibrznqa.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
 
 console.log('communication is running')
 console.log('room name = ' + window.location.pathname)
@@ -99,7 +99,19 @@ document.getElementById('go_previous')
         console.log(dataString)
 
         sendDataToOthers(dataString)
-    });
+    })
+    .addEventListener("keydown", function(event) {
+        if (event.defaultPrevented) {
+            return; // Do nothing if event already handled
+        }
+        switch(event.code) {
+            case "ArrowLeft":
+                // Handle "left"
+                myState.currentPage -= 1;
+                break;
+        }    // Consume the event so it doesn't get handled twice
+        event.preventDefault();
+    }, true);
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
@@ -126,7 +138,6 @@ document.getElementById('changeDocument')
 
         sendDataToOthers(dataString)
     });
-
 
 function sendDataToOthers(dataString){
     swarm.peers.forEach(

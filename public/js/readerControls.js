@@ -4,6 +4,36 @@ var myState = {
     zoom: 1
 }
 
+/*window.addEventListener("keydown", function(event) {
+    if (event.defaultPrevented) {
+        return; // Do nothing if event already handled
+    }
+    switch(event.code) {
+        case "KeyS":
+        case "ArrowDown":
+            // Handle "back"
+            break;
+        case "KeyW":
+        case "ArrowUp":
+            // Handle "forward"
+            break;
+        case "KeyA":
+        case "ArrowLeft":
+            // Handle "left"
+            myState.currentPage -= 1;
+            break;
+        case "KeyD":
+        case "ArrowRight":
+            // Handle "right"
+            console.log("right")
+            myState.currentPage += 1;
+            break;
+    }
+
+    // Consume the event so it doesn't get handled twice
+    event.preventDefault();
+}, true);*/
+
 document.getElementById('zoom_in')
     .addEventListener('click', (e) => {
         if(myState.pdf == null) return;
