@@ -84,7 +84,7 @@ function render() {
         var ctx = canvas.getContext('2d');
 
         //var viewport = page.getViewport(myState.zoom);
-        var viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom);
+        var viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97 );
         console.log(canvasContainer.getBoundingClientRect().width);
         canvas.width = viewport.width;
         canvas.height = viewport.height;
@@ -94,10 +94,10 @@ function render() {
             viewport: viewport
         });
 
-        /*if (ctx) {
+        if (ctx) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
-        }*/
+        }
 
 
     });
