@@ -4,36 +4,6 @@ var myState = {
     zoom: 1
 }
 
-/*window.addEventListener("keydown", function(event) {
-    if (event.defaultPrevented) {
-        return; // Do nothing if event already handled
-    }
-    switch(event.code) {
-        case "KeyS":
-        case "ArrowDown":
-            // Handle "back"
-            break;
-        case "KeyW":
-        case "ArrowUp":
-            // Handle "forward"
-            break;
-        case "KeyA":
-        case "ArrowLeft":
-            // Handle "left"
-            myState.currentPage -= 1;
-            break;
-        case "KeyD":
-        case "ArrowRight":
-            // Handle "right"
-            console.log("right")
-            myState.currentPage += 1;
-            break;
-    }
-
-    // Consume the event so it doesn't get handled twice
-    event.preventDefault();
-}, true);*/
-
 document.getElementById('zoom_in')
     .addEventListener('click', (e) => {
         if(myState.pdf == null) return;
@@ -109,11 +79,13 @@ function render() {
     myState.pdf.getPage(myState.currentPage).then((page) => {
 
         // more code here
+        var canvasContainer = document.getElementById("canvas_container");
         var canvas = document.getElementById("pdf_renderer");
         var ctx = canvas.getContext('2d');
 
-        var viewport = page.getViewport(myState.zoom);
-
+        //var viewport = page.getViewport(myState.zoom);
+        var viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom);
+        console.log(canvasContainer.getBoundingClientRect().width);
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
@@ -122,10 +94,12 @@ function render() {
             viewport: viewport
         });
 
-        /*if (context) {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.beginPath();
+        /*if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
         }*/
+
+
     });
 
 }

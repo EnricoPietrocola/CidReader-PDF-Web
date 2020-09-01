@@ -1,14 +1,16 @@
 
 <reader>
-    <div id="my_pdf_viewer">
+    <div id="pdf_input">
         <p>Paste the link of the document you would like to visualize</p>
-
         <input type="text" id="documentLink" name="Document URL" size = "90">
         <button onclick="startDoc()" id="changeDocument">Load</button>
+    </div>
 
-        <div id="canvas_container">
-            <canvas id="pdf_renderer"></canvas>
-        </div>
+    <div id="canvas_container">
+        <canvas id="pdf_renderer"></canvas>
+    </div>
+
+    <div id="controls">
         <div id="navigation_controls">
             <button id="go_previous">Previous</button>
             <input id="current_page" value="1" type="number"/>
