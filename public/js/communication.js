@@ -7,7 +7,7 @@
 const createSwarm = require('webrtc-swarm')
 
 const signalhub = require('signalhub')
-const hub = signalhub('CidReader' + window.location.pathname, ['https://signalhub-hzbibrznqa.now.sh']) //this signaling server is for testing, better deploy one yourself for serious applications
+const hub = signalhub('CidReader' + window.location.pathname, ['127.0.0.1:8080']) //this signaling server is for testing, better deploy one yourself for serious applications
 
 console.log('communication is running')
 console.log('room name = ' + window.location.pathname)
@@ -80,55 +80,91 @@ swarm.on('connect', function (peer, id) {
             }
         )
     }
-
 })
+
+function cid_go_previous (){
+    if(myState.pdf == null
+        || myState.currentPage == 1)
+        return;
+
+    myState.currentPage -= 1;
+    document.getElementById("current_page")
+        .value = myState.currentPage;
+    //console.log("render from visualize doc - go previous")
+    render()
+
+    let dataString = JSON.stringify('goBackward,' + myState.currentPage)
+    console.log(dataString)
+
+    sendDataToOthers(dataString)
+}
 
 document.getElementById('go_previous')
     .addEventListener('click', (e) => {
-        if(myState.pdf == null
-            || myState.currentPage == 1)
-            return;
+        cid_go_previous()
+    });
 
-        myState.currentPage -= 1;
-        document.getElementById("current_page")
-            .value = myState.currentPage;
-        //console.log("render from visualize doc - go previous")
-        render()
-
-        let dataString = JSON.stringify('goBackward,' + myState.currentPage)
-        console.log(dataString)
-
-        sendDataToOthers(dataString)
-    })
-    .addEventListener("keydown", function(event) {
-        if (event.defaultPrevented) {
-            return; // Do nothing if event already handled
-        }
+document.addEventListener("keydown", function(event) {
+        //if (event.defaultPrevented) {
+           // return; // Do nothing if event already handled
+        //}
         switch(event.code) {
             case "ArrowLeft":
                 // Handle "left"
-                myState.currentPage -= 1;
+                cid_go_previous()
+                break;
+            case "KeyA":
+                // Handle "left"
+                cid_go_previous()
+                break;
+            default:
+                //default
                 break;
         }    // Consume the event so it doesn't get handled twice
-        event.preventDefault();
+        //event.preventDefault();
     }, true);
+
+function cid_go_next(){
+    if(myState.pdf == null || myState.currentPage >= myState.pdf._pdfInfo.numPages)
+        return;
+
+    myState.currentPage += 1;
+    document.getElementById("current_page")
+        .value = myState.currentPage;
+    //console.log("render from visualize doc - go next")
+    render()
+
+    let dataString = JSON.stringify('goForward,' + myState.currentPage)
+    console.log(dataString)
+
+    sendDataToOthers(dataString)
+}
 
 document.getElementById('go_next')
     .addEventListener('click', (e) => {
-        if(myState.pdf == null || myState.currentPage >= myState.pdf._pdfInfo.numPages)
-            return;
-
-        myState.currentPage += 1;
-        document.getElementById("current_page")
-            .value = myState.currentPage;
-        //console.log("render from visualize doc - go next")
-        render()
-
-        let dataString = JSON.stringify('goForward,' + myState.currentPage)
-        console.log(dataString)
-
-        sendDataToOthers(dataString)
+        cid_go_next()
     });
+
+document.addEventListener("keydown", function(event) {
+        //if (event.defaultPrevented) {
+        // return; // Do nothing if event already handled
+        //}
+        switch(event.code) {
+            case "ArrowRight":
+                // Handle "right"
+                cid_go_next()
+                break;
+            case "KeyD":
+                // Handle "right"
+                cid_go_next()
+                break;
+            default:
+                //default
+                break;
+        }    // Consume the event so it doesn't get handled twice
+        //event.preventDefault();
+    }, true);
+
 
 document.getElementById('changeDocument')
     .addEventListener('click', (e) => {
