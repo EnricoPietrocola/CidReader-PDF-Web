@@ -85,7 +85,7 @@ function render() {
 
         //var viewport = page.getViewport(myState.zoom);
         var viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97 );
-        console.log(canvasContainer.getBoundingClientRect().width);
+
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 

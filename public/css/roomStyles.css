@@ -1,0 +1,82 @@
+body {
+    color: #333333;
+    font-family: arial;
+    /*max-width: 800px;*/
+}
+
+.main-content {
+    /*margin: 0 auto;*/
+    padding: 0 16px;
+
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    justify-content: center;
+}
+
+footer {
+    color: #888888;
+    border-top: 1px solid #eeeeee;
+    margin-top: 16px;
+    padding: 16px 0;
+}
+
+header {
+    margin-top: 16px;
+    margin-bottom: 48px;
+}
+
+h1 {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+header a {
+    color: #888888;
+    margin-right: 16px;
+    text-decoration: none;
+}
+
+.portrait {
+    width: 250px;
+}
+
+input {
+    border: 1px solid #cccccc;
+    padding: 8px;
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid #888888;
+    background: #888888;
+    color: white;
+    padding: 8px;
+}
+
+#canvas_container {
+    padding: 0 16px;
+
+    /*width:  60%;
+    height: 100%;*/
+
+    width: 700px;
+    height: 1200px;
+    overflow: auto;
+
+    background: #333333;
+    text-align: center;
+    border: solid 3px;
+    flex-grow: 1;
+}
+
+#controls{
+    flex-grow: 1;
+    padding: 0 16px;
+
+}
+
+#pdf_input{
+    padding: 0 16px;
+    flex-grow: 1;
+}
