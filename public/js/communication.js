@@ -7,7 +7,7 @@
 const createSwarm = require('webrtc-swarm')
 
 const signalhub = require('signalhub')
-const hub = signalhub('CidReader' + window.location.pathname, ['https://protected-crag-63251.herokuapp.com/']) //this signaling server is for testing, better deploy one yourself for serious applications
+const hub = signalhub('CidReader' + window.location.pathname, ['https://cidreadersignalhub.herokuapp.com/']) //this signaling server is for testing, better deploy one yourself for serious applications
 
 console.log('communication is running')
 console.log('room name = ' + window.location.pathname)
