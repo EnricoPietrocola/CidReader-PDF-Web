@@ -20,8 +20,8 @@ try {
   if (fs.existsSync(key) && fs.existsSync(cert)) {
     //file exists
     https.createServer({
-      key: fs.readFileSync('key'),
-      cert: fs.readFileSync('cert')
+      key: fs.readFileSync(key),
+      cert: fs.readFileSync(cert)
     }, app)
   }
   else {
