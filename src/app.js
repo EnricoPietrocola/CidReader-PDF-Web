@@ -89,7 +89,7 @@ try {
     const httpsServer = https.createServer({
       key: fs.readFileSync(key, 'utf8'),
       cert: fs.readFileSync(cert, 'utf8')
-    }, app).listen(8443)
+    }, app).listen(443)
 
     //httpsServer.listen(8443)
     console.log('Https server running')
