@@ -91,7 +91,7 @@ try {
       key: fs.readFileSync(key, 'utf8'),
       cert: fs.readFileSync(cert, 'utf8'),
       ca: fs.readFileSync(ca, 'utf8')
-    }, app).listen(443)
+    }, app).listen(80)
 
     //httpsServer.listen(8443)
     console.log('Https server running')
@@ -103,5 +103,5 @@ try {
   console.error(err)
 }
 
-httpServer.listen(PORT)
-console.log('Http server running')
+//httpServer.listen(PORT)
+//console.log('Http server running')
