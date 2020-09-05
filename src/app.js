@@ -82,7 +82,7 @@ app.get('*', (req, res) => {
 })*/
 
 
-const httpServer = http.createServer(app);
+//const httpServer = http.createServer(app);
 
 try {
   if (fs.existsSync(key) && fs.existsSync(cert)) {
@@ -103,5 +103,5 @@ try {
   console.error(err)
 }
 
-httpServer.listen(PORT)
-console.log('Http server running')
+//httpServer.listen(PORT)
+//console.log('Http server running')
