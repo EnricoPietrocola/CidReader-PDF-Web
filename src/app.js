@@ -12,7 +12,7 @@ app.use(cors())
 
 app.use(express.static(__dirname + '/public'))
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 80
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
