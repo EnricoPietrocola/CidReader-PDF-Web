@@ -22,7 +22,7 @@ app.use(cors())
 
 app.use(express.static(__dirname + '/public'))
 
-const PORT = process.env.PORT || 80
+//const PORT = process.env.PORT || 80
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -36,8 +36,6 @@ hbs.registerPartials(partialsPath)
 
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
-
-
 
 /*app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
@@ -64,9 +62,18 @@ app.get('/get-document', (req, res) => {
 
     file.on('finish', () => {
       file.close()
-      res.json({ fileName })
-    })
+      res.json({fileName})
+      setTimeout(function() {
+        try {
+          fs.unlinkSync(filePath)
+          //file removed
+        } catch (err) {
+          console.error(err)
+        }
+        console.log('it happened');
+      }, 60000);
 
+    })
   })
 })
 
@@ -80,7 +87,6 @@ app.get('*', (req, res) => {
 /*app.listen(PORT, () => {
   console.log("Server starting on port : " + PORT)
 })*/
-
 
 //const httpServer = http.createServer(app);
 
@@ -103,5 +109,5 @@ try {
   console.error(err)
 }
 
-//httpServer.listen(PORT)
+//ttpServer.listen(PORT)
 //console.log('Http server running')
