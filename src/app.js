@@ -16,16 +16,19 @@ const cert = httpsArgs[1]
 
 console.log(key + " " + cert)
 
-if(key != null && cert != null) {
-
-  https.createServer({
-    key: fs.readFileSync('key'),
-    cert: fs.readFileSync('cert')
-  }, app)
-
-}
-else{
-  console.log('Something went wrong with SSL certificates')
+try {
+  if (fs.existsSync(key) && fs.existsSync(cert)) {
+    //file exists
+    https.createServer({
+      key: fs.readFileSync('key'),
+      cert: fs.readFileSync('cert')
+    }, app)
+  }
+  else {
+    console.log('Something went wrong with SSL certificates')
+  }
+} catch(err) {
+  console.error(err)
 }
 
 app.use(cors())
