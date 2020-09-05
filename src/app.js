@@ -14,6 +14,7 @@ console.log('httpsArgs: ', httpsArgs)
 
 const key = httpsArgs[0]
 const cert = httpsArgs[1]
+const ca = httpsArgs[2]
 
 console.log(key + " " + cert)
 
@@ -88,7 +89,8 @@ try {
     //file exists
     const httpsServer = https.createServer({
       key: fs.readFileSync(key, 'utf8'),
-      cert: fs.readFileSync(cert, 'utf8')
+      cert: fs.readFileSync(cert, 'utf8'),
+      ca: fs.readFileSync(ca, 'utf8')
     }, app).listen(443)
 
     //httpsServer.listen(8443)
