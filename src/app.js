@@ -5,6 +5,7 @@ const hbs = require('hbs')
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
+const http = require('http')
 const https = require('https')
 const app = express()
 
@@ -15,21 +16,6 @@ const key = httpsArgs[0]
 const cert = httpsArgs[1]
 
 console.log(key + " " + cert)
-
-try {
-  if (fs.existsSync(key) && fs.existsSync(cert)) {
-    //file exists
-    https.createServer({
-      key: fs.readFileSync(key),
-      cert: fs.readFileSync(cert)
-    }, app)
-  }
-  else {
-    console.log('Something went wrong with SSL certificates')
-  }
-} catch(err) {
-  console.error(err)
-}
 
 app.use(cors())
 
@@ -90,7 +76,30 @@ app.get('*', (req, res) => {
   })
 })
 
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
   console.log("Server starting on port : " + PORT)
-})
+})*/
 
+
+const httpServer = http.createServer(app);
+
+try {
+  if (fs.existsSync(key) && fs.existsSync(cert)) {
+    //file exists
+    const httpsServer = https.createServer({
+      key: fs.readFileSync(key, 'utf8'),
+      cert: fs.readFileSync(cert, 'utf8')
+    }, app)
+
+    httpsServer.listen(8443)
+    console.log('Https server running')
+  }
+  else {
+    console.log('Something went wrong with SSL certificates')
+  }
+} catch(err) {
+  console.error(err)
+}
+
+httpServer.listen(PORT)
+console.log('Http server running')
