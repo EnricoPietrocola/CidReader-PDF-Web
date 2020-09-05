@@ -8,6 +8,26 @@ const fs = require('fs')
 const https = require('https')
 const app = express()
 
+const httpsArgs = process.argv.slice(2)
+console.log('httpsArgs: ', httpsArgs)
+
+const key = httpsArgs[0]
+const cert = httpsArgs[1]
+
+console.log(key + " " + cert)
+
+if(key != null && cert != null) {
+
+  https.createServer({
+    key: fs.readFileSync('key'),
+    cert: fs.readFileSync('cert')
+  }, app)
+
+}
+else{
+  console.log('Something went wrong with SSL certificates')
+}
+
 app.use(cors())
 
 app.use(express.static(__dirname + '/public'))
@@ -26,6 +46,8 @@ hbs.registerPartials(partialsPath)
 
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
+
+
 
 /*app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
