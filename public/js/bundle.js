@@ -11244,9 +11244,44 @@ console.log('communication is running')
 console.log('room name = ' + window.location.pathname)
 
 const swarm = createSwarm(hub, {
-    wrtc: require('wrtc') // don't need this if used in the browser
+    wrtc: require('wrtc'), // don't need this if used in the browser
+    config: {
+        trickle: true,
+        iceServers: [
+            {
+                urls: 'stun:stun.cidreader.com',
+                username: 'guest',
+                credential: 'guest'
+            },
+            {
+                urls: 'turn:turn.cidreader.com',
+                username: 'guest',
+                credential: 'guest'
+            }
+        ]
+    }
 })
 
+
+/*
+swarm.config = {
+    iceServers: [
+        {
+            urls: 'turn:my-turn-server.mycompany.com:19403',
+            username: 'optional-username',
+            credentials: 'auth-token'
+        }
+    ]
+}
+*/
+/*const iceConfiguration = {
+
+}
+
+const peerConnection = new RTCPeerConnection(iceConfiguration);
+swarm.config = peerConnection;
+swarm.config.getConfiguration().iceServers = iceConfiguration;
+*/
 console.log('peer name = ' + swarm.me)
 
 swarm.on('peer', function (peer, id) {
