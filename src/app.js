@@ -8,6 +8,7 @@ const fs = require('fs')
 const http = require('http')
 const https = require('https')
 const app = express()
+const socketio = require('socket.io')
 
 const httpsArgs = process.argv.slice(2)
 console.log('httpsArgs: ', httpsArgs)
@@ -83,12 +84,6 @@ app.get('*', (req, res) => {
   })
 })
 
-/*app.listen(PORT, () => {
-  console.log("Server starting on port : " + PORT)
-})*/
-
-//const httpServer = http.createServer(app);
-
 try {
   if (fs.existsSync(key) && fs.existsSync(cert)) {
     //file exists
@@ -100,6 +95,9 @@ try {
 
     //httpsServer.listen(8443)
     console.log('Https server running')
+
+    const io = socketio(httpsServer)
+
   }
   else {
     console.log('Something went wrong with SSL certificates')
@@ -108,5 +106,42 @@ try {
   console.error(err)
 }
 
-//httpServer.listen(PORT)
-//console.log('Http server running')
+/*app.listen(PORT, () => {
+  console.log("Server starting on port : " + PORT)
+})*/
+
+const httpServer = http.createServer(app);
+const io = socketio(httpServer)
+
+httpServer.listen(PORT)
+console.log('Http server running')
+
+io.on('connection', (socket) => {
+  console.log("new websocket connection")
+
+  //socket.emit('message', 'hey')
+  //socket.broadcast.emit('message', 'New user connected')
+
+  /*socket.on('message', (data, callback) =>{
+    console.log("heyEvent")
+    io.to('room').emit('asd', data)
+    callback('test')
+  })*/
+  socket.on('join', (room)=> {
+    socket.join(room)
+    socket.to(room).broadcast.emit('datachannel', 'A new user joined the room')
+  })
+
+  socket.on('datachannel', (room, data) =>{
+    socket.to(room).broadcast.emit('datachannel', data)
+
+    data = JSON.parse(data.toString())
+    console.log(data)
+  })
+
+  /*socket.on('disconnect', () => {
+    io.emit('message','A user has left')
+  })*/
+})
+
+// https://socket.io/docs/rooms/
