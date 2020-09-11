@@ -96,7 +96,7 @@ try {
     //httpsServer.listen(8443)
     console.log('Https server running')
 
-    const io = socketio(httpsServer)
+    //const io = socketio(httpsServer)
 
   }
   else {
@@ -110,11 +110,12 @@ try {
   console.log("Server starting on port : " + PORT)
 })*/
 
-const httpServer = http.createServer(app);
-const io = socketio(httpServer)
+//const httpServer = http.createServer(app);
+//const io = socketio(httpServer)
 
-httpServer.listen(PORT)
-console.log('Http server running')
+const io = socketio(httpsServer)
+//httpServer.listen(PORT)
+//console.log('Http server running')
 
 io.on('connection', (socket) => {
   console.log("new websocket connection")
