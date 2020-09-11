@@ -84,10 +84,12 @@ app.get('*', (req, res) => {
   })
 })
 
+let httpsServer;
+
 try {
   if (fs.existsSync(key) && fs.existsSync(cert)) {
     //file exists
-    const httpsServer = https.createServer({
+    httpsServer = https.createServer({
       key: fs.readFileSync(key, 'utf8'),
       cert: fs.readFileSync(cert, 'utf8'),
       ca: fs.readFileSync(ca, 'utf8')
