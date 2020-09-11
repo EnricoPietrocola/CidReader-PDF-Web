@@ -38,10 +38,6 @@ hbs.registerPartials(partialsPath)
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
-/*app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-})*/
-
 app.get('', (req, res) => {
   res.render('index', {
     title: 'CidReader',
@@ -95,11 +91,7 @@ try {
       ca: fs.readFileSync(ca, 'utf8')
     }, app).listen(443)
 
-    //httpsServer.listen(8443)
     console.log('Https server running')
-
-    //const io = socketio(httpsServer)
-
   }
   else {
     console.log('Something went wrong with SSL certificates')
@@ -122,14 +114,6 @@ const io = socketio(httpsServer)
 io.on('connection', (socket) => {
   console.log("new websocket connection")
 
-  //socket.emit('message', 'hey')
-  //socket.broadcast.emit('message', 'New user connected')
-
-  /*socket.on('message', (data, callback) =>{
-    console.log("heyEvent")
-    io.to('room').emit('asd', data)
-    callback('test')
-  })*/
   socket.on('join', (room)=> {
     socket.join(room)
     socket.to(room).broadcast.emit('datachannel', 'A new user joined the room')
@@ -146,5 +130,3 @@ io.on('connection', (socket) => {
     io.emit('message','A user has left')
   })*/
 })
-
-// https://socket.io/docs/rooms/

@@ -64,7 +64,6 @@ function startDoc() {
 
                     document.getElementById("current_page").value = myState.currentPage;
 
-
                     // more code here
                     //console.log("render from visualize doc - load")
                     render()
