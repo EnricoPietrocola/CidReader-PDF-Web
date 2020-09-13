@@ -9,6 +9,8 @@ const http = require('http')
 const https = require('https')
 const app = express()
 const socketio = require('socket.io')
+const multer = require('multer')
+var upload = multer({ dest: '../public/uploads/' })
 
 const httpsArgs = process.argv.slice(2)
 console.log('httpsArgs: ', httpsArgs)
@@ -43,6 +45,25 @@ app.get('', (req, res) => {
     title: 'CidReader',
     name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
   })
+})
+
+/*var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+
+    // Uploads is the Upload_folder_name
+    cb(null, "uploads")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now()+".pdf")
+  }
+})*/
+
+app.post('/pdfupload', upload.single('document'), function (req, res, next) {
+  //req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+
+  console.log('New file uploaded ' + req.file.name)
+
 })
 
 app.get('/get-document', (req, res) => {
@@ -80,6 +101,10 @@ app.get('*', (req, res) => {
   })
 })
 
+
+
+
+
 let httpsServer;
 
 try {
@@ -104,12 +129,14 @@ try {
   console.log("Server starting on port : " + PORT)
 })*/
 
-//const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 //const io = socketio(httpServer)
+httpServer.listen(PORT)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+//Real-time section
 
 const io = socketio(httpsServer)
-//httpServer.listen(PORT)
-//console.log('Http server running')
 
 io.on('connection', (socket) => {
   console.log("new websocket connection")
