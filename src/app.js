@@ -60,7 +60,7 @@ const upload = multer({ storage: storage })
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   //req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
-  const documentUrl = 'www.cidreader.com' + '/uploads/' + req.file.originalname
+  const documentUrl = 'https://www.cidreader.com' + '/uploads/' + req.file.originalname
   console.log('Post ' + documentUrl)
   //et file = fs.createReadStream(publicDirectoryPath + '/uploads/' + req.file.originalname)
 
@@ -83,7 +83,7 @@ app.get('/get-document', (req, res) => {
       file.close()
       //res.json({fileName})
       console.log('Sending ' + fileName)
-      const url = 'www.cidreader.com' + '/uploads/' + fileName
+      const url = 'https://www.cidreader.com' + '/uploads/' + fileName
       res.json({url})
       /*setTimeout(function() {
         try {
