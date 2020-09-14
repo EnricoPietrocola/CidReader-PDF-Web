@@ -122,7 +122,13 @@ socket.on('datachannel', (data) =>  {
         users[id] = new user()
     }*/
     if(data != undefined && data != null) {
-        data = JSON.parse(data.toString())
+
+        if(isJson(data)) {
+            data = JSON.parse(data.toString())
+        }
+        else{
+            console.log('sendData received non JSON data: ' + data)
+        }
 
         console.log(data)
 
@@ -260,3 +266,13 @@ document.getElementById('changeUploadedDocument')
         //let dataString = JSON.stringify('changeDocument,' + documentLink)
         //sendDataToOthers(dataString)
     });
+
+
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
