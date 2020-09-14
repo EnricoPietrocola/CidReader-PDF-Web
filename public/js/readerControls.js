@@ -56,7 +56,7 @@ function startDoc() {
             .then(res => res.json())
             .then(res => {
 
-                pdfjsLib.getDocument(res.fileName).then((pdf) => {
+                pdfjsLib.getDocument(res.url).then((pdf) => {
                     myState.pdf = pdf;
 
                     myState.currentPage = 1;
