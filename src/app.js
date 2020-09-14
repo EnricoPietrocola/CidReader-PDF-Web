@@ -134,14 +134,14 @@ try {
   console.log("Server starting on port : " + PORT)
 })*/
 
-//const httpServer = http.createServer(app);
-//const io = socketio(httpServer)
-//httpServer.listen(PORT)
+const httpServer = http.createServer(app);
+const io = socketio(httpServer)
+httpServer.listen(PORT)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //Real-time section
 
-const io = socketio(httpsServer)
+//const io = socketio(httpsServer)
 
 io.on('connection', (socket) => {
   console.log("new websocket connection")
