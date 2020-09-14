@@ -28,7 +28,7 @@ function startDoc() {
         .then(res => res.json())
         .then(res => {
             console.log('startdoc ricevuto ' + res)
-            pdfjsLib.getDocument(res).then((pdf) => {
+            pdfjsLib.getDocument(res.fileName).then((pdf) => {
                 myState.pdf = pdf;
 
                 myState.currentPage = 1;

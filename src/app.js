@@ -72,12 +72,10 @@ app.get('/get-document', (req, res) => {
 
   const fileName = Date.now() + '.pdf'
 
-  const filePath = publicDirectoryPath + "/uploads/" + fileName
+  const filePath = publicDirectoryPath + '/uploads/' + fileName
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
-  //const documentUrl = 'www.cidreader.com' + '/uploads/' + fileName
-  //res.send(documentUrl)
-  // could this https part be replaced by the response package to support http and https?
+
   https.get(documentUrl, (response) => {
     response.pipe(file)
 
@@ -99,43 +97,6 @@ app.get('/get-document', (req, res) => {
     })
   })
 })
-
-app.get('/fetch-document', (req, res) => {
-  //console.log('Fetch-document ' + req.query.url)
-  //const documentUrl = 'www.cidreader.com' + '/uploads/' + req.query
-  //request.get(documentUrl).pipe(res)
-  //console.log(documentUrl)
-  /*const fileName = Date.now() + '.pdf'
-  const filePath = publicDirectoryPath + "/uploads/" + fileName
-  console.log(filePath)
-  const file = fs.createWriteStream(filePath)
-   */
-  //res.json({documentUrl})
-
-  // could this https part be replaced by the response package to support http and https?
-  /*http.get(documentUrl, (response) => {
-    response.pipe(file)
-
-    file.on('finish', () => {
-      file.close()
-      res.json({fileName})
-      setTimeout(function() {
-        try {
-          fs.unlinkSync(filePath)
-          //file removed
-        } catch (err) {
-          console.error(err)
-        }
-      }, 60000);
-    })
-  })*/
-})
-
-
-
-function sendDocument(fs, filepath){
-
-}
 
 app.get('/uploads', (req, res) => {
 
