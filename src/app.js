@@ -85,7 +85,7 @@ app.get('/get-document', (req, res) => {
       console.log('Sending ' + fileName)
       const url = 'www.cidreader.com' + '/uploads/' + fileName
       res.json({url})
-      setTimeout(function() {
+      /*setTimeout(function() {
         try {
           fs.unlinkSync(filePath)
           //file removed
@@ -93,7 +93,7 @@ app.get('/get-document', (req, res) => {
           console.error(err)
         }
       }, 60000);
-
+    */
     })
   })
 })
