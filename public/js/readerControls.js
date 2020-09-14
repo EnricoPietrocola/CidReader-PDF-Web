@@ -121,39 +121,39 @@ socket.on('datachannel', (data) =>  {
     /*if (!users[id]) {
         users[id] = new user()
     }*/
+    if(data != undefined && data != null) {
+        data = JSON.parse(data.toString())
 
-    data = JSON.parse(data.toString())
+        console.log(data)
 
-    console.log(data)
+        const cmd = data.split(",");
 
-    const cmd = data.split(",");
+        switch (cmd[0]) {
+            case "changeDocument":
+                myState.pdf = cmd[1];
+                //startDoc();
+                visualizeDoc(myState.pdf)
+                console.log("RECV: Visualizing new document " + myState.pdf);
+                break;
 
-    switch (cmd[0]) {
-        case "changeDocument":
-            myState.pdf = cmd[1];
-            //startDoc();
-            visualizeDoc(myState.pdf)
-            console.log("RECV: Visualizing new document " + myState.pdf);
-            break;
+            case "goForward":
+                myState.currentPage = parseInt(cmd[1]);
+                document.getElementById("current_page").value = myState.currentPage;
+                render();
+                console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
+                break;
 
-        case "goForward":
-            myState.currentPage = parseInt(cmd[1]);
-            document.getElementById("current_page").value = myState.currentPage;
-            render();
-            console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
-            break;
+            case "goBackward":
+                myState.currentPage = parseInt(cmd[1]);
+                document.getElementById("current_page").value = myState.currentPage;
+                render();
+                console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
+                break;
 
-        case "goBackward":
-            myState.currentPage = parseInt(cmd[1]);
-            document.getElementById("current_page").value = myState.currentPage;
-            render();
-            console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
-            break;
-
-        default:
-            console.log('RECV msg' + data)
+            default:
+                console.log('RECV msg' + data)
+        }
     }
-
 })
 
 function cid_go_previous (){
