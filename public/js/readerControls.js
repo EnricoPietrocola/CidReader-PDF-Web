@@ -20,15 +20,15 @@ document.getElementById('zoom_out')
 
 function startDoc() {
 
-    console.log("StartDoc")
     var documentLink = document.getElementById("documentLink").value;
+    console.log("StartDoc " + documentLink)
 
     fetch('/get-document?url=' + documentLink)
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(res => {
-
-            pdfjsLib.getDocument(res.fileName).then((pdf) => {
+            console.log('startdoc ricevuto ' + res)
+            pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
 
                 myState.currentPage = 1;
@@ -49,7 +49,7 @@ function startDoc() {
 
     //this duplicated code should be refactored
     function visualizeDoc(documentLink){
-        console.log("VisualizeDoc")
+        console.log("VisualizeDoc " + documentLink)
 
         fetch('/get-document?url=' + documentLink)
             .catch(err => console.log(err))
@@ -73,6 +73,11 @@ function startDoc() {
 
             });
     }
+
+function startUploadedDoc() {
+    var documentLink = document.getElementById("fileUpload").files[0].name;
+    //more about this function is actually exectuded in room.hbs
+}
 
 function render() {
     myState.pdf.getPage(myState.currentPage).then((page) => {
@@ -241,10 +246,17 @@ document.addEventListener("keydown", function(event) {
 
 document.getElementById('changeDocument')
     .addEventListener('click', (e) => {
-        let documentLink = document.getElementById("documentLink").value;
-        console.log("SEND: " + "changing document")
+        let documentLink = document.getElementById('documentLink').value
+        console.log('SEND: ' + 'changing document')
         let dataString = JSON.stringify('changeDocument,' + documentLink)
 
         sendDataToOthers(dataString)
     });
 
+document.getElementById('changeUploadedDocument')
+    .addEventListener('click', (e) => {
+        //let documentLink = 'https://127.0.0.1/fdf_data_exchange.pdf'
+        //console.log('SEND: ' + 'changing document')
+        //let dataString = JSON.stringify('changeDocument,' + documentLink)
+        //sendDataToOthers(dataString)
+    });

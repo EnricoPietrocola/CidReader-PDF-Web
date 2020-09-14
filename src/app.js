@@ -10,7 +10,6 @@ const https = require('https')
 const app = express()
 const socketio = require('socket.io')
 const multer = require('multer')
-var upload = multer({ dest: '../public/uploads/' })
 
 const httpsArgs = process.argv.slice(2)
 console.log('httpsArgs: ', httpsArgs)
@@ -47,40 +46,47 @@ app.get('', (req, res) => {
   })
 })
 
-/*var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-
-    // Uploads is the Upload_folder_name
-    cb(null, "uploads")
+    cb(null, '../public/uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now()+".pdf")
+    cb(null, file.originalname)
   }
-})*/
+})
 
-app.post('/pdfupload', upload.single('document'), function (req, res, next) {
+const upload = multer({ storage: storage })
+
+app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   //req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
+  const documentUrl = 'www.cidreader.com' + '/uploads/' + req.file.originalname
+  console.log('Post ' + documentUrl)
+  //et file = fs.createReadStream(publicDirectoryPath + '/uploads/' + req.file.originalname)
 
-  console.log('New file uploaded ' + req.file.name)
-
+  res.send(documentUrl)
 })
 
 app.get('/get-document', (req, res) => {
   const documentUrl = req.query.url
 
   const fileName = Date.now() + '.pdf'
-  const filePath = publicDirectoryPath + "/" + fileName
+
+  const filePath = publicDirectoryPath + "/uploads/" + fileName
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
-
+  //const documentUrl = 'www.cidreader.com' + '/uploads/' + fileName
+  //res.send(documentUrl)
   // could this https part be replaced by the response package to support http and https?
   https.get(documentUrl, (response) => {
     response.pipe(file)
 
     file.on('finish', () => {
       file.close()
-      res.json({fileName})
+      //res.json({fileName})
+      console.log('Sending ' + fileName)
+      const url = 'www.cidreader.com' + '/uploads/' + fileName
+      res.json({url})
       setTimeout(function() {
         try {
           fs.unlinkSync(filePath)
@@ -94,15 +100,53 @@ app.get('/get-document', (req, res) => {
   })
 })
 
+app.get('/fetch-document', (req, res) => {
+  //console.log('Fetch-document ' + req.query.url)
+  //const documentUrl = 'www.cidreader.com' + '/uploads/' + req.query
+  //request.get(documentUrl).pipe(res)
+  //console.log(documentUrl)
+  /*const fileName = Date.now() + '.pdf'
+  const filePath = publicDirectoryPath + "/uploads/" + fileName
+  console.log(filePath)
+  const file = fs.createWriteStream(filePath)
+   */
+  //res.json({documentUrl})
+
+  // could this https part be replaced by the response package to support http and https?
+  /*http.get(documentUrl, (response) => {
+    response.pipe(file)
+
+    file.on('finish', () => {
+      file.close()
+      res.json({fileName})
+      setTimeout(function() {
+        try {
+          fs.unlinkSync(filePath)
+          //file removed
+        } catch (err) {
+          console.error(err)
+        }
+      }, 60000);
+    })
+  })*/
+})
+
+
+
+function sendDocument(fs, filepath){
+
+}
+
+app.get('/uploads', (req, res) => {
+
+})
+
 app.get('*', (req, res) => {
   res.render('room', {
     title: 'CidReader',
     name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
   })
 })
-
-
-
 
 
 let httpsServer;
