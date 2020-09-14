@@ -110,6 +110,7 @@ app.get('*', (req, res) => {
 })
 
 let httpsServer;
+let io;
 
 try {
   if (fs.existsSync(key) && fs.existsSync(cert)) {
@@ -119,11 +120,14 @@ try {
       cert: fs.readFileSync(cert, 'utf8'),
       ca: fs.readFileSync(ca, 'utf8')
     }, app).listen(443)
-
+    io = socketio(httpsServer)
     console.log('Https server running')
   }
   else {
-    console.log('Something went wrong with SSL certificates')
+    console.log('Something went wrong with SSL certificates, starting http server')
+    const httpServer = http.createServer(app);
+    io = socketio(httpServer)
+    httpServer.listen(PORT)
   }
 } catch(err) {
   console.error(err)
@@ -133,14 +137,12 @@ try {
   console.log("Server starting on port : " + PORT)
 })*/
 
-//const httpServer = http.createServer(app);
-//const io = socketio(httpServer)
-//httpServer.listen(PORT)
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //Real-time section
 
-const io = socketio(httpsServer)
+
 
 io.on('connection', (socket) => {
   console.log("new websocket connection")

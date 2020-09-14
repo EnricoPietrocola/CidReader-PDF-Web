@@ -122,7 +122,7 @@ socket.on('datachannel', (data) =>  {
         users[id] = new user()
     }*/
 
-    data = JSON.parse(data)
+    data = JSON.parse(data.toString())
 
     console.log(data)
 
