@@ -173,9 +173,9 @@ try {
   console.log("Server starting on port : " + PORT)
 })*/
 
-const httpServer = http.createServer(app);
+//const httpServer = http.createServer(app);
 //const io = socketio(httpServer)
-httpServer.listen(PORT)
+//httpServer.listen(PORT)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //Real-time section
