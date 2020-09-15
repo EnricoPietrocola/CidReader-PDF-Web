@@ -17,6 +17,11 @@ console.log('httpsArgs: ', httpsArgs)
 const key = httpsArgs[0]
 const cert = httpsArgs[1]
 const ca = httpsArgs[2]
+let domain = httpsArgs[3]
+
+if (domain === undefined || domain === null){
+  domain = 'https://127.0.0.1'
+}
 
 console.log(key + " " + cert)
 
@@ -60,7 +65,7 @@ const upload = multer({ storage: storage })
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   //req.file is the `avatar` file
   // req.body will hold the text fields, if there were any
-  const documentUrl = 'https://www.cidreader.com' + '/uploads/' + req.file.originalname
+  const documentUrl = domain + '/uploads/' + req.file.originalname
   console.log('Post ' + documentUrl)
   //et file = fs.createReadStream(publicDirectoryPath + '/uploads/' + req.file.originalname)
 
@@ -83,7 +88,7 @@ app.get('/get-document', (req, res) => {
       file.close()
       //res.json({fileName})
       console.log('Sending ' + fileName)
-      const url = 'https://www.cidreader.com' + '/uploads/' + fileName
+      const url = domain + '/uploads/' + fileName
       res.json({url})
       /*setTimeout(function() {
         try {
@@ -99,7 +104,7 @@ app.get('/get-document', (req, res) => {
 })
 
 app.get('/uploads', (req, res) => {
-
+  res.send('Denied - Please create a room with a different name')
 })
 
 app.get('*', (req, res) => {
@@ -118,7 +123,7 @@ try {
     httpsServer = https.createServer({
       key: fs.readFileSync(key, 'utf8'),
       cert: fs.readFileSync(cert, 'utf8'),
-      ca: fs.readFileSync(ca, 'utf8')
+      //ca: fs.readFileSync(ca, 'utf8')
     }, app).listen(443)
     io = socketio(httpsServer)
     console.log('Https server running')
@@ -155,11 +160,22 @@ io.on('connection', (socket) => {
   socket.on('datachannel', (room, data) =>{
     socket.to(room).broadcast.emit('datachannel', data)
 
-    data = JSON.parse(data.toString())
-    console.log(data)
+
+
+    //data = JSON.parse(data.toString())
+    //console.log(data)
   })
 
   /*socket.on('disconnect', () => {
     io.emit('message','A user has left')
   })*/
 })
+
+function isJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
