@@ -56,7 +56,7 @@
                     },
 
                     success: function(response) {
-                        sendDataToOthers(JSON.stringify('changeDocument,' + response))
+                        sendDataToOthers('changeDocument,' + response)
                         pdfjsLib.getDocument(response).then((pdf) => {
                             myState.pdf = pdf;
 
