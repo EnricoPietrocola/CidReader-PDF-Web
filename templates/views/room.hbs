@@ -57,6 +57,7 @@
 
                     success: function(response) {
                         sendDataToOthers('changeDocument,' + response)
+                        window.history.replaceState(null, null, "?docURL=" + "\"" + response.url + "\"" );
                         pdfjsLib.getDocument(response).then((pdf) => {
                             myState.pdf = pdf;
 

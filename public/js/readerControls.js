@@ -28,6 +28,7 @@ function startDoc() {
         .then(res => res.json())
         .then(res => {
             console.log('startdoc ricevuto ' + res.url)
+            window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
             pdfjsLib.getDocument(res.url).then((pdf) => {
                 myState.pdf = pdf;
 
@@ -55,7 +56,7 @@ function startDoc() {
             .catch(err => console.log(err))
             .then(res => res.json())
             .then(res => {
-
+                window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
                 pdfjsLib.getDocument(res.url).then((pdf) => {
                     myState.pdf = pdf;
 
