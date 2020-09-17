@@ -187,7 +187,7 @@ io.on('connection', (socket) => {
 
   socket.on('signalchannel', (room, data)=>{
     console.log('received socket change url request in room ' + room + ' url doc ' + data)
-    socket.to(room).emit('datachannel', 'changeDocument,' + data)
+    io.to(room).emit('datachannel', 'changeDocument,' + data)
   })
 
   /*socket.on('disconnect', () => {
