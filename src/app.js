@@ -10,6 +10,7 @@ const https = require('https')
 const app = express()
 const socketio = require('socket.io')
 const multer = require('multer')
+const rooms = require('../src/rooms.js')
 
 const httpsArgs = process.argv.slice(2)
 console.log('httpsArgs: ', httpsArgs)
@@ -115,6 +116,7 @@ app.get('*', (req, res) => {
 })
 
 let httpsServer;
+let httpServer
 let io;
 
 try {
@@ -130,7 +132,7 @@ try {
   }
   else {
     console.log('Something went wrong with SSL certificates, starting http server')
-    const httpServer = http.createServer(app);
+    httpServer = http.createServer(app);
     io = socketio(httpServer)
     httpServer.listen(PORT)
   }
@@ -144,23 +146,26 @@ try {
 
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 //Real-time section
-
-
 
 io.on('connection', (socket) => {
   console.log("new websocket connection")
 
   socket.on('join', (room)=> {
     socket.join(room)
+
+    rooms.addRoom(room, '')
+    console.log('rooms are ' + rooms.rooms.length)
+    //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
+
     socket.to(room).broadcast.emit('datachannel', 'A new user joined the room')
   })
 
   socket.on('datachannel', (room, data) =>{
     socket.to(room).broadcast.emit('datachannel', data)
-
-
 
     //data = JSON.parse(data.toString())
     //console.log(data)
