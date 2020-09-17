@@ -96,8 +96,8 @@ app.get('/get-document', (req, res) => {
       //res.json({url})
 
 
-      rooms.changeRoomDocURL(roomNameReq, url)
-      io.to(roomNameReq).emit('datachannel', 'changeDocument,' + url)
+      //rooms.changeRoomDocURL(roomNameReq, url)
+      //io.to(roomNameReq).emit('datachannel', 'changeDocument,' + url)
 
       /*setTimeout(function() {
         try {
