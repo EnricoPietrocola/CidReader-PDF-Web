@@ -28,7 +28,7 @@ console.log(key + " " + cert)
 
 app.use(cors())
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public')) //this might be removed, check later
 
 const PORT = process.env.PORT || 80
 
@@ -77,7 +77,7 @@ app.get('/get-document', (req, res) => {
   const documentUrl = req.query.url
   const roomNameReq = req.query.roomname
 
-  console.log('Fetch request from ' + roomNameReq)
+  console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
 
   const fileName = Date.now() + '.pdf'
 
@@ -166,7 +166,7 @@ io.on('connection', (socket) => {
     console.log('Current rooms are ' + rooms.rooms.length)
 
     if(rooms.getRoomURL(room) !== ''){
-      io.to(socket.id).emit('datachannel','changeDocument' + rooms.getRoomURL(room))
+      io.to(socket.id).emit('datachannel','changeDocument,' + rooms.getRoomURL(room))
       console.log('Sending room url to client ' + rooms.getRoomURL(room))
     }
     else{

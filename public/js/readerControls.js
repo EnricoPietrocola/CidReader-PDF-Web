@@ -33,7 +33,7 @@ function startDoc() {
 
             window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
 
-            pdfjsLib.getDocument(res.url).then((pdf) => {
+            /*pdfjsLib.getDocument(res.url).then((pdf) => {
                 myState.pdf = pdf;
 
                 myState.currentPage = 1;
@@ -46,7 +46,7 @@ function startDoc() {
                 render()
             }).catch((e) => {
                 console.log('Error', e)
-            })
+            })*/
 
         });
     }
