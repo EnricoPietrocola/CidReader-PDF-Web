@@ -75,6 +75,9 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
 
 app.get('/get-document', (req, res) => {
   const documentUrl = req.query.url
+  const roomNameReq = req.query.roomname
+
+  console.log('Fetch request from ' + roomNameReq)
 
   const fileName = Date.now() + '.pdf'
 
@@ -90,7 +93,12 @@ app.get('/get-document', (req, res) => {
       //res.json({fileName})
       console.log('Sending ' + fileName)
       const url = domain + '/uploads/' + fileName
-      res.json({url})
+      //res.json({url})
+
+
+      rooms.changeRoomDocURL(roomNameReq, url)
+      io.to(roomNameReq).emit('datachannel', 'changeDocument,' + url)
+
       /*setTimeout(function() {
         try {
           fs.unlinkSync(filePath)
@@ -105,7 +113,7 @@ app.get('/get-document', (req, res) => {
 })
 
 app.get('/uploads', (req, res) => {
-  res.send('Denied - Please create a room with a different name')
+  res.send('Access Denied - Please create a room with a different name')
 })
 
 app.get('*', (req, res) => {
@@ -125,28 +133,25 @@ try {
     httpsServer = https.createServer({
       key: fs.readFileSync(key, 'utf8'),
       cert: fs.readFileSync(cert, 'utf8'),
-      ca: fs.readFileSync(ca, 'utf8')
+      //ca: fs.readFileSync(ca, 'utf8')
     }, app).listen(443)
     io = socketio(httpsServer)
     console.log('Https server running')
   }
   else {
-    console.log('Something went wrong with SSL certificates, starting http server')
-    httpServer = http.createServer(app);
-    io = socketio(httpServer)
-    httpServer.listen(PORT)
+
   }
 } catch(err) {
-  console.error(err)
+  console.log('Something went wrong with SSL certificates, starting http server')
+  httpServer = http.createServer(app);
+  io = socketio(httpServer)
+  httpServer.listen(PORT)
+  //console.error(err)
 }
 
 /*app.listen(PORT, () => {
   console.log("Server starting on port : " + PORT)
 })*/
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //Real-time section
@@ -158,7 +163,15 @@ io.on('connection', (socket) => {
     socket.join(room)
 
     rooms.addRoom(room, '')
-    console.log('rooms are ' + rooms.rooms.length)
+    console.log('Current rooms are ' + rooms.rooms.length)
+
+    if(rooms.getRoomURL(room) !== ''){
+      io.to(socket.id).emit('datachannel','changeDocument' + rooms.getRoomURL(room))
+      console.log('Sending room url to client ' + rooms.getRoomURL(room))
+    }
+    else{
+      console.log('Room Url not set')
+    }
     //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
 
     socket.to(room).broadcast.emit('datachannel', 'A new user joined the room')

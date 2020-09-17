@@ -4,6 +4,8 @@ var myState = {
     zoom: 1
 }
 
+const roomName = window.location.pathname
+
 document.getElementById('zoom_in')
     .addEventListener('click', (e) => {
         if(myState.pdf == null) return;
@@ -23,12 +25,14 @@ function startDoc() {
     var documentLink = document.getElementById("documentLink").value;
     console.log("StartDoc " + documentLink)
 
-    fetch('/get-document?url=' + documentLink)
+    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(res => {
             console.log('startdoc ricevuto ' + res.url)
+
             window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
+
             pdfjsLib.getDocument(res.url).then((pdf) => {
                 myState.pdf = pdf;
 
@@ -113,9 +117,9 @@ function render() {
 
 const socket = io()
 
-console.log('room name = ' + window.location.pathname)
+console.log('room name = ' + roomName)
 
-socket.emit('join', window.location.pathname)
+socket.emit('join', roomName)
 
 socket.on('datachannel', (data) =>  {
     //datachannel

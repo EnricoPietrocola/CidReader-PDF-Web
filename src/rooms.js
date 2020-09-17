@@ -20,15 +20,17 @@ function addRoom(name, docURL){
 
 function getRoomURL(name){
     if (rooms.some(e => e.name === name)) {
+        console.log('Room found, connecting client')
         return rooms.find(element => element.name === name).docURL
     }
     else{
-        console.log('Could not find a room with this name')
+        console.log('Could not find a room with this name, creating a new room...')
     }
 }
 
 function changeRoomDocURL(name, docURL) {
     if (rooms.some(e => e.name === name)) {
+        console.log('Room found, updating doc URL')
         rooms.find(element => element.name === name).docURL = docURL;
     }
     else{
