@@ -4,7 +4,7 @@ var myState = {
     zoom: 1
 }
 
-const roomName = window.location.pathname
+const roomName = window.location.pathname.substring(1)
 console.log('roomName is ' + roomName)
 
 document.getElementById('zoom_in')
@@ -26,7 +26,7 @@ function startDoc() {
     var documentLink = document.getElementById("documentLink").value;
     console.log("StartDoc " + documentLink)
 
-    fetch('/get-document?url=' + documentLink + '&roomname=' + 'test' /*roomName.toString()*/)
+    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(res => {
