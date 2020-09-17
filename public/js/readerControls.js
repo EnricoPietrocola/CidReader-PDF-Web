@@ -26,7 +26,7 @@ function startDoc() {
     var documentLink = document.getElementById("documentLink").value;
     console.log("StartDoc " + documentLink)
 
-    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
+    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName.toString())
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(res => {
