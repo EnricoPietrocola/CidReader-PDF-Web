@@ -56,9 +56,9 @@
                     },
 
                     success: function(response) {
-                        sendDataToOthers('changeDocument,' + response)
+                        sendDataToServer('changeDocument,' + response)
                         window.history.replaceState(null, null, "?docURL=" + "\"" + response.url + "\"" );
-                        pdfjsLib.getDocument(response).then((pdf) => {
+                        /*pdfjsLib.getDocument(response).then((pdf) => {
                             myState.pdf = pdf;
 
                             myState.currentPage = 1;
@@ -69,7 +69,7 @@
                             render()
                         }).catch((e) => {
                             console.log('Error', e)
-                        })
+                        })*/
                     }
                 });
 
