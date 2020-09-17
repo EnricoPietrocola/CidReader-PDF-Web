@@ -5,6 +5,7 @@ var myState = {
 }
 
 const roomName = window.location.pathname
+console.log('roomName is ' + roomName)
 
 document.getElementById('zoom_in')
     .addEventListener('click', (e) => {
