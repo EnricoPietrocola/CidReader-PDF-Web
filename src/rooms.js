@@ -24,7 +24,7 @@ function getRoomURL(name){
         return rooms.find(element => element.name === name).docURL
     }
     else{
-        console.log('Could not find a room with this name, creating a new room...')
+        console.log('Could not find a room with the name ' + name + ' , creating a new room...')
     }
 }
 
@@ -34,7 +34,7 @@ function changeRoomDocURL(name, docURL) {
         rooms.find(element => element.name === name).docURL = docURL;
     }
     else{
-        console.log('Could not find a room with this name')
+        console.log('Could not find a room with name ' + name)
     }
 }
 
