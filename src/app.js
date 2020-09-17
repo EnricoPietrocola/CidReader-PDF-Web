@@ -93,7 +93,8 @@ app.get('/get-document', (req, res) => {
       //res.json({fileName})
       console.log('Sending ' + fileName)
       const url = domain + '/uploads/' + fileName
-      //res.json({url})
+
+      res.json({url})
 
 
       //rooms.changeRoomDocURL(roomNameReq, url)
