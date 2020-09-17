@@ -23,18 +23,21 @@ document.getElementById('zoom_out')
 
 function startDoc() {
 
-    var documentLink = document.getElementById("documentLink").value;
+    const documentLink = document.getElementById("documentLink").value;
     console.log("StartDoc " + documentLink)
+    sendDataToServer(documentLink)
+}
+
+//this duplicated code should be refactored
+function visualizeDoc(documentLink){
+    console.log("VisualizeDoc " + documentLink)
 
     fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(res => {
-            console.log('startdoc ricevuto ' + res.url)
-
             window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-
-            /*pdfjsLib.getDocument(res.url).then((pdf) => {
+            pdfjsLib.getDocument(res.url).then((pdf) => {
                 myState.pdf = pdf;
 
                 myState.currentPage = 1;
@@ -43,42 +46,13 @@ function startDoc() {
                 document.getElementById("current_page").value = myState.currentPage;
 
                 // more code here
-                //console.log("render from start doc - load")
+                //console.log("render from visualize doc - load")
                 render()
             }).catch((e) => {
-                console.log('Error', e)
-            })*/
-
+                console.log('Error', e);
+            })
         });
-    }
-
-
-    //this duplicated code should be refactored
-    function visualizeDoc(documentLink){
-        console.log("VisualizeDoc " + documentLink)
-
-        fetch('/get-document?url=' + documentLink)
-            .catch(err => console.log(err))
-            .then(res => res.json())
-            .then(res => {
-                window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-                pdfjsLib.getDocument(res.url).then((pdf) => {
-                    myState.pdf = pdf;
-
-                    myState.currentPage = 1;
-                    myState.zoom = 1;
-
-                    document.getElementById("current_page").value = myState.currentPage;
-
-                    // more code here
-                    //console.log("render from visualize doc - load")
-                    render()
-                }).catch((e) => {
-                    console.log('Error', e);
-                })
-
-            });
-    }
+}
 
 function startUploadedDoc() {
     var documentLink = document.getElementById("fileUpload").files[0].name;
@@ -202,7 +176,11 @@ function cid_go_next(){
 }
 
 function sendDataToOthers(dataString){
-    socket.emit('datachannel', window.location.pathname, dataString)
+    socket.emit('datachannel', roomName, dataString)
+}
+
+function sendDataToServer(dataString){
+    socket.emit('signalchannel', roomName, dataString)
 }
 
 document.getElementById('go_previous')
