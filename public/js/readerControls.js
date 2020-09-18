@@ -38,7 +38,7 @@ function visualizeDoc(documentLink){
         .then(res => {
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
 
-            pdfjsLib.getDocument(res).then((pdf) => {
+            /*pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
                 myState.currentPage = 1;
                 myState.zoom = 1;
@@ -46,7 +46,7 @@ function visualizeDoc(documentLink){
                 render()
             }).catch((e) => {
                 console.log('Error', e);
-            })
+            })*/
         });
 }
 
