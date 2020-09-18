@@ -95,8 +95,9 @@ app.get('/get-document', (req, res) => {
       const url = domain + '/uploads/' + fileName
 
       //res.json({url})
-      
+
       console.log('pdf path ' + filePath)
+      res.sendFile(filePath)
 
       //res.sendFile(publicDirectoryPath + fileName)
       //rooms.changeRoomDocURL(roomNameReq, url)
