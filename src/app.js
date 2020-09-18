@@ -85,8 +85,6 @@ app.get('/get-document', (req, res) => {
   const filePath = uploadsDirectoryPath + '/' + fileName
   console.log(filePath)
 
-  //need some caching in order to avoid downloading always the same file
-
   if(fs.existsSync(filePath)) {
     console.log("The file exists.");
     res.sendFile(filePath)
