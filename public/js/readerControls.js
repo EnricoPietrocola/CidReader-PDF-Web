@@ -36,10 +36,14 @@ function visualizeDoc(documentLink){
         .catch(err => console.log(err))
         //.then(res => res.json())
         .then(res => {
-            //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            console.log('fetch receiving ' + JSON.stringify(res))
 
-            pdfjsLib.getDocument(res).then((pdf) => {
+            const file = new Blob(res.arrayBuffer(), {type: 'application/pdf'})
+            const fileURL = URL.createObjectURL(file)
+
+            //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
+            console.log('fetch receiving ' + fileURL)
+
+            pdfjsLib.getDocument(fileURL).then((pdf) => {
                 myState.pdf = pdf;
                 myState.currentPage = 1;
                 myState.zoom = 1;
