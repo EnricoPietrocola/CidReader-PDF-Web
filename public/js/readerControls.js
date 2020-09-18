@@ -36,17 +36,13 @@ function visualizeDoc(documentLink){
         .catch(err => console.log(err))
         //.then(res => res.json())
         .then(res => {
-            window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
+            //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
+
             pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
-
                 myState.currentPage = 1;
                 myState.zoom = 1;
-
                 document.getElementById("current_page").value = myState.currentPage;
-
-                // more code here
-                //console.log("render from visualize doc - load")
                 render()
             }).catch((e) => {
                 console.log('Error', e);
