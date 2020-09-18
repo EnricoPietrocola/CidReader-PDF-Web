@@ -37,7 +37,7 @@ function visualizeDoc(documentLink){
         //.then(res => res.json())
         .then(res => {
 
-            const fileURL = URL.createObjectURL(res.blob())
+            const fileURL = URL.createObjectURL(res.arrayBuffer())
 
             console.log(fileURL)
 
