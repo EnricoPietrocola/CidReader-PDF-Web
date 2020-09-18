@@ -87,24 +87,21 @@ app.get('/get-document', (req, res) => {
   const file = fs.createWriteStream(filePath)
 
   //need some caching in order to avoid downloading always the same file
-  try {
-    if(!fs.existsSync(filePath)) {
-      console.log('New file request, adding to library')
-      https.get(documentUrl, (response) => {
-        response.pipe(file)
 
-        file.on('finish', () => {
-          file.close()
-          console.log('pdf path ' + filePath)
-          res.sendFile(filePath)
-        })
+  if(!fs.existsSync(filePath)) {
+    console.log('New file request, adding to library')
+    https.get(documentUrl, (response) => {
+      response.pipe(file)
+
+      file.on('finish', () => {
+        file.close()
+        console.log('pdf path ' + filePath)
+        res.sendFile(filePath)
       })
-    } else {
-      console.log("The file exists.");
-      res.sendFile(filePath)
-    }
-  } catch (err) {
-    console.error(err);
+    })
+  } else {
+    console.log("The file exists.");
+    res.sendFile(filePath)
   }
 })
 
