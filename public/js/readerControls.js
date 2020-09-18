@@ -37,7 +37,7 @@ function visualizeDoc(documentLink){
         //.then(res => res.json())
         .then(res => {
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            console.log('fetch receiving ' + new Uint8Array(res))
+            console.log('fetch receiving ' + new Uint8Array(res.result))
 
             /*pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
