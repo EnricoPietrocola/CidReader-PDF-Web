@@ -36,12 +36,12 @@ function visualizeDoc(documentLink){
         .catch(err => console.log(err))
         //.then(res => res.json())
         .then(res => {
-
-            const file = new Blob(res.arrayBuffer(), {type: 'application/pdf'})
-            const fileURL = URL.createObjectURL(file)
-
+            
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            console.log('fetch receiving ' + fileURL)
+            console.log('fetch receiving ' + res.arrayBuffer())
+
+            const file = new Blob([res.arrayBuffer()], {type: 'application/pdf'})
+            const fileURL = URL.createObjectURL(file)
 
             pdfjsLib.getDocument(fileURL).then((pdf) => {
                 myState.pdf = pdf;
