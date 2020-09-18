@@ -86,6 +86,8 @@ app.get('/get-document', (req, res) => {
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
 
+  //need some caching in order to avoid downloading always the same file
+
   https.get(documentUrl, (response) => {
     response.pipe(file)
 
