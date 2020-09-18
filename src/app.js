@@ -82,7 +82,7 @@ app.get('/get-document', (req, res) => {
 
   const fileName = documentUrl.substring(documentUrl.lastIndexOf('/')+1);
 
-  const filePath = uploadsDirectoryPath + fileName
+  const filePath = uploadsDirectoryPath + '/' + fileName
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
 
