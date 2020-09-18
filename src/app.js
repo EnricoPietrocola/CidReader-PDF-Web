@@ -80,7 +80,7 @@ app.get('/get-document', (req, res) => {
 
   console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
 
-  const fileName = Date.now() + '.pdf'
+  const fileName = documentUrl.substring(documentUrl.lastIndexOf('/')+1);
 
   const filePath = uploadsDirectoryPath + fileName
   console.log(filePath)
