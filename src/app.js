@@ -100,13 +100,14 @@ app.get('/get-document', (req, res) => {
         file.on('finish', () => {
           file.close()
           console.log('pdf path ' + filePath)
-          res.sendFile(filePath)
+          res.sendFile(JSON.stringify(filePath))
         })
       })
     /*}
   } catch (err) {
     console.error(err);
   }
+
 */
 
 })
