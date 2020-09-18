@@ -39,7 +39,7 @@ function visualizeDoc(documentLink){
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
             console.log('fetch receiving ' + new Uint8Array(res.result))
 
-            /*pdfjsLib.getDocument(res).then((pdf) => {
+            pdfjsLib.getDocument(new Uint8Array(res)).then((pdf) => {
                 myState.pdf = pdf;
                 myState.currentPage = 1;
                 myState.zoom = 1;
@@ -47,7 +47,7 @@ function visualizeDoc(documentLink){
                 render()
             }).catch((e) => {
                 console.log('Error', e);
-            })*/
+            })
         });
 }
 
