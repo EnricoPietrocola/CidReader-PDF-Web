@@ -38,7 +38,7 @@ function visualizeDoc(documentLink){
         .then(res => {
 
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            console.log('fetch receiving ' + res.arrayBuffer())
+            //console.log('fetch receiving ' + res.arrayBuffer())
 
 
             const fileURL = URL.createObjectURL(res.blob())
