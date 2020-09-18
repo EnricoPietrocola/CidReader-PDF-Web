@@ -32,7 +32,7 @@ function startDoc() {
 function visualizeDoc(documentLink){
     console.log("VisualizeDoc " + documentLink)
 
-    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
+    fetch('/get-documentttt?url=' + documentLink + '&roomname=' + roomName)
         .catch(err => console.log(err))
         //.then(res => res.json())
         .then(res => {

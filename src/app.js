@@ -74,7 +74,7 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   res.send(documentUrl)
 })
 
-app.get('/get-document', (req, res) => {
+app.get('/get-documentttt', (req, res) => {
   const documentUrl = req.query.url
   const roomNameReq = req.query.roomname
 
