@@ -95,9 +95,7 @@ app.get('/get-document', (req, res) => {
       const url = domain + '/uploads/' + fileName
 
       //res.json({url})
-
-      const filePath = publicDirectoryPath + fileName
-
+      
       console.log('pdf path ' + filePath)
 
       //res.sendFile(publicDirectoryPath + fileName)
