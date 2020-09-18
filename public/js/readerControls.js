@@ -275,7 +275,6 @@ document.getElementById('changeUploadedDocument')
         //let documentLink = 'https://127.0.0.1/fdf_data_exchange.pdf'
         //console.log('SEND: ' + 'changing document')
         //let dataString = JSON.stringify('changeDocument,' + documentLink)
-
     });
 
 

@@ -28,7 +28,7 @@ console.log(key + " " + cert)
 
 app.use(cors())
 
-app.use(express.static(__dirname + '/public')) //this might be removed, check later
+//app.use(express.static(__dirname + '/public')) //this might be removed, check later
 
 const PORT = process.env.PORT || 80
 
@@ -36,6 +36,7 @@ const PORT = process.env.PORT || 80
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
+const uploadsDirectoryPath = path.join(__dirname, '../uploads')
 
 // Setup handlebars engine and views location
 app.set('view engine', 'hbs')
@@ -43,7 +44,7 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
 // Setup static directory to serve
-//app.use(express.static(publicDirectoryPath))
+app.use(express.static(publicDirectoryPath))
 
 app.get('', (req, res) => {
   res.render('index', {
@@ -54,7 +55,7 @@ app.get('', (req, res) => {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../public/uploads/')
+    cb(null, '../uploads/')
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -81,7 +82,7 @@ app.get('/get-document', (req, res) => {
 
   const fileName = Date.now() + '.pdf'
 
-  const filePath = publicDirectoryPath + '/uploads/' + fileName
+  const filePath = uploadsDirectoryPath + '/uploads/' + fileName
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
 
