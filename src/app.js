@@ -90,35 +90,15 @@ app.get('/get-document', (req, res) => {
 
     file.on('finish', () => {
       file.close()
-      //res.json({fileName})
-      console.log('Sending ' + fileName)
-      const url = domain + '/uploads/' + fileName
-
-      //res.json({url})
-
       console.log('pdf path ' + filePath)
       res.sendFile(filePath)
-
-      //res.sendFile(publicDirectoryPath + fileName)
-      //rooms.changeRoomDocURL(roomNameReq, url)
-      //io.to(roomNameReq).emit('datachannel', 'changeDocument,' + url)
-
-      /*setTimeout(function() {
-        try {
-          fs.unlinkSync(filePath)
-          //file removed
-        } catch (err) {
-          console.error(err)
-        }
-      }, 60000);
-    */
     })
   })
 })
 
-app.get('/uploads', (req, res) => {
-  res.send('Access Denied - Please create a room with a different name')
-})
+//app.get('/uploads', (req, res) => {
+  //res.send('Access Denied - Please create a room with a different name')
+//})
 
 app.get('*', (req, res) => {
   res.render('room', {
@@ -190,7 +170,7 @@ io.on('connection', (socket) => {
 
   socket.on('signalchannel', (room, data)=>{
     console.log('received socket change url request in room ' + room + ' url doc ' + data)
-    io.to(room).emit('datachannel', 'changeDocument,' + data)
+    io.to(room).emit('signalchannel', 'changeDocument,' + data)
   })
 
   /*socket.on('disconnect', () => {

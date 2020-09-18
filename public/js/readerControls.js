@@ -96,7 +96,7 @@ console.log('room name = ' + roomName)
 
 socket.emit('join', roomName)
 
-socket.on('datachannel', (data) =>  {
+socket.on('signalchannel', (data) =>  {
     //datachannel
     /*if (!users[id]) {
         users[id] = new user()
@@ -122,6 +122,31 @@ socket.on('datachannel', (data) =>  {
                 console.log("RECV: Visualizing new document " + myState.pdf);
                 break;
 
+            default:
+                console.log('RECV msg' + data)
+        }
+    }
+})
+
+socket.on('datachannel', (data) =>  {
+    //datachannel
+    /*if (!users[id]) {
+        users[id] = new user()
+    }*/
+    if(data != undefined && data != null) {
+
+        if(isJson(data)) {
+            data = JSON.parse(data.toString())
+        }
+        else{
+            console.log('sendData received non JSON data: ' + data)
+        }
+
+        console.log(data)
+
+        const cmd = data.split(",");
+
+        switch (cmd[0]) {
             case "goForward":
                 myState.currentPage = parseInt(cmd[1]);
                 document.getElementById("current_page").value = myState.currentPage;
@@ -141,6 +166,8 @@ socket.on('datachannel', (data) =>  {
         }
     }
 })
+
+
 
 function cid_go_previous (){
     if(myState.pdf == null
