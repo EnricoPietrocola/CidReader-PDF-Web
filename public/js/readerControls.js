@@ -37,7 +37,7 @@ function visualizeDoc(documentLink){
         .then(res => res.json())
         .then(res => {
             window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            pdfjsLib.getDocument(res).then((pdf) => {
+            pdfjsLib.getDocument(new Uint8Array(res)).then((pdf) => {
                 myState.pdf = pdf;
 
                 myState.currentPage = 1;
