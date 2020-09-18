@@ -94,17 +94,19 @@ app.get('/get-document', (req, res) => {
     } else {
       console.log('New file request, adding to library')
 
-      https.get(documentUrl, (response) => {
-        response.pipe(file)
 
-        file.on('finish', () => {
-          file.close()
-          console.log('pdf path ' + filePath)
-          res.sendFile(filePath)
-        })
-      })
     }
   } catch (err) {
+    https.get(documentUrl, (response) => {
+      response.pipe(file)
+
+      file.on('finish', () => {
+        file.close()
+        console.log('pdf path ' + filePath)
+        res.sendFile(filePath)
+      })
+    })
+
     console.error(err);
   }
 
