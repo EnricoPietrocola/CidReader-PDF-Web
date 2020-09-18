@@ -34,12 +34,12 @@ function visualizeDoc(documentLink){
 
     fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
         .catch(err => console.log(err))
-        //.then(res => res.json())
+        .then(res => res.json())
         .then(res => {
             //window.history.replaceState(null, null, "?docURL=" + "\"" + res.url + "\"" );
-            console.log('fetch receiving ' + new Uint8Array(res))
+            console.log('fetch receiving ' + res)
 
-            pdfjsLib.getDocument({data: res}).then((pdf) => {
+            pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
                 myState.currentPage = 1;
                 myState.zoom = 1;
