@@ -82,7 +82,7 @@ app.get('/get-document', (req, res) => {
 
   const fileName = Date.now() + '.pdf'
 
-  const filePath = uploadsDirectoryPath + '/uploads/' + fileName
+  const filePath = uploadsDirectoryPath + fileName
   console.log(filePath)
   const file = fs.createWriteStream(filePath)
 
