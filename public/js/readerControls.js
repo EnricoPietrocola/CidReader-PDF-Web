@@ -36,8 +36,8 @@ function visualizeDoc(documentLink){
         .catch(err => console.log(err))
         //.then(res => res.json())
         .then(res => {
-            
-            pdfjsLib.getDocument(res.arrayBuffer()).then((pdf) => {
+
+            pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
                 myState.currentPage = 1;
                 myState.zoom = 1;
