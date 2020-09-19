@@ -71,7 +71,6 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
 
   rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
 
-
   res.send(documentUrl)
 })
 
@@ -154,22 +153,23 @@ try {
 io.on('connection', (socket) => {
   console.log("new websocket connection")
 
-  socket.on('join', (room)=> {
-    socket.join(room)
+  socket.on('join', (roomName)=> {
+    socket.join(roomName)
 
-    rooms.addRoom(room, '')
+    const room = rooms.addRoom(roomName, '')
+
     console.log('Current rooms are ' + rooms.rooms.length)
 
-    if(rooms.getRoomURL(room) !== ''){
-      io.to(socket.id).emit('signalchannel','changeDocument,' + rooms.getRoomURL(room))
-      console.log('Sending room url to client ' + rooms.getRoomURL(room))
+    if(rooms.getRoomURL(roomName) !== ''){
+      io.to(socket.id).emit('signalchannel','changeDocument,' + rooms.getRoomURL(roomName))
+      console.log('Sending room url to client ' + rooms.getRoomURL(roomName))
     }
     else{
       console.log('Room Url not set')
     }
     //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
 
-    socket.to(room).broadcast.emit('datachannel', 'A new user joined the room')
+    socket.to(roomName).broadcast.emit('datachannel', 'A new user joined the room')
   })
 
   socket.on('datachannel', (room, data) =>{
@@ -184,9 +184,16 @@ io.on('connection', (socket) => {
     io.to(room).emit('signalchannel', 'changeDocument,' + data)
   })
 
-  /*socket.on('disconnect', () => {
+  socket.on('disconnecting', () => {
+    const ioRooms = Object.keys(socket.rooms);
+    const room = rooms.findRoomByName(ioRooms[1])
+    rooms.decrementRoomConnection(room)
+  });
+
+
+  socket.on('disconnect', () => {
     io.emit('message','A user has left')
-  })*/
+  })
 })
 
 function isJson(str) {
