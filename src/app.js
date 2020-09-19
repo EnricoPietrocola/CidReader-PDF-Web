@@ -66,7 +66,11 @@ const upload = multer({ storage: storage })
 
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   const documentUrl = domain + '/uploads/' + req.file.originalname
+  const roomNameReq = req.query.roomname
   console.log('Post ' + documentUrl)
+
+  rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
+
 
   res.send(documentUrl)
 })
@@ -85,6 +89,7 @@ app.get('/get-documentttt', (req, res) => {
   if(fs.existsSync(filePath)) {
     console.log("The file exists.");
     res.sendFile(filePath)
+    rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
   } else {
     console.log('New file request, adding to library')
     const file = fs.createWriteStream(filePath)
@@ -93,6 +98,7 @@ app.get('/get-documentttt', (req, res) => {
       file.on('finish', () => {
         file.close()
         console.log('pdf path ' + filePath)
+        rooms.changeRoomDocURL(filePath)
         res.sendFile(filePath)
       })
     })
@@ -155,7 +161,7 @@ io.on('connection', (socket) => {
     console.log('Current rooms are ' + rooms.rooms.length)
 
     if(rooms.getRoomURL(room) !== ''){
-      io.to(socket.id).emit('datachannel','changeDocument,' + rooms.getRoomURL(room))
+      io.to(socket.id).emit('signalchannel','changeDocument,' + rooms.getRoomURL(room))
       console.log('Sending room url to client ' + rooms.getRoomURL(room))
     }
     else{
