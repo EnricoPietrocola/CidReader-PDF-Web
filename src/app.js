@@ -65,11 +65,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
-  //req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
   const documentUrl = domain + '/uploads/' + req.file.originalname
   console.log('Post ' + documentUrl)
-  //et file = fs.createReadStream(publicDirectoryPath + '/uploads/' + req.file.originalname)
 
   res.send(documentUrl)
 })
@@ -132,14 +129,13 @@ try {
     console.log('Https server running')
   }
   else {
-
+    console.log('Something went wrong with SSL certificates, starting http server')
+    httpServer = http.createServer(app);
+    io = socketio(httpServer)
+    httpServer.listen(PORT)
   }
 } catch(err) {
-  console.log('Something went wrong with SSL certificates, starting http server')
-  httpServer = http.createServer(app);
-  io = socketio(httpServer)
-  httpServer.listen(PORT)
-  //console.error(err)
+    console.error(err)
 }
 
 /*app.listen(PORT, () => {
