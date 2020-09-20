@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 //Rooms data structure - SERVER
 
+fs = require('fs')
+
 function Room(name, docURL){
     this.name = name;
     this.docURL = docURL;
@@ -43,7 +45,16 @@ function decrementRoomConnection(room){
         room.connections = room.connections - 1
         console.log('Room ' + room.name + ' has ' + room.connections + ' connected clients')
         if(room.connections <= 0) {
-            console.log('Room is empty. Deleting attached document')
+
+            const index = rooms.indexOf(room)
+            rooms.splice(index, 1)
+            if(room.docURL !== '' && room.docURL !== undefined && room.docURL !== null) {
+                console.log('Room is empty. Deleting attached document ' + room.docURL)
+                fs.unlinkSync(room.docURL)
+            }
+            else{
+                console.log('No file attached, nothing to delete')
+            }
         }
     }
     else{
