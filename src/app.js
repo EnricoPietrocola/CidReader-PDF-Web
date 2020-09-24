@@ -65,9 +65,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
+  //get new uploaded file, move it in proper room folder path
+
   const documentUrl = domain + '/uploads/' + req.file.originalname
   const roomNameReq = req.query.roomname
+  console.log('POST ROOM IS ' + roomNameReq)
   console.log('Post ' + documentUrl)
+
+  fs.writeFileSync( uploadsDirectoryPath + '/' + roomNameReq + '/' + req.file.originalname, req.file, function (err) {
+    if (err) throw err;
+    console.log('File is created successfully.');
+  });
+
 
   rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
 
