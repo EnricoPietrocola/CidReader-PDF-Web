@@ -156,7 +156,14 @@ io.on('connection', (socket) => {
   socket.on('join', (roomName)=> {
     socket.join(roomName)
 
+    const dir = uploadsDirectoryPath + '/' + roomName
+
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+
     const room = rooms.addRoom(roomName, '')
+    rooms.setRoomPath(roomName, dir)
 
     console.log('Current rooms are ' + rooms.rooms.length)
 

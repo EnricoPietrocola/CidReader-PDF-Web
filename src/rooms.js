@@ -6,6 +6,7 @@ fs = require('fs')
 function Room(name, docURL){
     this.name = name;
     this.docURL = docURL;
+    this.roomPath = '';
     this.connections = 0;
 }
 
@@ -83,6 +84,15 @@ function changeRoomDocURL(name, docURL) {
     }
 }
 
+function setRoomPath(name, path){
+    if (rooms.some(e => e.name === name)) {
+        console.log('Room found, updating room path')
+        rooms.find(element => element.name === name).roomPath = path;
+    }
+    else{
+        console.log('Could not find a room with name ' + name)
+    }
+}
 
 
 module.exports.addRoom = addRoom
@@ -90,4 +100,5 @@ module.exports.getRoomURL = getRoomURL
 module.exports.changeRoomDocURL = changeRoomDocURL
 module.exports.decrementRoomConnection = decrementRoomConnection
 module.exports.findRoomByName = findRoomByName
+module.exports.setRoomPath = setRoomPath
 module.exports.rooms = rooms;
