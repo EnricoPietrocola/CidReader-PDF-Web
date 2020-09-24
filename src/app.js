@@ -66,16 +66,18 @@ const upload = multer({ storage: storage })
 
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   //get new uploaded file, move it in proper room folder path
-
+  const originalName = req.file.originalname
   const documentUrl = domain + '/uploads/' + req.file.originalname
   const roomNameReq = req.query.roomname
   console.log('POST ROOM IS ' + roomNameReq)
   console.log('Post ' + documentUrl)
 
-  fs.writeFileSync( uploadsDirectoryPath + '/' + roomNameReq + '/' + req.file.originalname, req.file, function (err) {
-    if (err) throw err;
-    console.log('File is created successfully.');
+  fs.writeFile( uploadsDirectoryPath + '/' + roomNameReq + '/' + req.file.originalname, req.file, () =>{
+    console.log('moved doc to room folder, deleting doc from temp folder')
+    fs.unlinkSync(uploadsDirectoryPath + '/' + originalName)
   });
+
+
 
 
   rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
@@ -91,7 +93,7 @@ app.get('/get-documentttt', (req, res) => {
 
   const fileName = documentUrl.substring(documentUrl.lastIndexOf('/')+1);
 
-  const filePath = uploadsDirectoryPath + '/' + fileName
+  const filePath = uploadsDirectoryPath + '/' + roomNameReq + '/' + fileName
   console.log(filePath)
 
   if(fs.existsSync(filePath)) {

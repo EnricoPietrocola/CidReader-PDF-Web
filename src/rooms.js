@@ -48,10 +48,22 @@ function decrementRoomConnection(room){
         if(room.connections <= 0) {
 
             const index = rooms.indexOf(room)
+
             rooms.splice(index, 1)
-            if(room.docURL !== '' && room.docURL !== undefined && room.docURL !== null) {
-                console.log('Room is empty. Deleting attached document ' + room.docURL)
-                fs.unlinkSync(room.docURL)
+
+            if(room.roomPath !== '' && room.roomPath !== undefined && room.roomPath !== null) {
+
+                console.log('Room is empty. Deleting all files ' + room.roomPath)
+                //fs.unlinkSync(room.docURL)
+
+                // delete directory recursively
+                fs.rmdir(room.roomPath, { recursive: true }, (err) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    console.log(`${room.roomPath} is deleted!`);
+                });
             }
             else{
                 console.log('No file attached, nothing to delete')
