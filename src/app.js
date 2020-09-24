@@ -70,15 +70,13 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   const documentUrl = domain + '/uploads/' + req.file.originalname
   const roomNameReq = req.query.roomname
   console.log('POST ROOM IS ' + roomNameReq)
-  console.log('Post ' + documentUrl)
 
-  fs.writeFile( uploadsDirectoryPath + '/' + roomNameReq + '/' + req.file.originalname, req.file, () =>{
+  fs.copyFile(uploadsDirectoryPath + '/' + originalName , uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
+    if (err) throw err;
     console.log('moved doc to room folder, deleting doc from temp folder')
     fs.unlinkSync(uploadsDirectoryPath + '/' + originalName)
+
   });
-
-
-
 
   rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
 
@@ -94,7 +92,8 @@ app.get('/get-documentttt', (req, res) => {
   const fileName = documentUrl.substring(documentUrl.lastIndexOf('/')+1);
 
   const filePath = uploadsDirectoryPath + '/' + roomNameReq + '/' + fileName
-  console.log(filePath)
+  console.log('FETCH FILE PATH ' +  filePath)
+
 
   if(fs.existsSync(filePath)) {
     console.log("The file exists.");

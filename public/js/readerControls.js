@@ -119,7 +119,7 @@ socket.on('signalchannel', (data) =>  {
                 break;
 
             default:
-                console.log('RECV msg' + data)
+                console.log('RECV msg ' + data)
         }
     }
 })
@@ -158,7 +158,7 @@ socket.on('datachannel', (data) =>  {
                 break;
 
             default:
-                console.log('RECV msg' + data)
+                console.log('RECV msg ' + data)
         }
     }
 })
