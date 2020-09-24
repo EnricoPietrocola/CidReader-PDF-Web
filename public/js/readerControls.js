@@ -50,6 +50,7 @@ function visualizeDoc(documentLink){
 }
 
 function startUploadedDoc() {
+    document.getElementById('uploadForm').action = '/pdfupload' + '?roomname=' + roomName
     var documentLink = document.getElementById("fileUpload").files[0].name;
     //more about this function is actually exectuded in room.hbs
 }
