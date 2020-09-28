@@ -79,8 +79,21 @@ function render() {
             ctx.beginPath();
         }
     });
-
 }
+
+function displayWindowSize(){
+    // Get width and height of the window excluding scrollbars
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.clientHeight;
+
+    // Display result inside a div element
+    console.log("Width: " + w + ", " + "Height: " + h)
+    render()
+    //document.getElementById("result").innerHTML = "Width: " + w + ", " + "Height: " + h;
+}
+
+// Attaching the event listener function to window's resize event
+window.addEventListener("resize", displayWindowSize);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -282,3 +295,4 @@ function isJson(str) {
     }
     return true;
 }
+
