@@ -62,7 +62,21 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({
+  storage: storage,
+
+  fileFilter: function (req, file, cb) {
+
+    const filetypes = /pdf|PDF/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb("Error: File upload only supports the following filetypes - " + filetypes);
+  }
+})
 
 app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   //get new uploaded file, move it in proper room folder path
