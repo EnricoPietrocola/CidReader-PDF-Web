@@ -57,13 +57,18 @@ function decrementRoomConnection(room){
                 //fs.unlinkSync(room.docURL)
 
                 // delete directory recursively
-                fs.rmdir(room.roomPath, { recursive: true }, (err) => {
-                    if (err) {
-                        throw err;
-                    }
+                try{
+                 fs.rmdir(room.roomPath, { recursive: true }, (err) => {
+                     if (err) {
+                         throw err;
+                     }
 
                     console.log(`${room.roomPath} is deleted!`);
                 });
+                }
+                catch (e){
+                    console.log(e)
+                }
             }
             else{
                 console.log('No file attached, nothing to delete')
