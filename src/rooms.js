@@ -57,18 +57,13 @@ function decrementRoomConnection(room){
                 //fs.unlinkSync(room.docURL)
 
                 // delete directory recursively
-                try{
-                 fs.rmdir(room.roomPath, { recursive: true }, (err) => {
-                     /*if (err) {
-                         throw err;
-                     }*/
-
+                fs.rmdir(room.roomPath, { recursive: true }, function(err) {
+                    if (err) {
+                        throw err;
+                    }
                     console.log(`Deleted!`);
                 });
-                }
-                catch (e){
-                    console.log(e)
-                }
+
             }
             else{
                 console.log('No file attached, nothing to delete')
@@ -79,6 +74,7 @@ function decrementRoomConnection(room){
        console.log('Something went wrong with the connection tracking for this room ' + room.name)
     }
 }
+
 
 function getRoomURL(name){
     if (rooms.some(e => e.name === name)) {
