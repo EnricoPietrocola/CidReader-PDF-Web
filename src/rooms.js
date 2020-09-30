@@ -2,6 +2,7 @@
 //Rooms data structure - SERVER
 
 fs = require('fs')
+const rimraf = require('rimraf')
 
 function Room(name, docURL){
     this.name = name;
@@ -57,12 +58,13 @@ function decrementRoomConnection(room){
                 //fs.unlinkSync(room.docURL)
 
                 // delete directory recursively
-                fs.rmdir(room.roomPath, { recursive: true }, function(err) {
+                /*fs.rmdir(room.roomPath, { recursive: true }, function(err) {
                     if (err) {
                         throw err;
                     }
                     console.log(`Deleted!`);
-                });
+                });*/
+                rimraf(room.roomPath, function () { console.log("Done deleting"); });
 
             }
             else{
