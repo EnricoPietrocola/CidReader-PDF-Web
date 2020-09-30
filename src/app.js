@@ -98,8 +98,10 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
   res.send(documentUrl)
 })
 
+let totalConnections = 0
+
 app.get('/status', (req, res) => {
-  res.send('Cid is running, with ' + rooms.rooms.length + ' open rooms, with ' + rooms.getConnectionsCount() + ' total users.')
+  res.send('Cid is running, with ' + rooms.rooms.length + ' open rooms, with ' + rooms.getConnectionsCount() + ' total users. Total connections since last reboot are ' + totalConnections )
 })
 
 
@@ -185,7 +187,7 @@ io.on('connection', (socket) => {
 
   socket.on('join', (roomName)=> {
     socket.join(roomName)
-
+    totalConnections++
     const dir = uploadsDirectoryPath + '/' + roomName
 
     if (!fs.existsSync(dir)){
