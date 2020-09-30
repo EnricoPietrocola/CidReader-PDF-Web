@@ -53,6 +53,7 @@ app.get('', (req, res) => {
   })
 })
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, '../uploads/')
@@ -96,6 +97,11 @@ app.post('/pdfupload', upload.single('docUpload'), function (req, res, next) {
 
   res.send(documentUrl)
 })
+
+app.get('/status', (req, res) => {
+  res.send('Cid is running, with ' + rooms.rooms.length + ' open rooms, with ' + rooms.getConnectionsCount() + ' total users.')
+})
+
 
 app.get('/get-documentttt', (req, res) => {
   const documentUrl = req.query.url

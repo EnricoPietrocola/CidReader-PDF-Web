@@ -109,6 +109,14 @@ function setRoomPath(name, path){
     }
 }
 
+function getConnectionsCount(){
+    let count = 0;
+    rooms.forEach((item) => {
+        count += item.connections
+    })
+    return count
+}
+
 
 module.exports.addRoom = addRoom
 module.exports.getRoomURL = getRoomURL
@@ -116,4 +124,5 @@ module.exports.changeRoomDocURL = changeRoomDocURL
 module.exports.decrementRoomConnection = decrementRoomConnection
 module.exports.findRoomByName = findRoomByName
 module.exports.setRoomPath = setRoomPath
+module.exports.getConnectionsCount = getConnectionsCount
 module.exports.rooms = rooms;
