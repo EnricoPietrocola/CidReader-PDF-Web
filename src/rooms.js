@@ -59,11 +59,11 @@ function decrementRoomConnection(room){
                 // delete directory recursively
                 try{
                  fs.rmdir(room.roomPath, { recursive: true }, (err) => {
-                     if (err) {
+                     /*if (err) {
                          throw err;
-                     }
+                     }*/
 
-                    console.log(`${room.roomPath} is deleted!`);
+                    console.log(`Deleted!`);
                 });
                 }
                 catch (e){
