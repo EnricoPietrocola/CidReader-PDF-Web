@@ -104,6 +104,8 @@ app.get('/status', (req, res) => {
   res.send('Cid is running, with ' + rooms.rooms.length + ' open rooms, with ' + rooms.getConnectionsCount() + ' total users. Total connections since last reboot are ' + totalConnections )
 })
 
+app.get('/public/docs/', (req, res) => {
+})
 
 app.get('/get-documentttt', (req, res) => {
   const documentUrl = req.query.url
@@ -149,7 +151,6 @@ app.get('*', (req, res) => {
     name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
   })
 })
-
 let httpsServer;
 let httpServer
 let io;
@@ -208,6 +209,9 @@ io.on('connection', (socket) => {
     }
     //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
 
+    if (rooms.getRoomURL(roomName) === ''){
+      io.to(socket.id).emit('signalchannel','visualizePublic,' + domain +  '/docs/welcomeToCidReader.pdf')
+    }
     socket.to(roomName).broadcast.emit('datachannel', 'A new user joined the room')
   })
 

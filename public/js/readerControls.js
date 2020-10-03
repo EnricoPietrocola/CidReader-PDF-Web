@@ -1,5 +1,5 @@
 var myState = {
-    pdf: null,
+    pdf: '',
     currentPage: 1,
     zoom: 1
 }
@@ -47,6 +47,20 @@ function visualizeDoc(documentLink){
                 console.log('Error', e);
             })
         });
+}
+
+//this duplicated code should be refactored
+function visualizePublicDoc(documentLink){
+    console.log("VisualizeDoc " + documentLink)
+        pdfjsLib.getDocument(documentLink).then((pdf) => {
+            myState.pdf = pdf;
+            myState.currentPage = 1;
+            myState.zoom = 1;
+            document.getElementById("current_page").value = myState.currentPage;
+            render()
+        }).catch((e) => {
+            console.log('Error', e);
+        })
 }
 
 function startUploadedDoc() {
@@ -130,7 +144,12 @@ socket.on('signalchannel', (data) =>  {
                 visualizeDoc(myState.pdf)
                 console.log("RECV: Visualizing new document " + myState.pdf);
                 break;
-
+            case "visualizePublic":
+                myState.pdf = cmd[1];
+                //startDoc();
+                visualizePublicDoc(myState.pdf)
+                console.log("RECV: Visualizing new public document " + myState.pdf);
+                break;
             default:
                 console.log('RECV msg ' + data)
         }
@@ -279,13 +298,13 @@ document.getElementById('changeDocument')
         sendDataToOthers(dataString)
     });
 
-document.getElementById('changeUploadedDocument')
+/*document.getElementById('changeUploadedDocument')
     .addEventListener('click', (e) => {
         //let documentLink = 'https://127.0.0.1/fdf_data_exchange.pdf'
         //console.log('SEND: ' + 'changing document')
         //let dataString = JSON.stringify('changeDocument,' + documentLink)
     });
-
+*/
 
 function isJson(str) {
     try {
