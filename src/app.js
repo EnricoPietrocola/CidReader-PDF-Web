@@ -204,7 +204,7 @@ io.on('connection', (socket) => {
       io.to(socket.id).emit('signalchannel','changeDocument,' + rooms.getRoomURL(roomName))
       io.to(socket.id).emit('datachannel','changePage,' + rooms.findRoomByName(roomName).currentPage)
 
-      console.log('Sending room url to client ' + rooms.getRoomURL(roomName))
+      console.log('Sending room url to client ' + rooms.getRoomURL(roomName) + ' on page ' + rooms.findRoomByName(roomName).currentPage)
     }
     else{
       io.to(socket.id).emit('signalchannel','visualizePublic,' + domain +  '/docs/welcomeToCidReader.pdf')
@@ -251,6 +251,8 @@ io.on('connection', (socket) => {
   socket.on('signalchannel', (room, data)=>{
     console.log('received socket change url request in room ' + room + ' url doc ' + data)
     io.to(room).emit('signalchannel', 'changeDocument,' + data)
+    io.to(room).emit('datachannel','changePage,1')
+    rooms.setCurrentPageNumber(room, 0)
   })
 
   socket.on('disconnecting', () => {

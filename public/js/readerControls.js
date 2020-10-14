@@ -55,7 +55,7 @@ function visualizePublicDoc(documentLink){
     console.log("VisualizeDoc " + documentLink)
         pdfjsLib.getDocument(documentLink).then((pdf) => {
             myState.pdf = pdf;
-            myState.currentPage = 1;
+            //myState.currentPage = 1;
             myState.zoom = 1;
             document.getElementById("current_page").value = myState.currentPage;
             render()
