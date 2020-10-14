@@ -202,22 +202,48 @@ io.on('connection', (socket) => {
 
     if(rooms.getRoomURL(roomName) !== ''){
       io.to(socket.id).emit('signalchannel','changeDocument,' + rooms.getRoomURL(roomName))
+      io.to(socket.id).emit('datachannel','changePage,' + rooms.findRoomByName(roomName).currentPage)
+
       console.log('Sending room url to client ' + rooms.getRoomURL(roomName))
     }
     else{
+      io.to(socket.id).emit('signalchannel','visualizePublic,' + domain +  '/docs/welcomeToCidReader.pdf')
       console.log('Room Url not set')
     }
     //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
 
-    if (rooms.getRoomURL(roomName) === ''){
-      io.to(socket.id).emit('signalchannel','visualizePublic,' + domain +  '/docs/welcomeToCidReader.pdf')
-    }
     socket.to(roomName).broadcast.emit('datachannel', 'A new user joined the room')
   })
 
   socket.on('datachannel', (room, data) =>{
     socket.to(room).broadcast.emit('datachannel', data)
+    if(data != undefined && data != null) {
 
+      if(isJson(data)) {
+        data = JSON.parse(data.toString())
+      }
+      else{
+        console.log('sendData received non JSON data: ' + data)
+      }
+
+      //console.log(data)
+
+      const cmd = data.split(",");
+
+      switch (cmd[0]) {
+        case "changePage":
+          rooms.setCurrentPageNumber(room, parseInt(cmd[1]))
+          break;
+
+        /*case "goBackward":
+          rooms.setCurrentPageNumber(room, parseInt(cmd[1]))
+
+          break;*/
+
+        default:
+          //console.log('RECV msg ' + data)
+      }
+    }
     //data = JSON.parse(data.toString())
     //console.log(data)
   })

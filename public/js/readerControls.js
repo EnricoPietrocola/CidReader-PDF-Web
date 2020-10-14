@@ -1,5 +1,5 @@
-var myState = {
-    pdf: '',
+let myState = {
+    pdf: undefined,
     currentPage: 1,
     zoom: 1
 }
@@ -39,10 +39,11 @@ function visualizeDoc(documentLink){
 
             pdfjsLib.getDocument(res).then((pdf) => {
                 myState.pdf = pdf;
-                myState.currentPage = 1;
+                //myState.currentPage = 1;
                 myState.zoom = 1;
                 document.getElementById("current_page").value = myState.currentPage;
                 render()
+
             }).catch((e) => {
                 console.log('Error', e);
             })
@@ -70,29 +71,36 @@ function startUploadedDoc() {
 }
 
 function render() {
-    myState.pdf.getPage(myState.currentPage).then((page) => {
+    try {
+        if (myState.pdf !== undefined && myState.pdf !== '') {
+            myState.pdf.getPage(myState.currentPage).then((page) => {
 
-        // more code here
-        var canvasContainer = document.getElementById("canvas_container");
-        var canvas = document.getElementById("pdf_renderer");
-        var ctx = canvas.getContext('2d');
+                // more code here
+                const canvasContainer = document.getElementById("canvas_container");
+                const canvas = document.getElementById("pdf_renderer");
+                const ctx = canvas.getContext('2d');
 
-        //var viewport = page.getViewport(myState.zoom);
-        var viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97 );
+                //var viewport = page.getViewport(myState.zoom);
+                const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
 
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
 
-        page.render({
-            canvasContext: ctx,
-            viewport: viewport
-        });
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
 
-        if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
+                if (ctx) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                }
+            });
         }
-    });
+    }
+    catch (e) {
+        //console.log(e)
+    }
 }
 
 function displayWindowSize(){
@@ -175,27 +183,25 @@ socket.on('datachannel', (data) =>  {
         const cmd = data.split(",");
 
         switch (cmd[0]) {
-            case "goForward":
+            case "changePage":
                 myState.currentPage = parseInt(cmd[1]);
                 document.getElementById("current_page").value = myState.currentPage;
                 render();
                 console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
                 break;
 
-            case "goBackward":
+            /*case "goBackward":
                 myState.currentPage = parseInt(cmd[1]);
                 document.getElementById("current_page").value = myState.currentPage;
                 render();
                 console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
-                break;
+                break;*/
 
             default:
                 console.log('RECV msg ' + data)
         }
     }
 })
-
-
 
 function cid_go_previous (){
     if(myState.pdf == null
@@ -208,7 +214,7 @@ function cid_go_previous (){
     //console.log("render from visualize doc - go previous")
     render()
 
-    let dataString = JSON.stringify('goBackward,' + myState.currentPage)
+    let dataString = JSON.stringify('changePage,' + myState.currentPage)
     console.log("SEND: " + dataString)
 
     sendDataToOthers(dataString)
@@ -224,7 +230,7 @@ function cid_go_next(){
     //console.log("render from visualize doc - go next")
     render()
 
-    let dataString = JSON.stringify('goForward,' + myState.currentPage)
+    let dataString = JSON.stringify('changePage,' + myState.currentPage)
     console.log("SEND: " + dataString)
 
     sendDataToOthers(dataString)

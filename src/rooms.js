@@ -8,6 +8,7 @@ function Room(name, docURL){
     this.name = name;
     this.docURL = docURL;
     this.roomPath = '';
+    this.currentPage = 1;
     this.connections = 0;
 }
 
@@ -37,43 +38,53 @@ function addRoom(name, docURL){
     }
 }
 
+function setCurrentPageNumber(roomName, pageNumber){
+    console.log('changing room page to ' + pageNumber)
+    findRoomByName(roomName).currentPage = pageNumber
+}
+
 function incrementRoomConnection(room){
     room.connections++
     console.log('Room ' + room.name + ' has ' + room.connections + ' connected clients')
 }
 
 function decrementRoomConnection(room){
-    if(room.connections >= 0) {
-        room.connections = room.connections - 1
-        console.log('Room ' + room.name + ' has ' + room.connections + ' connected clients')
-        if(room.connections <= 0) {
+    try{
+        if(room.connections >= 0) {
+            room.connections = room.connections - 1
+            console.log('Room ' + room.name + ' has ' + room.connections + ' connected clients')
+            if(room.connections <= 0) {
 
-            const index = rooms.indexOf(room)
+                const index = rooms.indexOf(room)
 
-            rooms.splice(index, 1)
+                rooms.splice(index, 1)
 
-            if(room.roomPath !== '' && room.roomPath !== undefined && room.roomPath !== null) {
+                if(room.roomPath !== '' && room.roomPath !== undefined && room.roomPath !== null) {
 
-                console.log('Room is empty. Deleting all files ' + room.roomPath)
-                //fs.unlinkSync(room.docURL)
+                    console.log('Room is empty. Deleting all files ' + room.roomPath)
+                    //fs.unlinkSync(room.docURL)
 
-                // delete directory recursively
-                /*fs.rmdir(room.roomPath, { recursive: true }, function(err) {
-                    if (err) {
-                        throw err;
-                    }
-                    console.log(`Deleted!`);
-                });*/
-                rimraf(room.roomPath, function () { console.log("Done deleting"); });
+                    // delete directory recursively
+                    /*fs.rmdir(room.roomPath, { recursive: true }, function(err) {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log(`Deleted!`);
+                    });*/
+                    rimraf(room.roomPath, function () { console.log("Done deleting"); });
 
-            }
-            else{
-                console.log('No file attached, nothing to delete')
+                }
+                else{
+                    console.log('No file attached, nothing to delete')
+                }
             }
         }
+        else{
+           console.log('Something went wrong with the connection tracking for this room ' + room.name)
+        }
     }
-    else{
-       console.log('Something went wrong with the connection tracking for this room ' + room.name)
+    catch (e){
+        console.log(e)
     }
 }
 
@@ -119,6 +130,7 @@ function getConnectionsCount(){
 
 
 module.exports.addRoom = addRoom
+module.exports.setCurrentPageNumber = setCurrentPageNumber
 module.exports.getRoomURL = getRoomURL
 module.exports.changeRoomDocURL = changeRoomDocURL
 module.exports.decrementRoomConnection = decrementRoomConnection
