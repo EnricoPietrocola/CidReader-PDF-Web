@@ -1,3 +1,5 @@
+"use strict";
+
 let myState = {
     pdf: undefined,
     currentPage: 1,
@@ -67,7 +69,7 @@ function visualizePublicDoc(documentLink){
 function startUploadedDoc() {
     document.getElementById('uploadForm').action = '/pdfupload' + '?roomname=' + roomName
     var documentLink = document.getElementById("fileUpload").files[0].name;
-    //more about this function is actually exectuded in room.hbs
+    //more about this function is actually executed in room.hbs
 }
 
 
@@ -81,16 +83,12 @@ function render() {
                 const canvas = document.getElementById("pdf_renderer");
                 const ctx = canvas.getContext('2d');
 
-                //var viewport = page.getViewport(myState.zoom);
                 const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
 
                 canvas.width = canvasContainer.clientWidth;
                 canvas.height = canvasContainer.clientHeight;
 
-
-                console.log("ViewPort x: " + viewport.width + " y: " + viewport.height ,20, 80)
-                console.log("div x: " + canvasContainer.clientWidth + " y: " + canvasContainer.clientHeight ,20, 100)
-                console.log("canvas x: " + canvas.width + " y: " + canvas.height ,20, 120)
+                resizeCanvas()
 
                 page.render({
                     canvasContext: ctx,
@@ -119,26 +117,27 @@ function displayWindowSize(){
     // Display result inside a div element
     console.log("Width: " + w + ", " + "Height: " + h)
     myState.zoom = 1
-    render()
+    //render()
     //document.getElementById("result").innerHTML = "Width: " + w + ", " + "Height: " + h;
 }
 
 // Attaching the event listener function to window's resize event
 window.addEventListener("resize", displayWindowSize);
 
-document.getElementById("canvas_container").addEventListener("resize", ()=>{
-    console.log('div size changed')
-})
 
-const myObserver = new ResizeObserver(entries => {
-    entries.forEach(entry => {
-        console.log('width', entry.contentRect.width);
-        console.log('height', entry.contentRect.height);
-    });
+const ro = new ResizeObserver(entries => {
+    for (let entry of entries) {
+        const cr = entry.contentRect;
+        console.log('Element:', entry.target);
+        console.log(`Element size: ${cr.width}px x ${cr.height}px`);
+        console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+        render()
+    }
 });
 
-const someEl = document.querySelector('canvas_container');
-myObserver.observe(someEl);
+//even listener for canvas container size changes
+ro.observe(document.getElementById("canvas_container"));
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
