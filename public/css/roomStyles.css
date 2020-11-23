@@ -60,9 +60,11 @@ button {
     /*width:  60%;
     height: 100%;*/
 
-    width: 700px;
+    /*width: 700px;
     height: 1200px;
+    */
     overflow: auto;
+    resize: both;
 
     background: #333333;
     text-align: center;

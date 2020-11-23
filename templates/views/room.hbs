@@ -26,9 +26,10 @@
 
     </div>
 
-    <div id="canvas_container" style="position: relative;">
+    <div id="canvas_container" style="position: relative;" onresize="console.log('test')">
         <canvas id="pdf_renderer" width="100" height="100"
                 style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+
         <canvas id="drawing_renderer"
                 style="position: absolute; left: 0; top: 0; z-index: 1; background-color: transparent"></canvas>
     </div>
@@ -45,19 +46,12 @@
         </div>
     </div>
 
-
-    <!--<canvas id="drawingLayer"></canvas>-->
-
-
-
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
     <script src="../js/readerControls.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/pts@0.9.5/dist/pts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
-    <script type="text/javascript" src="https://unpkg.com/pts@0.9.5/dist/pts.js"></script>
     <script type="text/javascript" src="/js/drawingLayer.js"></script>
     <script>
         $(document).ready(function () {

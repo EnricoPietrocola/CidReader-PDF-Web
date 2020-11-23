@@ -23,6 +23,8 @@ canvas.addEventListener("mousemove", function(e) {
     sendDataToOthers("pointerPosition," + posX + "," + posY)
 });
 
+
+
 function drawPointer(posX, posY){
     resizeCanvas()
     ctx.clearRect(0, 0, canvas.width, canvas.height);  // (0,0) the top left of the canvas

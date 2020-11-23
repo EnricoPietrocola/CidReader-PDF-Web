@@ -70,6 +70,7 @@ function startUploadedDoc() {
     //more about this function is actually exectuded in room.hbs
 }
 
+
 function render() {
     try {
         if (myState.pdf !== undefined && myState.pdf !== '') {
@@ -83,8 +84,13 @@ function render() {
                 //var viewport = page.getViewport(myState.zoom);
                 const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
 
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+                canvas.width = canvasContainer.clientWidth;
+                canvas.height = canvasContainer.clientHeight;
+
+
+                console.log("ViewPort x: " + viewport.width + " y: " + viewport.height ,20, 80)
+                console.log("div x: " + canvasContainer.clientWidth + " y: " + canvasContainer.clientHeight ,20, 100)
+                console.log("canvas x: " + canvas.width + " y: " + canvas.height ,20, 120)
 
                 page.render({
                     canvasContext: ctx,
@@ -94,6 +100,8 @@ function render() {
                 if (ctx) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.beginPath();
+
+
                 }
             });
         }
@@ -110,12 +118,27 @@ function displayWindowSize(){
 
     // Display result inside a div element
     console.log("Width: " + w + ", " + "Height: " + h)
+    myState.zoom = 1
     render()
     //document.getElementById("result").innerHTML = "Width: " + w + ", " + "Height: " + h;
 }
 
 // Attaching the event listener function to window's resize event
 window.addEventListener("resize", displayWindowSize);
+
+document.getElementById("canvas_container").addEventListener("resize", ()=>{
+    console.log('div size changed')
+})
+
+const myObserver = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+        console.log('width', entry.contentRect.width);
+        console.log('height', entry.contentRect.height);
+    });
+});
+
+const someEl = document.querySelector('canvas_container');
+myObserver.observe(someEl);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
