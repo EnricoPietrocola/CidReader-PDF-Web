@@ -8,10 +8,6 @@ body {
     /*margin: 0 auto;*/
     padding: 0 16px;
 
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    justify-content: space-between;
 }
 
 footer {
@@ -67,21 +63,17 @@ button {
     text-align: center;
     border: solid 1px;
     flex-grow: 1;*/
+    display: inline-block;
+    height: 100vh;
     overflow: auto;
-    flex-grow: 1;
-    flex-shrink: 1;
     border: solid 1px;
-    flex-basis: auto;
-    width: 100%;
 }
 
 #controls{
-    flex-grow: 0;
     padding: 0 16px;
 
 }
 
 #pdf_input{
-    padding: 0 16px;
     flex-grow: 1;
 }

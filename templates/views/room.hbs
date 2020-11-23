@@ -11,10 +11,17 @@
 
 <div class="main-content">
 
+
+
+    <div id="canvas_container" style="position: relative;">
+        <canvas id="pdf_renderer" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+        <canvas id="drawing_renderer" style="position: absolute; left: 0; top: 0; z-index: 1; background-color: transparent"></canvas>
+    </div>
+
     <div id = "header&input">
         {{>header}}
 
-        <div id="pdf_input">
+        <div id="pdf_input" style="position: relative;">
             <p>Paste the link of the document you would like to visualize</p>
             <input type="text" id="documentLink" name="Document URL" size = "40" placeholder="Load from URL">
             <button onclick="startDoc()" id="changeDocument">Load</button>
@@ -26,12 +33,7 @@
 
     </div>
 
-    <div id="canvas_container" style="position: relative;">
-        <canvas id="pdf_renderer" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
-        <canvas id="drawing_renderer" style="position: absolute; left: 0; top: 0; z-index: 1; background-color: transparent"></canvas>
-    </div>
-
-    <div id="controls">
+    <div id="controls" style="position: relative;">
         <div id="navigation_controls">
             <button id="go_previous">Previous</button>
             <input id="current_page" value="1" type="number" size="4"/>

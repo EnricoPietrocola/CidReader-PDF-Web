@@ -92,7 +92,7 @@ function render() {
                 const ratio = viewport.width / viewport.height
                 console.log(ratio)
                 canvas.width = canvas.height * ratio
-                canvasContainer.getBoundingClientRect().width = canvas.width
+                canvasContainer.style.width = canvasContainer.clientHeight * ratio+"px"
                 //canvasContainer.getBoundingClientRect().height = canvas.height
                 // Make it visually fill the positioned parent
 
