@@ -190,12 +190,9 @@ socket.on('datachannel', (data) =>  {
                 console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
                 break;
 
-            /*case "goBackward":
-                myState.currentPage = parseInt(cmd[1]);
-                document.getElementById("current_page").value = myState.currentPage;
-                render();
-                console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
-                break;*/
+            case "pointerPosition":
+                drawPointer(parseFloat(cmd[1]), parseFloat(cmd[2]))
+                break;
 
             default:
                 console.log('RECV msg ' + data)
