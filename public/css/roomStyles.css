@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 footer {
@@ -55,19 +55,28 @@ button {
 }
 
 #canvas_container {
-    padding: 0 16px;
+    /*padding: 0 1px;
 
     overflow: auto;
-    resize: both;
+    display: inline-block;
 
-    background: #333333;
+    width: fit-content;
+    block-size: fit-content;
+
+    background: #852323;
     text-align: center;
-    border: solid 3px;
+    border: solid 1px;
+    flex-grow: 1;*/
+    overflow: auto;
     flex-grow: 1;
+    flex-shrink: 1;
+    border: solid 1px;
+    flex-basis: auto;
+    width: 100%;
 }
 
 #controls{
-    flex-grow: 1;
+    flex-grow: 0;
     padding: 0 16px;
 
 }

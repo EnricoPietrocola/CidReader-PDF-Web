@@ -61,10 +61,14 @@ function visualizePublicDoc(documentLink){
             myState.zoom = 1;
             document.getElementById("current_page").value = myState.currentPage;
             render()
+            //getDocumentRatio
+
         }).catch((e) => {
             console.log('Error', e);
         })
 }
+
+
 
 function startUploadedDoc() {
     document.getElementById('uploadForm').action = '/pdfupload' + '?roomname=' + roomName
@@ -78,15 +82,26 @@ function render() {
         if (myState.pdf !== undefined && myState.pdf !== '') {
             myState.pdf.getPage(myState.currentPage).then((page) => {
 
-                // more code here
                 const canvasContainer = document.getElementById("canvas_container");
                 const canvas = document.getElementById("pdf_renderer");
                 const ctx = canvas.getContext('2d');
 
                 const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
 
-                canvas.width = canvasContainer.clientWidth;
-                canvas.height = canvasContainer.clientHeight;
+                canvas.height = window.innerHeight //canvasContainer.clientHeight;
+                const ratio = viewport.width / viewport.height
+                console.log(ratio)
+                canvas.width = canvas.height * ratio
+                canvasContainer.getBoundingClientRect().width = canvas.width
+                //canvasContainer.getBoundingClientRect().height = canvas.height
+                // Make it visually fill the positioned parent
+
+
+                /*canvas.style.width ='100%';
+                canvas.style.height='100%';
+                // ...then set the internal size to match
+                canvas.width  = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;*/
 
                 resizeCanvas()
 
@@ -124,13 +139,9 @@ function displayWindowSize(){
 // Attaching the event listener function to window's resize event
 window.addEventListener("resize", displayWindowSize);
 
-
 const ro = new ResizeObserver(entries => {
     for (let entry of entries) {
         const cr = entry.contentRect;
-        console.log('Element:', entry.target);
-        console.log(`Element size: ${cr.width}px x ${cr.height}px`);
-        console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
         render()
     }
 });
