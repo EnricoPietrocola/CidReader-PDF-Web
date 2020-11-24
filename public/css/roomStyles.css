@@ -1,12 +1,12 @@
 body {
     color: #333333;
     font-family: arial;
-    /*max-width: 800px;*/
+    margin-top: 0px;
 }
 
 .main-content {
-    /*margin: 0 auto;*/
-    padding: 0 16px;
+    margin: 0 auto;
+    padding: 0 1px;
 
 }
 
@@ -15,26 +15,31 @@ footer {
     border-top: 1px solid #eeeeee;
     margin-top: 16px;
     padding: 16px 0;
+    position: fixed;
+    bottom: 0px;
+
 }
 
 header {
-    margin-top: 16px;
-    margin-bottom: 48px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    margin-right: 30px;
+    /*float:left;*/
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
 }
 
 h1 {
-    font-size: 64px;
-    margin-bottom: 16px;
+    font-size: 32px;
+    margin-bottom: 2px;
+    margin-top: 0px;
 }
 
 header a {
     color: #888888;
-    margin-right: 16px;
+    margin-right: 2px;
     text-decoration: none;
-}
-
-.portrait {
-    width: 250px;
 }
 
 input {
@@ -63,15 +68,34 @@ button {
     text-align: center;
     border: solid 1px;
     flex-grow: 1;*/
-    display: inline-block;
     height: 100vh;
-    overflow: auto;
+    overflow: hidden;
     border: solid 1px;
+    float:right;
+}
+
+#canvas_container2 {
+    /*padding: 0 1px;
+
+    overflow: auto;
+    display: inline-block;
+
+    width: fit-content;
+    block-size: fit-content;
+
+    background: #852323;
+    text-align: center;
+    border: solid 1px;
+    flex-grow: 1;*/
+    height: 100vh;
+    overflow: hidden;
+    border: solid 1px;
+    float:right;
 }
 
 #controls{
     padding: 0 16px;
-
+    flex-grow: 1;
 }
 
 #pdf_input{

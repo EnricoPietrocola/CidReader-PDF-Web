@@ -122,6 +122,50 @@ function render() {
     catch (e) {
         //console.log(e)
     }
+    try {
+        if (myState.pdf !== undefined && myState.pdf !== '') {
+            myState.pdf.getPage(myState.currentPage + 1).then((page) => {
+
+                const canvasContainer = document.getElementById("canvas_container2");
+                const canvas = document.getElementById("pdf_renderer2");
+                const ctx = canvas.getContext('2d');
+
+                const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
+
+                canvas.height = window.innerHeight //canvasContainer.clientHeight;
+                const ratio = viewport.width / viewport.height
+                console.log(ratio)
+                canvas.width = canvas.height * ratio
+                canvasContainer.style.width = canvasContainer.clientHeight * ratio+"px"
+                //canvasContainer.getBoundingClientRect().height = canvas.height
+                // Make it visually fill the positioned parent
+
+
+                /*canvas.style.width ='100%';
+                canvas.style.height='100%';
+                // ...then set the internal size to match
+                canvas.width  = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;*/
+
+                resizeCanvas()
+
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
+
+                if (ctx) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+
+
+                }
+            });
+        }
+    }
+    catch (e) {
+        //console.log(e)
+    }
 }
 
 function displayWindowSize(){
@@ -238,7 +282,7 @@ function cid_go_previous (){
         || myState.currentPage == 1)
         return;
 
-    myState.currentPage -= 1;
+    myState.currentPage -= 2;
     document.getElementById("current_page")
         .value = myState.currentPage;
     //console.log("render from visualize doc - go previous")
@@ -254,7 +298,7 @@ function cid_go_next(){
     if(myState.pdf == null || myState.currentPage >= myState.pdf._pdfInfo.numPages)
         return;
 
-    myState.currentPage += 1;
+    myState.currentPage += 2;
     document.getElementById("current_page")
         .value = myState.currentPage;
     //console.log("render from visualize doc - go next")

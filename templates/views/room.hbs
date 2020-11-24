@@ -11,17 +11,19 @@
 
 <div class="main-content">
 
-
-
+    <div id="canvas_container2" style="position: relative;">
+        <canvas id="pdf_renderer2" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+        <canvas id="drawing_renderer2" style="position: absolute; left: 0; top: 0; z-index: 1; background-color: transparent"></canvas>
+    </div>
     <div id="canvas_container" style="position: relative;">
         <canvas id="pdf_renderer" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
         <canvas id="drawing_renderer" style="position: absolute; left: 0; top: 0; z-index: 1; background-color: transparent"></canvas>
     </div>
 
+
     <div id = "header&input">
         {{>header}}
-
-        <div id="pdf_input" style="position: relative;">
+        <div id="pdf_input">
             <p>Paste the link of the document you would like to visualize</p>
             <input type="text" id="documentLink" name="Document URL" size = "40" placeholder="Load from URL">
             <button onclick="startDoc()" id="changeDocument">Load</button>
@@ -29,21 +31,21 @@
                 <input id="fileUpload" type="file" name="docUpload" value="submit" accept="application/pdf" style="width: 140px"/></input>
                 <button onclick="startUploadedDoc()" type="submit" value="submit" id="changeUploadedDocument">Upload File</button>
             </form>
-        </div>
-
+            <div id="controls">
+                <div id="navigation_controls">
+                    <button id="go_previous">Previous</button>
+                    <input id="current_page" value="1" type="number" size="4"/>
+                    <button id="go_next">Next</button>
+                </div>
+                <div id="zoom_controls">
+                    <button id="zoom_in">+</button>
+                    <button id="zoom_out">-</button>
+                </div>
+            </div>
+            </div>
     </div>
 
-    <div id="controls" style="position: relative;">
-        <div id="navigation_controls">
-            <button id="go_previous">Previous</button>
-            <input id="current_page" value="1" type="number" size="4"/>
-            <button id="go_next">Next</button>
-        </div>
-        <div id="zoom_controls">
-            <button id="zoom_in">+</button>
-            <button id="zoom_out">-</button>
-        </div>
-    </div>
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
@@ -72,9 +74,5 @@
 
     </script>
 </div>
-
-{{>footer}}
-
 </body>
-
 </html>
