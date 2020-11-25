@@ -81,7 +81,6 @@ function render() {
     try {
         if (myState.pdf !== undefined && myState.pdf !== '') {
             myState.pdf.getPage(myState.currentPage).then((page) => {
-
                 const canvasContainer = document.getElementById("canvas_container");
                 const canvas = document.getElementById("pdf_renderer");
                 const ctx = canvas.getContext('2d');
@@ -103,9 +102,10 @@ function render() {
                 canvas.width  = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;*/
 
-                resizeCanvas()
+                //resizeCanvas()
 
                 page.render({
+
                     canvasContext: ctx,
                     viewport: viewport
                 });
@@ -113,8 +113,6 @@ function render() {
                 if (ctx) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.beginPath();
-
-
                 }
             });
         }
@@ -128,6 +126,7 @@ function render() {
 
                 const canvasContainer = document.getElementById("canvas_container2");
                 const canvas = document.getElementById("pdf_renderer2");
+
                 const ctx = canvas.getContext('2d');
 
                 const viewport = page.getViewport((canvasContainer.getBoundingClientRect().width / page.getViewport(1.0).width) * myState.zoom * 0.97);
@@ -147,7 +146,7 @@ function render() {
                 canvas.width  = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;*/
 
-                resizeCanvas()
+                //resizeCanvas()
 
                 page.render({
                     canvasContext: ctx,
@@ -157,8 +156,6 @@ function render() {
                 if (ctx) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.beginPath();
-
-
                 }
             });
         }
@@ -186,7 +183,7 @@ window.addEventListener("resize", displayWindowSize);
 const ro = new ResizeObserver(entries => {
     for (let entry of entries) {
         const cr = entry.contentRect;
-        render()
+        //render()
     }
 });
 

@@ -6,7 +6,7 @@ const ctx2 = canvas.getContext('2d')
 
 //this is not very optimized but it's the only way I've found at the moment to make it work
 pdf.addEventListener("mousemove", ()=>{
-    resizeCanvas()
+    //resizeCanvas()
 })
 
 canvas.addEventListener("mousemove", function(e) {
