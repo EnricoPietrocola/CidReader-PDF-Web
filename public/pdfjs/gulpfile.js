@@ -1714,7 +1714,7 @@ gulp.task(
   })
 );
 
-gulp.task("server", function (arg1, arg2) {
+gulp.task("server", function () {
   console.log();
   console.log("### Starting local server");
 
@@ -1722,9 +1722,6 @@ gulp.task("server", function (arg1, arg2) {
   var server = new WebServer();
   server.port = 8888;
   server.start();
-
-  //const cidServer = require('./cidinteraction/src/app.js')
-  //cidServer()
 });
 
 gulp.task("clean", function (done) {

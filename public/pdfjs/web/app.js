@@ -2597,10 +2597,10 @@ function webViewerLastPage() {
     PDFViewerApplication.page = PDFViewerApplication.pagesCount;
   }
 }
-export function webViewerNextPage() {
+function webViewerNextPage() {
   PDFViewerApplication.page++;
 }
-export function webViewerPreviousPage() {
+function webViewerPreviousPage() {
   PDFViewerApplication.page--;
 }
 function webViewerZoomIn() {
