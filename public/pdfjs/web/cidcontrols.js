@@ -23,10 +23,7 @@ document.addEventListener(
           console.log(PDFViewerApplication.pdfViewer.eventBus.dispatch("previouspage"))
           break;
         case "KeyL":
-          PDFViewerApplication.eventBus.dispatch("fileinputchange", {
-            source: this,
-            fileInput: 'thispdflol.pdf',
-          });
+          //PDFViewerApplication.open('doc.pdf').then() //this opens a file by its url
           break;
         default:
           // default
