@@ -141,9 +141,9 @@
 
   })
 
-//app.get('/uploads', (req, res) => {
-//res.send('Access Denied - Please create a room with a different name')
-//})
+app.get('/uploads', (req, res) => {
+    res.send('Access Denied - Please create a room with a different name')
+})
 
   app.get('/reader', (req, res) => {
     res.sendFile("D:/RepoCidReaderWeb/public/pdfjs/web/viewer.html")
