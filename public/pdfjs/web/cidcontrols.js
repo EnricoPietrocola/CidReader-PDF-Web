@@ -1,4 +1,7 @@
-console.log("Cid Controls Active")
+console.log("Cid Controls active")
+//use this function to load a pdf
+//PDFViewerApplication.open('https://127.0.0.1/docs/welcometocidreader.pdf').then("console")
+
 
 let myState = {
   pdf: undefined,
@@ -6,19 +9,18 @@ let myState = {
   zoom: 1
 }
 
+const roomName = window.location.pathname.substring(1)
+console.log('roomName is ' + roomName)
+
+
 document.addEventListener(
     "keydown",
     function(event) {
-      // if (event.defaultPrevented) {
-      // return; // Do nothing if event already handled
-      // }
+
       switch (event.code) {
         case "KeyA":
-          // Handle "left"
-          //webViewerPreviousPage();
-          //eventBus.dispatch('previouspage');
+
           sendDataToOthers("test")
-          //PDFViewerApplication.pdfViewer.eventBus.dispatch("previouspage")
           if(PDFViewerApplication.page > 1) {
             PDFViewerApplication.page--
             sendDataToOthers("changePage," + PDFViewerApplication.page)
@@ -26,21 +28,19 @@ document.addEventListener(
           break;
 
         case "KeyD":
-          // Handle "left"
-          //webViewerNextPage();
-          //eventBus.dispatch('nextpage');
-
-          console.log(PDFViewerApplication.pagesCount)
 
           if(PDFViewerApplication.page < PDFViewerApplication.pagesCount) {
             PDFViewerApplication.page++
             sendDataToOthers("changePage," + PDFViewerApplication.page)
           }
-          //PDFViewerApplication.pdfViewer.eventBus.dispatch("nextpage")
           break;
 
         case "KeyL":
-          PDFViewerApplication.open('doc.pdf').then() //this opens a file by its url
+
+
+          //visualizeDoc('https://127.0.0.1/uploads/doc.pdf')
+          //PDFViewerApplication.open('/uploads/doc.pdf').then() //this opens a file by its url
+          sendDataToOthers('visualizePublic,' + 'https://127.0.0.1/docs/welcomeToCidReader.pdf')
           break;
         default:
           // default
@@ -51,13 +51,7 @@ document.addEventListener(
     true
   );
 
-
-
-const roomName = window.location.pathname.substring(1)
-console.log('roomName is ' + roomName)
-
 function startDoc() {
-
   const documentLink = document.getElementById("documentLink").value;
   console.log("StartDoc " + documentLink)
   sendDataToServer(documentLink)
@@ -72,6 +66,7 @@ function visualizeDoc(documentLink){
     //.then(res => res.json())
     .then(res => {
 
+      //PDFViewerApplication.open(res).then("openingPDF")
       /*pdfjsLib.getDocument(res).then((pdf) => {
         myState.pdf = pdf;
         //myState.currentPage = 1;
@@ -88,6 +83,14 @@ function visualizeDoc(documentLink){
 //this duplicated code should be refactored
 function visualizePublicDoc(documentLink){
   console.log("VisualizeDoc " + documentLink)
+
+  try{
+    PDFViewerApplication.open(documentLink).then("console")
+  }catch(e){
+    console.log(e)
+  }
+
+
   /*pdfjsLib.getDocument(documentLink).then((pdf) => {
     myState.pdf = pdf;
     //myState.currentPage = 1;
@@ -144,7 +147,7 @@ socket.on('signalchannel', (data) =>  {
       case "visualizePublic":
         myState.pdf = cmd[1];
         //startDoc();
-        visualizePublicDoc(myState.pdf)
+        visualizePublicDoc(myState.pdf.toString())
         console.log("RECV: Visualizing new public document " + myState.pdf);
         break;
       default:
