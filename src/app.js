@@ -45,8 +45,8 @@
 // Setup static directory to serve
   app.use(express.static(publicDirectoryPath))
 
-  const pdfjsPath = path.join(publicDirectoryPath, '/pdfjs/web')
-  console.log(pdfjsPath)
+  const pdfjsPath = path.join(publicDirectoryPath, '/pdfjs/')
+  //console.log(pdfjsPath)
   app.use(express.static(pdfjsPath))
 
   app.get('', (req, res) => {
@@ -154,8 +154,9 @@
 //      title: 'CidReader',
 //      name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
 //    })
-    //res.sendFile('D:/RepoCidReaderWeb/public/pdfjs/web/testPage.html')
-    res.render('viewer')
+    //request('https://127.0.0.1/pdfjs/web/viewer.html').pipe(res);
+    //res.render('viewer')
+    res.sendFile(path.join(publicDirectoryPath, '/reader.html'))
   })
   let httpsServer;
   let httpServer
@@ -195,6 +196,7 @@
       socket.join(roomName)
       totalConnections++
       const dir = uploadsDirectoryPath + '/' + roomName
+      console.log(roomName)
 
       if (!fs.existsSync(dir)) {
         //fs.mkdirSync(dir);
@@ -297,7 +299,7 @@
  */
 /* eslint-disable object-shorthand */
 
-var mimeTypes = {
+const mimeTypes = {
   ".css": "text/css",
   ".html": "text/html",
   ".js": "application/javascript",

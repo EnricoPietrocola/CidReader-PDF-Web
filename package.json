@@ -16,6 +16,7 @@
   "dependencies": {
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
+    "es-module-shims": "^0.7.1",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "hbs": "^4.1.1",
