@@ -21,6 +21,7 @@ document.addEventListener(
           //PDFViewerApplication.pdfViewer.eventBus.dispatch("previouspage")
           if(PDFViewerApplication.page > 1) {
             PDFViewerApplication.page--
+            sendDataToOthers("changePage," + PDFViewerApplication.page)
           }
           break;
 
@@ -28,10 +29,12 @@ document.addEventListener(
           // Handle "left"
           //webViewerNextPage();
           //eventBus.dispatch('nextpage');
-          sendDataToOthers("test")
+
           console.log(PDFViewerApplication.pagesCount)
+
           if(PDFViewerApplication.page < PDFViewerApplication.pagesCount) {
             PDFViewerApplication.page++
+            sendDataToOthers("changePage," + PDFViewerApplication.page)
           }
           //PDFViewerApplication.pdfViewer.eventBus.dispatch("nextpage")
           break;
@@ -170,9 +173,10 @@ socket.on('datachannel', (data) =>  {
 
     switch (cmd[0]) {
       case "changePage":
-        myState.currentPage = parseInt(cmd[1]);
-
-        console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
+        //myState.currentPage = parseInt(cmd[1]);
+        console.log('is this happening?')
+        PDFViewerApplication.page = parseInt(cmd[1])
+        //console.log("RECV: turnPage " + cmd[1] + " " + myState.currentPage);
         break;
 
       case "pointerPosition":
