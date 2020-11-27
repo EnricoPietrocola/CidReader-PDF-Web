@@ -199,7 +199,7 @@
       console.log(roomName)
 
       if (!fs.existsSync(dir)) {
-        //fs.mkdirSync(dir);
+        fs.mkdirSync(dir);
       }
 
       const room = rooms.addRoom(roomName, '')

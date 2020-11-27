@@ -13,22 +13,31 @@ document.addEventListener(
       // return; // Do nothing if event already handled
       // }
       switch (event.code) {
-        case "KeyD":
-          // Handle "left"
-          //webViewerNextPage();
-          //eventBus.dispatch('nextpage');
-          sendDataToOthers("test")
-          PDFViewerApplication.pdfViewer.eventBus.dispatch("nextpage")
-          break;
         case "KeyA":
           // Handle "left"
           //webViewerPreviousPage();
           //eventBus.dispatch('previouspage');
           sendDataToOthers("test")
-          PDFViewerApplication.pdfViewer.eventBus.dispatch("previouspage")
+          //PDFViewerApplication.pdfViewer.eventBus.dispatch("previouspage")
+          if(PDFViewerApplication.page > 1) {
+            PDFViewerApplication.page--
+          }
           break;
+
+        case "KeyD":
+          // Handle "left"
+          //webViewerNextPage();
+          //eventBus.dispatch('nextpage');
+          sendDataToOthers("test")
+          console.log(PDFViewerApplication.pagesCount)
+          if(PDFViewerApplication.page < PDFViewerApplication.pagesCount) {
+            PDFViewerApplication.page++
+          }
+          //PDFViewerApplication.pdfViewer.eventBus.dispatch("nextpage")
+          break;
+
         case "KeyL":
-          //PDFViewerApplication.open('doc.pdf').then() //this opens a file by its url
+          PDFViewerApplication.open('doc.pdf').then() //this opens a file by its url
           break;
         default:
           // default
