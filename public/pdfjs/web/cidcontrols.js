@@ -39,7 +39,6 @@ document.addEventListener(
 
           fetch('/fetch-document?url=' + 'https://127.0.0.1/docs/fdf.pdf')
             .catch(err => console.log(err))
-            //.then(res => res.json)
             .then(res => res.blob())
             .then(res => {
               console.log(res)
@@ -48,16 +47,6 @@ document.addEventListener(
                 url: URL.createObjectURL(res),
                 originalUrl: "test",
               }).catch(err => console.log(err))
-              /*pdfjsLib.getDocument(res).then((pdf) => {
-                myState.pdf = pdf;
-                //myState.currentPage = 1;
-                myState.zoom = 1;
-                document.getElementById("current_page").value = myState.currentPage;
-                render()
-
-              }).catch((e) => {
-                console.log('Error', e);
-              })*/
             });
 
           //visualizeDoc('https://127.0.0.1/docs/fdf.pdf')
