@@ -37,10 +37,32 @@ document.addEventListener(
 
         case "KeyL":
 
+          fetch('/fetch-document?url=' + 'https://127.0.0.1/docs/fdf.pdf')
+            .catch(err => console.log(err))
+            //.then(res => res.json)
+            .then(res => res.blob())
+            .then(res => {
+              console.log(res)
 
-          //visualizeDoc('https://127.0.0.1/uploads/doc.pdf')
+              PDFViewerApplication.open({
+                url: URL.createObjectURL(res),
+                originalUrl: "test",
+              }).catch(err => console.log(err))
+              /*pdfjsLib.getDocument(res).then((pdf) => {
+                myState.pdf = pdf;
+                //myState.currentPage = 1;
+                myState.zoom = 1;
+                document.getElementById("current_page").value = myState.currentPage;
+                render()
+
+              }).catch((e) => {
+                console.log('Error', e);
+              })*/
+            });
+
+          //visualizeDoc('https://127.0.0.1/docs/fdf.pdf')
           //PDFViewerApplication.open('/uploads/doc.pdf').then() //this opens a file by its url
-          sendDataToOthers('visualizePublic,' + 'https://127.0.0.1/docs/welcomeToCidReader.pdf')
+          //sendDataToOthers('visualizePublic,' + 'https://127.0.0.1/docs/welcomeToCidReader.pdf')
           break;
         default:
           // default
@@ -63,10 +85,15 @@ function visualizeDoc(documentLink){
 
   fetch('/get-documentttt?url=' + documentLink + '&roomname=' + roomName)
     .catch(err => console.log(err))
-    //.then(res => res.json())
+    //.then(res => res.json)
+    .then(res => res.blob())
     .then(res => {
+      console.log(res)
 
-      //PDFViewerApplication.open(res).then("openingPDF")
+      PDFViewerApplication.open({
+        url: URL.createObjectURL(res),
+        originalUrl: "test",
+      }).catch(err => console.log(err)).then(console.log("read pdf"))
       /*pdfjsLib.getDocument(res).then((pdf) => {
         myState.pdf = pdf;
         //myState.currentPage = 1;
@@ -141,13 +168,13 @@ socket.on('signalchannel', (data) =>  {
       case "changeDocument":
         myState.pdf = cmd[1];
         //startDoc();
-        visualizeDoc(myState.pdf)
+        //visualizeDoc(myState.pdf)
         console.log("RECV: Visualizing new document " + myState.pdf);
         break;
       case "visualizePublic":
         myState.pdf = cmd[1];
         //startDoc();
-        visualizePublicDoc(myState.pdf.toString())
+        //visualizePublicDoc(myState.pdf.toString())
         console.log("RECV: Visualizing new public document " + myState.pdf);
         break;
       default:

@@ -109,7 +109,7 @@
   app.get('/public/docs/', (req, res) => {
   })
 
-  app.get('/get-documentttt', (req, res) => {
+  app.get('/get-document', (req, res) => {
     const documentUrl = req.query.url
     const roomNameReq = req.query.roomname
 
@@ -121,9 +121,13 @@
     console.log('FETCH FILE PATH ' + filePath)
 
     if (fs.existsSync(filePath)) {
-      console.log("The file exists.");
+      console.log("The file exists. Sending file to client");
       res.sendFile(filePath)
+      //res.contentType("application/pdf");
+      //res.send(file);
+
       rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
+
     } else {
       console.log('New file request, adding to library')
       const file = fs.createWriteStream(filePath)
@@ -141,6 +145,39 @@
 
   })
 
+app.get('/fetch-document', (req, res) => {
+  const documentUrl = req.query.url
+  const roomNameReq = req.query.roomname
+
+  const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
+
+  const filePath = publicDirectoryPath + '/docs/' + fileName
+  console.log('FETCH FILE PATH ' + filePath)
+
+  if (fs.existsSync(filePath)) {
+    console.log("The file exists. Sending file to client");
+    res.sendFile(filePath)
+    //res.contentType("application/pdf");
+    //res.send(file);
+
+    rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
+
+  } else {
+    console.log('New file request, adding to library')
+    const file = fs.createWriteStream(filePath)
+    https.get(documentUrl, (response) => {
+      response.pipe(file)
+      file.on('finish', () => {
+        file.close()
+        console.log('pdf path ' + filePath)
+        rooms.changeRoomDocURL(filePath)
+        res.sendFile(filePath)
+      })
+    })
+
+  }
+
+})
 app.get('/uploads', (req, res) => {
     res.send('Access Denied - Please create a room with a different name')
 })
@@ -150,14 +187,9 @@ app.get('/uploads', (req, res) => {
   })
 
   app.get('*', (req, res) => {
-//    res.render('room', {
-//      title: 'CidReader',
-//      name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
-//    })
-    //request('https://127.0.0.1/pdfjs/web/viewer.html').pipe(res);
-    //res.render('viewer')
     res.sendFile(path.join(publicDirectoryPath, '/reader.html'))
   })
+
   let httpsServer;
   let httpServer
   let io;
@@ -208,12 +240,14 @@ app.get('/uploads', (req, res) => {
       console.log('Current rooms are ' + rooms.rooms.length)
 
       if (rooms.getRoomURL(roomName) !== '') {
-        io.to(socket.id).emit('signalchannel', 'changeDocument,' + rooms.getRoomURL(roomName))
-        io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
+        //disabled for dev
+
+        //io.to(socket.id).emit('signalchannel', 'changeDocument,' + rooms.getRoomURL(roomName))
+        //io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
 
         console.log('Sending room url to client ' + rooms.getRoomURL(roomName) + ' on page ' + rooms.findRoomByName(roomName).currentPage)
       } else {
-        io.to(socket.id).emit('signalchannel', 'visualizePublic,' + domain + '/docs/welcomeToCidReader.pdf')
+        //io.to(socket.id).emit('signalchannel', 'visualizePublic,' + domain + '/docs/welcomeToCidReader.pdf')
         console.log('Room Url not set')
       }
       //io.to(socket.id).emit('datachannel', docURL) //this can be used to send pdf data to client
