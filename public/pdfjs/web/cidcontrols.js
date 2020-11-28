@@ -37,11 +37,10 @@ document.addEventListener(
 
         case "KeyL":
 
-          fetch('/fetch-document?url=' + 'https://127.0.0.1/docs/fdf.pdf')
+          fetch('/fetch-document?url=' + 'https://127.0.0.1/petreptec/fdf.pdf')
             .catch(err => console.log(err))
             .then(res => res.blob())
             .then(res => {
-              console.log(res)
 
               PDFViewerApplication.open({
                 url: URL.createObjectURL(res),
@@ -72,27 +71,15 @@ function startDoc() {
 function visualizeDoc(documentLink){
   console.log("VisualizeDoc " + documentLink)
 
-  fetch('/get-documentttt?url=' + documentLink + '&roomname=' + roomName)
+  fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
     .catch(err => console.log(err))
-    //.then(res => res.json)
     .then(res => res.blob())
     .then(res => {
-      console.log(res)
 
       PDFViewerApplication.open({
         url: URL.createObjectURL(res),
         originalUrl: "test",
-      }).catch(err => console.log(err)).then(console.log("read pdf"))
-      /*pdfjsLib.getDocument(res).then((pdf) => {
-        myState.pdf = pdf;
-        //myState.currentPage = 1;
-        myState.zoom = 1;
-        document.getElementById("current_page").value = myState.currentPage;
-        render()
-
-      }).catch((e) => {
-        console.log('Error', e);
-      })*/
+      }).catch(err => console.log(err))
     });
 }
 
