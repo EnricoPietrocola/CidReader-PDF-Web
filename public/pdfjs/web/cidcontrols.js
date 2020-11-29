@@ -14,7 +14,7 @@ function init(){
   const roomName = window.location.pathname.substring(1)
   console.log('roomName is ' + roomName)
 
-  fetch('/fetch-document?url=' + 'https://127.0.0.1/docs/welcometocidreader.pdf')
+  fetch('/fetch-document?url=' + 'https://cidreader.com/docs/welcometocidreader.pdf')
     .catch(err => console.log(err))
     .then(res => res.blob())
     .then(res => {
