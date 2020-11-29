@@ -4,26 +4,12 @@ let myState = {
   zoom: 1
 }
 
-let webViewerFileInputChange = function (evt) {
-  console.log("HEEEEEEEEEEEEEEEY")
-}
-
 //called after PDFViewerApplication is initialized
 function init(){
+  console.log("Viewer initialized. Cid Controls active.");
 
   const roomName = window.location.pathname.substring(1)
-  console.log('roomName is ' + roomName)
-
-  fetch('/fetch-document?url=' + 'https://cidreader.com/docs/welcometocidreader.pdf')
-    .catch(err => console.log(err))
-    .then(res => res.blob())
-    .then(res => {
-
-      PDFViewerApplication.open({
-        url: URL.createObjectURL(res),
-        originalUrl: "test",
-      }).catch(err => console.log(err))
-    });
+  //console.log('roomName is ' + roomName)
 
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
@@ -45,6 +31,16 @@ function init(){
 
   });
 
+  fetch('/fetch-document?url=' + 'https://localhost/docs/welcometocidreader.pdf')
+    .catch(err => console.log(err))
+    .then(res => res.blob())
+    .then(res => {
+
+      PDFViewerApplication.open({
+        url: URL.createObjectURL(res),
+        originalUrl: "Welcome",
+      }).catch(err => console.log(err))
+    });
 
   function uploadFile () {
       console.log("UploadFile")
@@ -102,19 +98,14 @@ function init(){
     true
   );
 
-  document.addEventListener('', (e)=>{
-  console.log('viewer loaded')
-  });
 
 
-  console.log("Cid Controls active");
 
-
-  function startDoc() {
+  /*function startDoc() {
     const documentLink = document.getElementById("documentLink").value;
     console.log("StartDoc " + documentLink)
     sendDataToServer(documentLink)
-  }
+  }*/
 
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
@@ -131,38 +122,6 @@ function init(){
         }).catch(err => console.log(err))
       });
   }
-
-  //this duplicated code should be refactored
-  function visualizePublicDoc(documentLink) {
-    console.log("VisualizeDoc " + documentLink)
-
-    try {
-      PDFViewerApplication.open(documentLink).then("console")
-    } catch (e) {
-      console.log(e)
-    }
-
-
-    /*pdfjsLib.getDocument(documentLink).then((pdf) => {
-      myState.pdf = pdf;
-      //myState.currentPage = 1;
-      myState.zoom = 1;
-      document.getElementById("current_page").value = myState.currentPage;
-      render()
-      //getDocumentRatio
-
-    }).catch((e) => {
-      console.log('Error', e);
-    })*/
-  }
-
-
-  function startUploadedDoc() {
-    //document.getElementById('uploadForm').action = '/pdfupload' + '?roomname=' + roomName
-    //var documentLink = document.getElementById("fileUpload").files[0].name;
-    //more about this function is actually executed in room.hbs
-  }
-
 
   const socket = io()
 
@@ -344,5 +303,5 @@ function init(){
     return true;
   }
 }
-export { init , webViewerFileInputChange}
+export { init }
 

@@ -199,7 +199,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        ca: fs.readFileSync(ca, 'utf8')
+        //ca: fs.readFileSync(ca, 'utf8')
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
@@ -241,8 +241,8 @@ app.get('/uploads', (req, res) => {
       if (rooms.getRoomURL(roomName) !== '') {
         //disabled for dev
 
-        //io.to(socket.id).emit('signalchannel', 'changeDocument,' + rooms.getRoomURL(roomName))
-        //io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
+        io.to(socket.id).emit('signalchannel', 'changeDocument,' + rooms.getRoomURL(roomName))
+        io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
 
         console.log('Sending room url to client ' + rooms.getRoomURL(roomName) + ' on page ' + rooms.findRoomByName(roomName).currentPage)
       } else {
