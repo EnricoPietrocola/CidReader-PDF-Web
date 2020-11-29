@@ -96,8 +96,9 @@
     });
 
     rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
-
-    res.send(documentUrl)
+    console.log('Responding with document Url' + documentUrl)
+    //res.send(documentUrl)
+    io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
   })
 
   let totalConnections = 0

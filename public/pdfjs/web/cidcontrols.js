@@ -20,7 +20,6 @@ function init(){
     const file = evt.fileInput.files[0];
     console.log("Loaded " + file)
 
-
     const formData = new FormData();
     formData.append('docUpload', file);
 
@@ -38,15 +37,17 @@ function init(){
   });
 
   function uploadFile () {
+      console.log("UploadFile")
 
-      $('fileinputchange').submit(function () {
+    $('pdfUpload').submit(function () {
         $(this).ajaxSubmit({
           error: function (xhr) {
+            console.log("An error occurred")
           },
 
           success: function (response) {
             //sendDataToServer(response)
-            console.log("File successfully uploaded")
+            console.log("File successfully uploaded " + response)
           }
         });
 
@@ -54,15 +55,6 @@ function init(){
         return false;
       });
     };
-
-
-
-  /*<form id="uploadForm" action="" method="post" enctype="multipart/form-data">
-    <input id="fileUpload" type="file" name="docUpload" value="submit" accept="application/pdf"/></input>
-  <button onclick="startUploadedDoc()" type="submit" value="submit" id="changeUploadedDocument">Upload File</button>
-  </form>*/
-
-
 
   document.addEventListener(
     "keydown",
@@ -201,7 +193,7 @@ function init(){
         case "changeDocument":
           myState.pdf = cmd[1];
           //startDoc();
-          //visualizeDoc(myState.pdf)
+          visualizeDoc(myState.pdf)
           console.log("RECV: Visualizing new document " + myState.pdf);
           break;
         case "visualizePublic":
