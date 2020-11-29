@@ -86,7 +86,7 @@
     const originalName = req.file.originalname
     const documentUrl = domain + '/uploads/' + req.file.originalname
     const roomNameReq = req.query.roomname
-    console.log('POST ROOM IS ' + roomNameReq)
+    console.log('POST ROOM IS ' + req.query.roomname)
 
     fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
       if (err) throw err;

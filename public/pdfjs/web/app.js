@@ -2207,6 +2207,7 @@ function webViewerInitialized() {
       if (!files || files.length === 0) {
         return;
       }
+
       PDFViewerApplication.eventBus.dispatch("fileinputchange", {
         source: this,
         fileInput: evt.target,

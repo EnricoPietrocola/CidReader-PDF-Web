@@ -4,18 +4,65 @@ let myState = {
   zoom: 1
 }
 
+let webViewerFileInputChange = function (evt) {
+  console.log("HEEEEEEEEEEEEEEEY")
+}
+
+
+
+//called after PDFViewerApplication is initialized
 function init(){
 
   const roomName = window.location.pathname.substring(1)
   console.log('roomName is ' + roomName)
-  PDFViewerApplication.eventBus.on('openfile', (e)=>
-  {
-    console.log("test " + e.toString())
+
+  PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
+    const file = evt.fileInput.files[0];
+    console.log("Loaded " + file)
+
+
+    const formData = new FormData();
+    formData.append('docUpload', file);
+
+    $.ajax({
+      url: 'pdfUpload' + '?roomname=' + roomName,
+      type: 'POST',
+      processData: false, // important
+      contentType: false, // important
+      dataType : 'docUpload',
+      data: formData
+    });
+
+    uploadFile();
+
   });
-  PDFViewerApplication.eventBus.on('find', (e)=>
-  {
-    console.log("test " + e.toString())
-  });
+
+  function uploadFile () {
+
+      $('fileinputchange').submit(function () {
+        $(this).ajaxSubmit({
+          error: function (xhr) {
+          },
+
+          success: function (response) {
+            //sendDataToServer(response)
+            console.log("File successfully uploaded")
+          }
+        });
+
+        //Very important line, it disables the page refresh.
+        return false;
+      });
+    };
+
+
+
+  /*<form id="uploadForm" action="" method="post" enctype="multipart/form-data">
+    <input id="fileUpload" type="file" name="docUpload" value="submit" accept="application/pdf"/></input>
+  <button onclick="startUploadedDoc()" type="submit" value="submit" id="changeUploadedDocument">Upload File</button>
+  </form>*/
+
+
 
   document.addEventListener(
     "keydown",
@@ -68,8 +115,6 @@ function init(){
   document.addEventListener('', (e)=>{
   console.log('viewer loaded')
   });
-
-
 
 
   console.log("Cid Controls active");
@@ -309,5 +354,5 @@ function init(){
     return true;
   }
 }
-export { init }
+export { init , webViewerFileInputChange}
 
