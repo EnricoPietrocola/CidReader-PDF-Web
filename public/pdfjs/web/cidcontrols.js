@@ -31,7 +31,7 @@ function init(){
 
   });
 
-  fetch('/fetch-document?url=' + 'https://localhost/docs/welcometocidreader.pdf')
+  fetch('/fetch-document?url=' + 'https://cidreader.com/docs/welcometocidreader.pdf')
     .catch(err => console.log(err))
     .then(res => res.blob())
     .then(res => {
