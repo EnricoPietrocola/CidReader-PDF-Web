@@ -96,8 +96,6 @@
     });
 
     rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
-    console.log('Responding with document Url' + documentUrl)
-    //res.send(documentUrl)
     io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
   })
 
@@ -201,7 +199,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        //ca: fs.readFileSync(ca, 'utf8')
+        ca: fs.readFileSync(ca, 'utf8')
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
