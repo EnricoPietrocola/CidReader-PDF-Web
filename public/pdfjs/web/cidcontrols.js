@@ -8,13 +8,22 @@ let webViewerFileInputChange = function (evt) {
   console.log("HEEEEEEEEEEEEEEEY")
 }
 
-
-
 //called after PDFViewerApplication is initialized
 function init(){
 
   const roomName = window.location.pathname.substring(1)
   console.log('roomName is ' + roomName)
+
+  fetch('/fetch-document?url=' + 'https://127.0.0.1/docs/welcometocidreader.pdf')
+    .catch(err => console.log(err))
+    .then(res => res.blob())
+    .then(res => {
+
+      PDFViewerApplication.open({
+        url: URL.createObjectURL(res),
+        originalUrl: "test",
+      }).catch(err => console.log(err))
+    });
 
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
@@ -35,6 +44,7 @@ function init(){
     uploadFile();
 
   });
+
 
   function uploadFile () {
       console.log("UploadFile")
@@ -79,18 +89,6 @@ function init(){
           break;
 
         case "KeyL":
-
-          fetch('/fetch-document?url=' + 'https://127.0.0.1/petreptec/fdf.pdf')
-            .catch(err => console.log(err))
-            .then(res => res.blob())
-            .then(res => {
-
-              PDFViewerApplication.open({
-                url: URL.createObjectURL(res),
-                originalUrl: "test",
-              }).catch(err => console.log(err))
-            });
-
           //visualizeDoc('https://127.0.0.1/docs/fdf.pdf')
           //PDFViewerApplication.open('/uploads/doc.pdf').then() //this opens a file by its url
           //sendDataToOthers('visualizePublic,' + 'https://127.0.0.1/docs/welcomeToCidReader.pdf')
