@@ -199,7 +199,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        //ca: fs.readFileSync(ca, 'utf8')
+        ca: fs.readFileSync(ca, 'utf8')
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
