@@ -27,7 +27,7 @@
 
   app.use(cors())
 
-//app.use(express.static(__dirname + '/public')) //this might be removed, check later
+app.use(express.static(__dirname + '/public')) //this might be removed, check later
 
   const PORT = process.env.PORT || 80
 
@@ -182,7 +182,7 @@ app.get('/uploads', (req, res) => {
 })
 
   app.get('/reader', (req, res) => {
-    res.sendFile("D:/RepoCidReaderWeb/public/pdfjs/web/viewer.html")
+    //res.sendFile("D:/RepoCidReaderWeb/public/pdfjs/web/viewer.html")
   })
 
   app.get('*', (req, res) => {
