@@ -185,6 +185,10 @@ app.get('/uploads', (req, res) => {
     //res.sendFile("D:/RepoCidReaderWeb/public/pdfjs/web/viewer.html")
   })
 
+  app.get('/player', (req, res) => {
+    res.sendFile(path.join(publicDirectoryPath, '/player.html'))
+  })
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(publicDirectoryPath, '/reader.html'))
   })
