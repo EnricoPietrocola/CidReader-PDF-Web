@@ -118,13 +118,12 @@ function init(){
   })
 
   function getPages(){
-    console.log('[ div.page data-page-number="' + counter + '"]')
     pdfPages = document.querySelectorAll(".page");
   }
 
   PDFViewerApplication.eventBus.on('pagerendered', ()=> {
     counter++;
-    console.log('pagerendered ' + counter);
+    //console.log('pagerendered ' + counter);
 
     if (counter < PDFViewerApplication.pagesCount) {
       //wait or do something while loading
@@ -164,7 +163,7 @@ function init(){
           const posY = canvasY / cidCanvas.height
           ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-          sendDataToOthers("pointerPosition,"+ index + "," + posX + "," + posY)
+          sendDataToOthers(JSON.stringify("pointerPosition,"+ index + "," + posX + "," + posY))
         });
       })
     }
@@ -193,7 +192,7 @@ function init(){
         console.log('sendData received non JSON data: ' + data)
       }
 
-      console.log(data)
+      //console.log(data)
 
       const cmd = data.split(",");
 
@@ -202,13 +201,13 @@ function init(){
           myState.pdf = cmd[1];
           //startDoc();
           visualizeDoc(myState.pdf)
-          console.log("RECV: Visualizing new document " + myState.pdf);
+          //console.log("RECV: Visualizing new document " + myState.pdf);
           break;
         case "visualizePublic":
           myState.pdf = cmd[1];
           //startDoc();
           //visualizePublicDoc(myState.pdf.toString())
-          console.log("RECV: Visualizing new public document " + myState.pdf);
+          //console.log("RECV: Visualizing new public document " + myState.pdf);
           break;
 
         default:
@@ -227,7 +226,7 @@ function init(){
         console.log('sendData received non JSON data: ' + data)
       }
 
-      console.log(data)
+      //console.log(data)
 
       const cmd = data.split(",");
 
@@ -241,7 +240,7 @@ function init(){
           break;
 
         default:
-          console.log('RECV msg ' + data)
+          //console.log('RECV msg ' + data)
       }
     }
   })
@@ -267,62 +266,3 @@ function init(){
 
 }
 export { init }
-
-/*
-    eventBus._on("resize", webViewerResize);
-    eventBus._on("hashchange", webViewerHashchange);
-    eventBus._on("beforeprint", _boundEvents.beforePrint);
-    eventBus._on("afterprint", _boundEvents.afterPrint);
-    eventBus._on("pagerendered", webViewerPageRendered);
-    eventBus._on("updateviewarea", webViewerUpdateViewarea);
-    eventBus._on("pagechanging", webViewerPageChanging);
-    eventBus._on("scalechanging", webViewerScaleChanging);
-    eventBus._on("rotationchanging", webViewerRotationChanging);
-    eventBus._on("sidebarviewchanged", webViewerSidebarViewChanged);
-    eventBus._on("pagemode", webViewerPageMode);
-    eventBus._on("namedaction", webViewerNamedAction);
-    eventBus._on("presentationmodechanged", webViewerPresentationModeChanged);
-    eventBus._on("presentationmode", webViewerPresentationMode);
-    eventBus._on("print", webViewerPrint);
-    eventBus._on("download", webViewerDownload);
-    eventBus._on("save", webViewerSave);
-    eventBus._on("firstpage", webViewerFirstPage);
-    eventBus._on("lastpage", webViewerLastPage);
-    eventBus._on("nextpage", webViewerNextPage);
-    eventBus._on("previouspage", webViewerPreviousPage);
-    eventBus._on("zoomin", webViewerZoomIn);
-    eventBus._on("zoomout", webViewerZoomOut);
-    eventBus._on("zoomreset", webViewerZoomReset);
-    eventBus._on("pagenumberchanged", webViewerPageNumberChanged);
-    eventBus._on("scalechanged", webViewerScaleChanged);
-    eventBus._on("rotatecw", webViewerRotateCw);
-    eventBus._on("rotateccw", webViewerRotateCcw);
-    eventBus._on("optionalcontentconfig", webViewerOptionalContentConfig);
-    eventBus._on("switchscrollmode", webViewerSwitchScrollMode);
-    eventBus._on("scrollmodechanged", webViewerScrollModeChanged);
-    eventBus._on("switchspreadmode", webViewerSwitchSpreadMode);
-    eventBus._on("spreadmodechanged", webViewerSpreadModeChanged);
-    eventBus._on("documentproperties", webViewerDocumentProperties);
-    eventBus._on("find", webViewerFind);
-    eventBus._on("findfromurlhash", webViewerFindFromUrlHash);
-    eventBus._on("updatefindmatchescount", webViewerUpdateFindMatchesCount);
-    eventBus._on("updatefindcontrolstate", webViewerUpdateFindControlState);
- */
-/*
-page.addEventListener("mousemove", function(e) {
-  console.log("happening?")
-  //ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const cRect = page.getBoundingClientRect();        // Gets CSS pos, and width/height
-  const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
-  const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-  ctx.clearRect(0, 0, page.width, page.height);  // (0,0) the top left of the canvas
-  ctx.fillText("X: "+canvasX / page.width+", Y: "+canvasY / page.height, 10, 20);
-  ctx.fillRect(canvasX,canvasY,20,20)
-
-  const posX = canvasX / page.width
-  const posY = canvasY / page.height
-  ctx.fillText("X: "+posX+", Y: "+posX, 10, 20);
-  ctx.fillRect(posX * page.width, posY * page.height,20,20)
-  //sendDataToOthers("pointerPosition," + posX + "," + posY)
-});
-})*/

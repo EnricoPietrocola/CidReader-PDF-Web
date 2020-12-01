@@ -265,7 +265,7 @@ app.get('/uploads', (req, res) => {
         if (isJson(data)) {
           data = JSON.parse(data.toString())
         } else {
-          console.log('sendData received non JSON data: ' + data)
+          //console.log('sendData received non JSON data: ' + data)
         }
 
         //console.log(data)
