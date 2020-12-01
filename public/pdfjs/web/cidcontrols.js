@@ -85,32 +85,6 @@ function init(){
           }
           break;
 
-        case "KeyL":
-          cidPages.forEach((item, index) => {
-            const ctx = item.getContext('2d')
-            console.log('adding event listeners')
-            item.addEventListener('mousemove', function (e) {
-              console.log("happening?")
-              //ctx.clearRect(0, 0, canvas.width, canvas.height);
-              console.log(e.clientX)
-              console.log(e.clientY)
-
-              const cRect = item.getBoundingClientRect();        // Gets CSS pos, and width/height
-              const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
-              const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-              ctx.clearRect(0, 0, item.width, item.height);  // (0,0) the top left of the canvas
-              ctx.fillText("X: " + canvasX / item.width + ", Y: " + canvasY / item.height, 10, 20);
-              ctx.fillRect(canvasX, canvasY, 20, 20)
-
-              const posX = canvasX / item.width
-              const posY = canvasY / item.height
-
-              ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
-              ctx.fillRect(posX * item.width, posY * item.height, 20, 20)
-              //sendDataToOthers("pointerPosition," + posX + "," + posY)
-            });
-          })
-          break;
         default:
           // default
           break;
@@ -137,44 +111,15 @@ function init(){
   }
 
   let counter = 0;
-  let cidLayers;
-  let cidPages = new Array();
-  let pdfPages = new Array();
+  let cidPages = [];
+  let pdfPages = [];
   PDFViewerApplication.eventBus.on("fileinputchange", ()=>{
     counter = 0;
   })
 
   function getPages(){
-    //const queryValue = 'Page ' + counter;
-    //const page = document.querySelector('[aria-label="' + queryValue + '"]');
     console.log('[ div.page data-page-number="' + counter + '"]')
-
-    //const page = document.querySelector('[.page] [data-page-number="' + counter + '"]');
     pdfPages = document.querySelectorAll(".page");
-    /*
-    //create an array of overlayed pages
-    const layer = page.cloneNode(true)
-    layer.id("CidLayer" + counter);
-    layer.classList.add('text-large');
-    page.after(layer)
-    cidLayers.push(layer)
-    */
-    console.log(pdfPages)
-    //create an array of pages (canvases)
-    //cidPages.push(page)
-
-    /*
-    const cidCanvas = document.createElement('canvas');
-    cidCanvas.id = 'cidCanvas';
-
-    document.body.appendChild(cidCanvas); // adds the canvas to the body element
-    page.appendChild(cidCanvas); // adds the canvas to #someBox
-    */
-
-
-    //const ctx = page.getContext('2d');
-    //ctx.fillStyle = "blue";
-    //ctx.fillRect(0, 0, page.width, page.height);
   }
 
   PDFViewerApplication.eventBus.on('pagerendered', ()=> {
@@ -199,7 +144,6 @@ function init(){
         cidCanvas.style.top = '0px';
         cidCanvas.style.left = '0px';
 
-
         const ctx = cidCanvas.getContext('2d')
 
         cidCanvas.width = item.clientWidth;
@@ -220,13 +164,18 @@ function init(){
           const posY = canvasY / cidCanvas.height
           ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-          //sendDataToOthers("pointerPosition," + posX + "," + posY)
+          sendDataToOthers("pointerPosition,"+ index + "," + posX + "," + posY)
         });
       })
     }
   });
 
-
+  function drawRemotePointer(pageNumber, posX, posY){
+    const ctx = cidPages[pageNumber].getContext('2d');
+    ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
+    ctx.fillText("X: "+posX+", Y: "+posX, 10, 20);
+    ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height,20,20)
+  }
   //                                                                                                       REALTIME_COM
 
   const socket = io()
@@ -288,7 +237,7 @@ function init(){
           break;
 
         case "pointerPosition":
-          drawPointer(parseFloat(cmd[1]), parseFloat(cmd[2]))
+          drawRemotePointer(parseFloat(cmd[1]), parseFloat(cmd[2]), parseFloat(cmd[3]))
           break;
 
         default:
