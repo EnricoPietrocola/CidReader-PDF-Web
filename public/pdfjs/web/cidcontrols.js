@@ -115,16 +115,10 @@ function init(){
   function visualizePublicDoc(documentLink) {
     console.log("VisualizeDoc " + documentLink)
 
-    fetch('/get-public-document?url=' + documentLink)
-      .catch(err => console.log(err))
-      .then(res => res.blob())
-      .then(res => {
-
-        PDFViewerApplication.open({
-          url: URL.createObjectURL(res),
-          originalUrl: "Welcome To Cid Reader",
-        }).catch(err => console.log(err))
-      });
+    PDFViewerApplication.open({
+      url: documentLink,
+      originalUrl: "Welcome To Cid Reader",
+    }).catch(err => console.log(err))
   }
 
   let counter = 0;
