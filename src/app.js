@@ -154,7 +154,7 @@ app.get('/get-public-document', (req, res) => {
 
   const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
 
-  const filePath = publicDirectoryPath + '/' + fileName
+  const filePath = publicDirectoryPath + '/docs/' + fileName
   console.log('FETCH FILE PATH ' + filePath)
 
   if (fs.existsSync(filePath)) {
