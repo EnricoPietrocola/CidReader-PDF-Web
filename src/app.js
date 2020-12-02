@@ -144,6 +144,40 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
   })
 
+app.get('/get-public-document', (req, res) => {
+  const documentUrl = req.query.url
+  const roomNameReq = req.query.roomname
+
+  console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
+
+  const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
+
+  const filePath = uploadsDirectoryPath + '/' + fileName
+  console.log('FETCH FILE PATH ' + filePath)
+
+  if (fs.existsSync(filePath)) {
+    console.log("The file exists. Sending file to client");
+    res.sendFile(filePath)
+    //res.contentType("application/pdf");
+    //res.send(file);
+
+    rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
+
+  } else {
+    console.log('New file request, adding to library')
+    const file = fs.createWriteStream(filePath)
+    https.get(documentUrl, (response) => {
+      response.pipe(file)
+      file.on('finish', () => {
+        file.close()
+        console.log('pdf path ' + filePath)
+        rooms.changeRoomDocURL(filePath)
+        res.sendFile(filePath)
+      })
+    })
+  }
+})
+
 app.get('/fetch-document', (req, res) => {
   const documentUrl = req.query.url
   const roomNameReq = req.query.roomname
@@ -193,6 +227,20 @@ app.get('/uploads', (req, res) => {
     res.sendFile(path.join(publicDirectoryPath, '/docs/TermsandConditionsofUseCidReader.pdf'))
   })
 
+  app.get('/about', (req, res) => {
+    //res.sendFile(path.join(publicDirectoryPath, '/player.html'))
+    res.send('Work in progress')
+  })
+
+  app.get('/help', (req, res) => {
+    res.sendFile(path.join(publicDirectoryPath, '/docs/welcometocidreader.pdf'))
+  })
+
+  app.get('/contact', (req, res) => {
+    //res.sendFile(path.join(publicDirectoryPath, '/player.html'))
+    res.send('Work in progress')
+  })
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(publicDirectoryPath, '/reader.html'))
   })
@@ -207,7 +255,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        //ca: fs.readFileSync(ca, 'utf8')
+        ca: fs.readFileSync(ca, 'utf8')
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
