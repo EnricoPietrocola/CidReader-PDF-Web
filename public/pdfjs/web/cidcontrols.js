@@ -11,7 +11,7 @@ function init(){
   const roomName = window.location.pathname.substring(1)
 
 
-  visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
+  visualizePublicDoc(document.location.origin + '/docs/welcomeToCidReader.pdf')
 
 
   /*fetch('/fetch-document?url=' + document.location.origin + '/docs/welcome.pdf')
