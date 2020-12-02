@@ -7,7 +7,7 @@ let myState = {
 //called after PDFViewerApplication is initialized
 function init(){
   console.log("Viewer initialized. Cid Controls active.");
-  
+
   const roomName = window.location.pathname.substring(1)
 
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
@@ -161,7 +161,7 @@ function init(){
 
           const posX = canvasX / cidCanvas.width
           const posY = canvasY / cidCanvas.height
-          ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
+          //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
           sendDataToOthers(JSON.stringify("pointerPosition,"+ index + "," + posX + "," + posY))
         });
@@ -172,7 +172,7 @@ function init(){
   function drawRemotePointer(pageNumber, posX, posY){
     const ctx = cidPages[pageNumber].getContext('2d');
     ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
-    ctx.fillText("X: "+posX+", Y: "+posX, 10, 20);
+    //ctx.fillText("X: "+posX+", Y: "+posX, 10, 20);
     ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height,20,20)
   }
   //                                                                                                       REALTIME_COM
