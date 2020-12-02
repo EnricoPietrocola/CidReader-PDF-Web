@@ -91,7 +91,7 @@ function init(){
       dataType : 'docUpload',
       data: formData
     });
-
+    //this should only happen if THIS user changed a document
     //uploadFile();
 
   });
@@ -121,22 +121,23 @@ function init(){
     }).catch(err => console.log(err))
   }
 
-  let counter = 0;
+  //let counter = 0;
   let cidPages = [];
   let pdfPages = [];
   PDFViewerApplication.eventBus.on("fileinputchange", ()=>{
-    counter = 0;
+    //counter = 0;
   })
 
   function getPages(){
     pdfPages = document.querySelectorAll(".page");
   }
 
-  PDFViewerApplication.eventBus.on('pagerendered', ()=> {
-    counter++;
+  PDFViewerApplication.eventBus.on('pagerendered', (evt)=> {
+    //console.log(evt.pageNumber)
+    //counter++;
     //console.log('pagerendered ' + counter);
 
-    if (counter < PDFViewerApplication.pagesCount) {
+    if (evt.pageNumber < PDFViewerApplication.pagesCount) {
       //wait or do something while loading
     } else {
       getPages()
@@ -174,7 +175,7 @@ function init(){
           const posY = canvasY / cidCanvas.height
           //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-          sendDataToOthers(JSON.stringify("pointerPosition,"+ index + "," + posX + "," + posY))
+          sendDataToOthers(JSON.stringify("pointerPosition," + index + "," + posX + "," + posY))
         });
       })
     }
