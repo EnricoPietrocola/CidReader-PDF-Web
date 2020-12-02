@@ -13,26 +13,6 @@ function init(){
 
   visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
 
-  function uploadFile () {
-      console.log("UploadFile")
-
-    $('pdfUpload').submit(function () {
-        $(this).ajaxSubmit({
-          error: function (xhr) {
-            console.log("An error occurred")
-          },
-
-          success: function (response) {
-            //sendDataToServer(response)
-            console.log("File successfully uploaded " + response)
-          }
-        });
-
-        //Very important line, it disables the page refresh.
-        return false;
-      });
-    };
-
   document.addEventListener(
     "keydown",
     function (event) {
@@ -40,7 +20,6 @@ function init(){
       switch (event.code) {
         case "KeyA":
 
-          sendDataToOthers("test")
           if (PDFViewerApplication.page > 1) {
             PDFViewerApplication.page--
             sendDataToOthers("changePage," + PDFViewerApplication.page)
@@ -67,7 +46,7 @@ function init(){
   let isChangeLocal = false;
 
   PDFViewerApplication.eventBus.on('openfile', (evt)=>{
-    console.log(evt)
+    //console.log(evt)
     isChangeLocal = true
   })
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
@@ -88,16 +67,16 @@ function init(){
         data: formData
       });
       isChangeLocal = false; //reset for next docs
+      //this could be improved by ignoring the next doc change message from server in order to open selected document ASAP locally
     }
     else{
 
     }
-
   });
 
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
-    console.log("VisualizeDoc " + documentLink)
+    //console.log("VisualizeDoc " + documentLink)
 
     fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
       .catch(err => console.log(err))
@@ -112,7 +91,7 @@ function init(){
   }
 
   function visualizePublicDoc(documentLink) {
-    console.log("VisualizeDoc " + documentLink)
+    //console.log("VisualizeDoc " + documentLink)
 
     PDFViewerApplication.open({
       url: documentLink,
@@ -167,7 +146,7 @@ function init(){
           const posY = canvasY / cidCanvas.height
           //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-          sendDataToOthers(JSON.stringify("pointerPosition," + index + "," + posX + "," + posY))
+          sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
         });
       })
     }
@@ -183,7 +162,7 @@ function init(){
 
   const socket = io()
 
-  console.log('room name = ' + roomName)
+  //console.log('room name = ' + roomName)
 
   socket.emit('join', roomName)
 
@@ -193,7 +172,7 @@ function init(){
       if (isJson(data)) {
         data = JSON.parse(data.toString())
       } else {
-        console.log('sendData received non JSON data: ' + data)
+        //console.log('sendData received non JSON data: ' + data)
       }
 
       //console.log(data)
@@ -215,7 +194,7 @@ function init(){
           break;
 
         default:
-          console.log('RECV msg ' + data)
+          console.log('RECV unknown msg ' + data)
       }
     }
   })
@@ -227,7 +206,7 @@ function init(){
       if (isJson(data)) {
         data = JSON.parse(data.toString())
       } else {
-        console.log('sendData received non JSON data: ' + data)
+        //console.log('sendData received non JSON data: ' + data)
       }
 
       //console.log(data)
@@ -244,17 +223,17 @@ function init(){
           break;
 
         default:
-          //console.log('RECV msg ' + data)
+          console.log('RECV unknown msg ' + data)
       }
     }
   })
 
   function sendDataToOthers(dataString) {
-    socket.emit('datachannel', roomName, dataString)
+    socket.emit('datachannel', roomName, JSON.stringify(dataString))
   }
 
   function sendDataToServer(dataString) {
-    socket.emit('signalchannel', roomName, dataString)
+    socket.emit('signalchannel', roomName, JSON.stringify(dataString))
   }
 
   function isJson(str) {
