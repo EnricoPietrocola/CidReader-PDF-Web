@@ -13,18 +13,6 @@ function init(){
 
   visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
 
-
-  /*fetch('/fetch-document?url=' + document.location.origin + '/docs/welcome.pdf')
-    .catch(err => console.log(err))
-    .then(res => res.blob())
-    .then(res => {
-
-      PDFViewerApplication.open({
-        url: URL.createObjectURL(res),
-        originalUrl: "Welcome",
-      }).catch(err => console.log(err))
-    });
-  */
   function uploadFile () {
       console.log("UploadFile")
 
@@ -76,6 +64,12 @@ function init(){
     true
   );
 
+  let isChangeLocal = false;
+
+  PDFViewerApplication.eventBus.on('openfile', (evt)=>{
+    console.log(evt)
+    isChangeLocal = true
+  })
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
     console.log("Loaded " + file)
@@ -83,16 +77,21 @@ function init(){
     const formData = new FormData();
     formData.append('docUpload', file);
 
-    $.ajax({
-      url: 'pdfUpload' + '?roomname=' + roomName,
-      type: 'POST',
-      processData: false, // important
-      contentType: false, // important
-      dataType : 'docUpload',
-      data: formData
-    });
-    //this should only happen if THIS user changed a document
-    //uploadFile();
+    //if user is the one uploading a file, send to server, else simply fetch and visualize
+    if(isChangeLocal){
+      $.ajax({
+        url: 'pdfUpload' + '?roomname=' + roomName,
+        type: 'POST',
+        processData: false, // important
+        contentType: false, // important
+        dataType : 'docUpload',
+        data: formData
+      });
+      isChangeLocal = false; //reset for next docs
+    }
+    else{
+
+    }
 
   });
 
@@ -121,21 +120,14 @@ function init(){
     }).catch(err => console.log(err))
   }
 
-  //let counter = 0;
   let cidPages = [];
   let pdfPages = [];
-  PDFViewerApplication.eventBus.on("fileinputchange", ()=>{
-    //counter = 0;
-  })
 
   function getPages(){
     pdfPages = document.querySelectorAll(".page");
   }
 
   PDFViewerApplication.eventBus.on('pagerendered', (evt)=> {
-    //console.log(evt.pageNumber)
-    //counter++;
-    //console.log('pagerendered ' + counter);
 
     if (evt.pageNumber < PDFViewerApplication.pagesCount) {
       //wait or do something while loading
@@ -212,7 +204,7 @@ function init(){
         case "changeDocument":
           myState.pdf = cmd[1];
           //startDoc();
-          //visualizeDoc(myState.pdf)
+          visualizeDoc(myState.pdf)
           //console.log("RECV: Visualizing new document " + myState.pdf);
           break;
         case "visualizePublic":

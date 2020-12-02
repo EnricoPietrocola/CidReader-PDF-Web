@@ -86,7 +86,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     const originalName = req.file.originalname
     const documentUrl = domain + '/uploads/' + req.file.originalname
     const roomNameReq = req.query.roomname
-    console.log('POST ROOM IS ' + req.query.roomname)
+    //console.log('POST ROOM IS ' + req.query.roomname)
 
     fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
       if (err) throw err;
@@ -220,6 +220,7 @@ app.get('/uploads', (req, res) => {
 
   app.get('/reader', (req, res) => {
     //res.sendFile("D:/RepoCidReaderWeb/public/pdfjs/web/viewer.html")
+    res.send('Access Denied - Please create a room with a different name')
   })
 
   app.get('/player', (req, res) => {
