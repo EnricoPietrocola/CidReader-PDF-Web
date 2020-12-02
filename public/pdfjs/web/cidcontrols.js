@@ -11,7 +11,7 @@ function init(){
   const roomName = window.location.pathname.substring(1)
 
 
-  visualizePublicDoc(document.location.origin + '/docs/welcomeToCidReader.pdf')
+  visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
 
 
   /*fetch('/fetch-document?url=' + document.location.origin + '/docs/welcome.pdf')
@@ -92,7 +92,7 @@ function init(){
       data: formData
     });
 
-    uploadFile();
+    //uploadFile();
 
   });
 
@@ -211,7 +211,7 @@ function init(){
         case "changeDocument":
           myState.pdf = cmd[1];
           //startDoc();
-          visualizeDoc(myState.pdf)
+          //visualizeDoc(myState.pdf)
           //console.log("RECV: Visualizing new document " + myState.pdf);
           break;
         case "visualizePublic":
