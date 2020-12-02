@@ -47,7 +47,7 @@ function init(){
   let isChangeLocal = false;
 
   PDFViewerApplication.eventBus.on('openfile', (evt)=>{
-    //console.log(evt)
+    console.log(evt)
     isChangeLocal = true
   })
   //triggered when user inputs a new document
@@ -72,7 +72,6 @@ function init(){
       //this could be improved by ignoring the next doc change message from server in order to open selected document ASAP locally
     }
     else{
-
     }
 
   });
