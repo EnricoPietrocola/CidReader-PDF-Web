@@ -105,9 +105,9 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     res.send('Cid is running, with ' + rooms.rooms.length + ' open rooms, with ' + rooms.getConnectionsCount() + ' total users. Total connections since last reboot are ' + totalConnections)
   })
 
-  app.get('/public/docs/', (req, res) => {
+  app.get('/public/docs', (req, res) => {
   })
-  app.get('/docs/', (req, res) => {
+  app.get('/docs', (req, res) => {
   })
 
   app.get('/get-document', (req, res) => {
