@@ -8,6 +8,16 @@ let myState = {
 function init(){
   console.log("Viewer initialized. Cid Controls active.");
 
+  /*const terms = confirm("I agree to the CidReader Terms and Conditions of use" + ' <a href="/docs/termsandconditions">Visit W3Schools</a>' );
+  if(terms === true){
+    //keep going
+  }
+  else{
+  }
+*/
+
+
+
   const roomName = window.location.pathname.substring(1)
 
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
