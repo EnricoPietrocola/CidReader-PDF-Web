@@ -107,6 +107,8 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
   app.get('/public/docs/', (req, res) => {
   })
+  app.get('/docs/', (req, res) => {
+  })
 
   app.get('/get-document', (req, res) => {
     const documentUrl = req.query.url
