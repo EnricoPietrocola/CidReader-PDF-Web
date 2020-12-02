@@ -10,7 +10,8 @@ function init(){
 
   const roomName = window.location.pathname.substring(1)
 
-
+  let pdfPages = [];
+  let cidPages = []
   visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
 
   document.addEventListener(
@@ -72,6 +73,8 @@ function init(){
     else{
 
     }
+    pdfPages = new Array(PDFViewerApplication.pagesCount)
+    cidPages = new Array(PDFViewerApplication.pagesCount)
   });
 
   //this duplicated code should be refactored
@@ -99,22 +102,83 @@ function init(){
     }).catch(err => console.log(err))
   }
 
-  let cidPages = [];
-  let pdfPages = [];
-
   function getPages(){
     pdfPages = document.querySelectorAll(".page");
   }
 
-  PDFViewerApplication.eventBus.on('pagerendered', (evt)=> {
+  PDFViewerApplication.eventBus.on('hashchange',(evt) => {
+    console.log('hashchange')
+    console.log(evt)
+  })
 
-    if (evt.pageNumber < PDFViewerApplication.pagesCount) {
+  PDFViewerApplication.eventBus.on('pagerendered', (evt)=> {
+    const pageNumber = evt.pageNumber - 1;
+    getPages()
+
+    //add a listener on page to detect mouse over page
+    const thisPage = pdfPages[pageNumber];
+    thisPage.addEventListener("mousemove", (e)=> {
+      const cRect = thisPage.getBoundingClientRect();        // Gets CSS pos, and width/height
+      const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
+      const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
+      const posX = canvasX / thisPage.clientWidth
+      const posY = canvasY / thisPage.clientHeight
+
+      console.log("page " + pageNumber + " " + posX + " " + posY)
+    })
+
+
+    /*if (evt.pageNumber < PDFViewerApplication.pagesCount) {
       //wait or do something while loading
-    } else {
+      //evt.pageNumber
       getPages()
+      //const query = '.page div[data-page-number="' + evt.pageNumber + '"]';
+      //const query = '.page, div[data-page-number="' + evt.pageNumber + '"]';
+      //console.log(query)
+      const pdfPage = pdfPages[evt.pageNumber] //document.querySelector(query);
+      //pdfPages[evt.pageNumber] = pdfPage;
+
+      const cidCanvas = document.createElement('canvas');
+      cidPages[evt.pageNumber] = cidCanvas;
+
+      cidCanvas.id = 'cidCanvas';
+
+      document.body.appendChild(cidCanvas); // adds the canvas to the body element
+      pdfPage.appendChild(cidCanvas); // adds the canvas to div
+
+      cidCanvas.style.position = 'absolute';
+      cidCanvas.style.top = '0px';
+      cidCanvas.style.left = '0px';
+
+      const ctx = cidCanvas.getContext('2d')
+
+      cidCanvas.width = pdfPage.clientWidth;
+      cidCanvas.height = pdfPage.clientHeight;
+      //cidPages.push(cidCanvas)
+
+      cidCanvas.addEventListener('mousemove', function (e) {
+
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cRect = cidCanvas.getBoundingClientRect();        // Gets CSS pos, and width/height
+        const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
+        const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
+        ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
+        //ctx.fillText("X: " + canvasX / cidCanvas.width + ", Y: " + canvasY / cidCanvas.height, 10, 20);
+        //ctx.fillRect(canvasX, canvasY, 20, 20)
+
+        const posX = canvasX / cidCanvas.width
+        const posY = canvasY / cidCanvas.height
+        //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
+        ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
+        sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
+      });
+
+
+    } else {
+      //getPages()
       console.log("last page rendered ")
       //do things with pages canvases
-      pdfPages.forEach((item, index) => {
+      /*pdfPages.forEach((item, index) => {
 
         const cidCanvas = document.createElement('canvas');
         cidCanvas.id = 'cidCanvas';
@@ -148,14 +212,14 @@ function init(){
           ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
           sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
         });
-      })
-    }
+      })*/
+    //}
+
   });
 
   function drawRemotePointer(pageNumber, posX, posY){
     const ctx = cidPages[pageNumber].getContext('2d');
     ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
-    //ctx.fillText("X: "+posX+", Y: "+posX, 10, 20);
     ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height,20,20)
   }
   //                                                                                                       REALTIME_COM
