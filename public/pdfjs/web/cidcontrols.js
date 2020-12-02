@@ -55,11 +55,13 @@ function init(){
     const file = evt.fileInput.files[0];
     console.log("Loaded " + file)
 
-    const formData = new FormData();
-    formData.append('docUpload', file);
-
-    //if user is the one uploading a file, send to server, else simply fetch and visualize
     if(isChangeLocal){
+      isChangeLocal = false; //reset for next docs
+      //if user is the one uploading a file, send to server, else simply fetch and visualize
+
+      const formData = new FormData();
+      formData.append('docUpload', file);
+
       $.ajax({
         url: 'pdfUpload' + '?roomname=' + roomName,
         type: 'POST',
@@ -68,8 +70,6 @@ function init(){
         dataType : 'docUpload',
         data: formData
       });
-      isChangeLocal = false; //reset for next docs
-      //this could be improved by ignoring the next doc change message from server in order to open selected document ASAP locally
     }
     else{
     }
