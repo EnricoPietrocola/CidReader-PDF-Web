@@ -50,6 +50,7 @@ function init(){
     //console.log(evt)
     isChangeLocal = true
   })
+  //triggered when user inputs a new document
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
     console.log("Loaded " + file)
@@ -73,8 +74,7 @@ function init(){
     else{
 
     }
-    pdfPages = new Array(PDFViewerApplication.pagesCount)
-    cidPages = new Array(PDFViewerApplication.pagesCount)
+
   });
 
   //this duplicated code should be refactored
@@ -88,8 +88,10 @@ function init(){
 
         PDFViewerApplication.open({
           url: URL.createObjectURL(res),
-          originalUrl: "test",
+          originalUrl: "",
         }).catch(err => console.log(err))
+
+
       });
   }
 
@@ -100,9 +102,11 @@ function init(){
       url: documentLink,
       originalUrl: "Welcome To Cid Reader",
     }).catch(err => console.log(err))
+
   }
 
   function getPages(){
+
     pdfPages = document.querySelectorAll(".page");
   }
 
@@ -120,6 +124,7 @@ function init(){
 
     //create a canvas, add it to page div and draw something on given position
     const cidCanvas = document.createElement('canvas');
+    cidPages[pageNumber] = cidCanvas;
     document.body.appendChild(cidCanvas); // adds the canvas to the body element
     pdfPage.appendChild(cidCanvas); // adds the canvas to div
     //overlap page
@@ -140,28 +145,30 @@ function init(){
       const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
       const posX = canvasX / pdfPage.clientWidth
       const posY = canvasY / pdfPage.clientHeight
-      
+
       //draw pointer
       ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
       ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
 
       //send remote pointer draw call
-      //sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
+      sendDataToOthers("pointerPosition," + pageNumber + "," + posX + "," + posY)
     })
-
   });
 
   function drawRemotePointer(pageNumber, posX, posY){
-    const ctx = cidPages[pageNumber].getContext('2d');
-    ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
-    ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height,20,20)
+    const page = cidPages[pageNumber]
+    if(page !== undefined) {
+      const ctx = page.getContext('2d');
+      if(ctx !== undefined) {
+        ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
+        ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height, 20, 20)
+      }
+    }
   }
+
   //                                                                                                       REALTIME_COM
-
   const socket = io()
-
   //console.log('room name = ' + roomName)
-
   socket.emit('join', roomName)
 
   socket.on('signalchannel', (data) => {
@@ -242,8 +249,5 @@ function init(){
     }
     return true;
   }
-
-
-
 }
 export { init }
