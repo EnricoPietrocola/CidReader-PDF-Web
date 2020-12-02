@@ -116,104 +116,38 @@ function init(){
     getPages()
 
     //add a listener on page to detect mouse over page
-    const thisPage = pdfPages[pageNumber];
-    thisPage.addEventListener("mousemove", (e)=> {
-      const cRect = thisPage.getBoundingClientRect();        // Gets CSS pos, and width/height
+    const pdfPage = pdfPages[pageNumber];
+
+    //create a canvas, add it to page div and draw something on given position
+    const cidCanvas = document.createElement('canvas');
+    document.body.appendChild(cidCanvas); // adds the canvas to the body element
+    pdfPage.appendChild(cidCanvas); // adds the canvas to div
+    //overlap page
+    cidCanvas.id = 'cidCanvas';
+    cidCanvas.style.position = 'absolute';
+    cidCanvas.style.top = '0px';
+    cidCanvas.style.left = '0px';
+
+    const ctx = cidCanvas.getContext('2d')
+
+    //resize to match page size
+    cidCanvas.width = pdfPage.clientWidth;
+    cidCanvas.height = pdfPage.clientHeight;
+
+    pdfPage.addEventListener("mousemove", (e)=> {
+      const cRect = pdfPage.getBoundingClientRect();        // Gets CSS pos, and width/height
       const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
       const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-      const posX = canvasX / thisPage.clientWidth
-      const posY = canvasY / thisPage.clientHeight
+      const posX = canvasX / pdfPage.clientWidth
+      const posY = canvasY / pdfPage.clientHeight
+      
+      //draw pointer
+      ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
+      ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
 
-      console.log("page " + pageNumber + " " + posX + " " + posY)
+      //send remote pointer draw call
+      //sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
     })
-
-
-    /*if (evt.pageNumber < PDFViewerApplication.pagesCount) {
-      //wait or do something while loading
-      //evt.pageNumber
-      getPages()
-      //const query = '.page div[data-page-number="' + evt.pageNumber + '"]';
-      //const query = '.page, div[data-page-number="' + evt.pageNumber + '"]';
-      //console.log(query)
-      const pdfPage = pdfPages[evt.pageNumber] //document.querySelector(query);
-      //pdfPages[evt.pageNumber] = pdfPage;
-
-      const cidCanvas = document.createElement('canvas');
-      cidPages[evt.pageNumber] = cidCanvas;
-
-      cidCanvas.id = 'cidCanvas';
-
-      document.body.appendChild(cidCanvas); // adds the canvas to the body element
-      pdfPage.appendChild(cidCanvas); // adds the canvas to div
-
-      cidCanvas.style.position = 'absolute';
-      cidCanvas.style.top = '0px';
-      cidCanvas.style.left = '0px';
-
-      const ctx = cidCanvas.getContext('2d')
-
-      cidCanvas.width = pdfPage.clientWidth;
-      cidCanvas.height = pdfPage.clientHeight;
-      //cidPages.push(cidCanvas)
-
-      cidCanvas.addEventListener('mousemove', function (e) {
-
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const cRect = cidCanvas.getBoundingClientRect();        // Gets CSS pos, and width/height
-        const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
-        const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-        ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
-        //ctx.fillText("X: " + canvasX / cidCanvas.width + ", Y: " + canvasY / cidCanvas.height, 10, 20);
-        //ctx.fillRect(canvasX, canvasY, 20, 20)
-
-        const posX = canvasX / cidCanvas.width
-        const posY = canvasY / cidCanvas.height
-        //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
-        ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-        sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
-      });
-
-
-    } else {
-      //getPages()
-      console.log("last page rendered ")
-      //do things with pages canvases
-      /*pdfPages.forEach((item, index) => {
-
-        const cidCanvas = document.createElement('canvas');
-        cidCanvas.id = 'cidCanvas';
-
-        document.body.appendChild(cidCanvas); // adds the canvas to the body element
-        item.appendChild(cidCanvas); // adds the canvas to #someBox
-
-        cidCanvas.style.position = 'absolute';
-        cidCanvas.style.top = '0px';
-        cidCanvas.style.left = '0px';
-
-        const ctx = cidCanvas.getContext('2d')
-
-        cidCanvas.width = item.clientWidth;
-        cidCanvas.height = item.clientHeight;
-        cidPages.push(cidCanvas)
-
-        cidCanvas.addEventListener('mousemove', function (e) {
-
-          //ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const cRect = cidCanvas.getBoundingClientRect();        // Gets CSS pos, and width/height
-          const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
-          const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-          ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
-          //ctx.fillText("X: " + canvasX / cidCanvas.width + ", Y: " + canvasY / cidCanvas.height, 10, 20);
-          //ctx.fillRect(canvasX, canvasY, 20, 20)
-
-          const posX = canvasX / cidCanvas.width
-          const posY = canvasY / cidCanvas.height
-          //ctx.fillText("X: " + posX + ", Y: " + posX, 10, 20);
-          ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
-          sendDataToOthers("pointerPosition," + index + "," + posX + "," + posY)
-        });
-      })*/
-    //}
 
   });
 
