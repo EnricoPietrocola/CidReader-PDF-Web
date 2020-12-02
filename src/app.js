@@ -46,7 +46,6 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
   app.use(express.static(publicDirectoryPath))
 
   const pdfjsPath = path.join(publicDirectoryPath, '/pdfjs/')
-  //console.log(pdfjsPath)
   app.use(express.static(pdfjsPath))
 
   app.get('', (req, res) => {
@@ -124,96 +123,11 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     if (fs.existsSync(filePath)) {
       console.log("The file exists. Sending file to client");
       res.sendFile(filePath)
-      //res.contentType("application/pdf");
-      //res.send(file);
-
-      rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
-
     } else {
-      console.log('New file request, adding to library')
-      const file = fs.createWriteStream(filePath)
-      https.get(documentUrl, (response) => {
-        response.pipe(file)
-        file.on('finish', () => {
-          file.close()
-          console.log('pdf path ' + filePath)
-          rooms.changeRoomDocURL(filePath)
-          res.sendFile(filePath)
-        })
-      })
 
     }
-
   })
 
-app.get('/get-public-document', (req, res) => {
-  const documentUrl = req.query.url
-  const roomNameReq = req.query.roomname
-
-  console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
-
-  const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
-
-  const filePath = publicDirectoryPath + '/docs/' + fileName
-  console.log('FETCH FILE PATH ' + filePath)
-
-  if (fs.existsSync(filePath)) {
-    console.log("The file exists. Sending file to client");
-    res.sendFile(filePath)
-    //res.contentType("application/pdf");
-    //res.send(file);
-
-    //rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
-
-  }
-  /*else {
-    console.log('New file request, adding to library')
-    const file = fs.createWriteStream(filePath)
-    https.get(documentUrl, (response) => {
-      response.pipe(file)
-      file.on('finish', () => {
-        file.close()
-        console.log('pdf path ' + filePath)
-        rooms.changeRoomDocURL(filePath)
-        res.sendFile(filePath)
-      })
-    })
-  }*/
-})
-
-app.get('/fetch-document', (req, res) => {
-  const documentUrl = req.query.url
-  const roomNameReq = req.query.roomname
-
-  const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
-
-  const filePath = publicDirectoryPath + '/docs/' + fileName
-  console.log('FETCH FILE PATH ' + filePath)
-
-  if (fs.existsSync(filePath)) {
-    console.log("The file exists. Sending file to client");
-    res.sendFile(filePath)
-    //res.contentType("application/pdf");
-    //res.send(file);
-
-    rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
-
-  } else {
-    console.log('New file request, adding to library')
-    const file = fs.createWriteStream(filePath)
-    https.get(documentUrl, (response) => {
-      response.pipe(file)
-      file.on('finish', () => {
-        file.close()
-        console.log('pdf path ' + filePath)
-        rooms.changeRoomDocURL(filePath)
-        res.sendFile(filePath)
-      })
-    })
-
-  }
-
-})
 app.get('/uploads', (req, res) => {
     res.send('Access Denied - Please create a room with a different name')
 })
@@ -333,17 +247,10 @@ app.get('/uploads', (req, res) => {
             rooms.setCurrentPageNumber(room, parseInt(cmd[1]))
             break;
 
-          /*case "goBackward":
-            rooms.setCurrentPageNumber(room, parseInt(cmd[1]))
-
-            break;*/
-
           default:
           //console.log('RECV msg ' + data)
         }
       }
-      //data = JSON.parse(data.toString())
-      //console.log(data)
     })
 
     socket.on('signalchannel', (room, data) => {
@@ -423,7 +330,6 @@ function WebServer() {
     POST: [],
   };
 }
-
 
 function start (callback) {
     ensureNonZeroPort();

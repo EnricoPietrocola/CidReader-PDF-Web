@@ -80,7 +80,6 @@ function init(){
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
     //console.log("VisualizeDoc " + documentLink)
-
     fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
       .catch(err => console.log(err))
       .then(res => res.blob())
@@ -90,8 +89,6 @@ function init(){
           url: URL.createObjectURL(res),
           originalUrl: "CidReader",
         }).catch(err => console.log(err))
-
-
       });
   }
 
