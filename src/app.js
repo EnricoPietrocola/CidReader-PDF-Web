@@ -154,7 +154,7 @@ app.get('/get-public-document', (req, res) => {
 
   const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
 
-  const filePath = uploadsDirectoryPath + '/' + fileName
+  const filePath = publicDirectoryPath + '/' + fileName
   console.log('FETCH FILE PATH ' + filePath)
 
   if (fs.existsSync(filePath)) {
@@ -163,9 +163,10 @@ app.get('/get-public-document', (req, res) => {
     //res.contentType("application/pdf");
     //res.send(file);
 
-    rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
+    //rooms.changeRoomDocURL(roomNameReq, filePath) //this line is repeated in case a file stayed on the server after a reboot
 
-  } else {
+  }
+  /*else {
     console.log('New file request, adding to library')
     const file = fs.createWriteStream(filePath)
     https.get(documentUrl, (response) => {
@@ -177,7 +178,7 @@ app.get('/get-public-document', (req, res) => {
         res.sendFile(filePath)
       })
     })
-  }
+  }*/
 })
 
 app.get('/fetch-document', (req, res) => {
