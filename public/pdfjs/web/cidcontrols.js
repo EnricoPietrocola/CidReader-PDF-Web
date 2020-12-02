@@ -88,7 +88,7 @@ function init(){
 
         PDFViewerApplication.open({
           url: URL.createObjectURL(res),
-          originalUrl: "",
+          originalUrl: "CidReader",
         }).catch(err => console.log(err))
 
 
