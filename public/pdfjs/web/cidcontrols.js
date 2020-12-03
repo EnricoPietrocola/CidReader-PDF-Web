@@ -7,7 +7,7 @@ let myState = {
 //called after PDFViewerApplication is initialized
 function init(){
   console.log("Viewer initialized. Cid Controls active.");
-
+  const socket = io()
   const roomName = window.location.pathname.substring(1)
 
   //create text field to visualize some messages
@@ -50,61 +50,46 @@ function init(){
     true
   );
 
-  let isChangeLocal = false;
-
   PDFViewerApplication.eventBus.on('openfile', (evt)=>{
-    console.log(evt)
-    isChangeLocal = true
+
   })
   //triggered when user inputs a new document
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
-    console.log("Loaded " + file)
+    console.log('Sending pdf to server')
+    const formData = new FormData();
+    formData.append('docUpload', file);
 
-    if(isChangeLocal){
-      isChangeLocal = false; //reset for next docs
-      //if user is the one uploading a file, send to server, else simply fetch and visualize
-
-      console.log('sending pdf to server')
-      const formData = new FormData();
-      formData.append('docUpload', file);
-
-      $.ajax({
-        xhr: function()
-        {
-          const xhr = new window.XMLHttpRequest();
-          //Upload progress
-          xhr.upload.addEventListener("progress", function(evt){
-            if (evt.lengthComputable) {
-              const percentComplete = evt.loaded / evt.total;
-              cidInfo.textContent = "Uploading " + percentComplete * 100.0;
-              //Do something with upload progress
-              //console.log(percentComplete + " on " + evt.total);
-            }
-          }, false);
-          //Download progress
-          xhr.addEventListener("progress", function(evt){
-            if (evt.lengthComputable) {
-              const percentComplete = evt.loaded / evt.total;
-              //Do something with download progress
-              //console.log(percentComplete);
-            }
-          }, false);
-          return xhr;
-        },
-        type: 'POST',
-        url: 'pdfUpload' + '?roomname=' + roomName,
-        processData: false, // important
-        contentType: false, // important
-        dataType : 'docUpload',
-        data: formData,
-        success: function(data){
-          //Do something success-ish
-        }
-      });
-    }
-    else{
-    }
+    $.ajax({
+      xhr: function()
+      {
+        const xhr = new window.XMLHttpRequest();
+        //Upload progress
+        xhr.upload.addEventListener("progress", function(evt){
+          if (evt.lengthComputable) {
+            const percentComplete = evt.loaded / evt.total;
+            cidInfo.textContent = "Uploading " + (parseInt(percentComplete.toString()) * 100);
+          }
+        }, false);
+        //Download progress
+        xhr.addEventListener("progress", function(evt){
+          if (evt.lengthComputable) {
+            const percentComplete = evt.loaded / evt.total;
+            //Do something with download progress
+            //console.log(percentComplete);
+          }
+        }, false);
+        return xhr;
+      },
+      type: 'POST',
+      url: 'pdfUpload' + '?roomname=' + roomName + '&socket=' + socket.id,
+      processData: false, // important
+      contentType: false, // important
+      dataType : 'docUpload',
+      data: formData,
+      success: function(data){
+      }
+    });
   });
 
   //this duplicated code should be refactored
@@ -203,18 +188,13 @@ function init(){
 
 
   //                                                                                                       REALTIME_COM
-  const socket = io()
+
   //console.log('room name = ' + roomName)
   socket.emit('join', roomName)
 
   socket.on('signalchannel', (data) => {
-    if (data != undefined && data != null) {
+    if (data !== undefined && data !== null) {
 
-      if (isJson(data)) {
-        data = JSON.parse(data.toString())
-      } else {
-        //console.log('sendData received non JSON data: ' + data)
-      }
 
       //console.log(data)
 
@@ -242,7 +222,7 @@ function init(){
 
   socket.on('datachannel', (data) => {
 
-    if (data != undefined && data != null) {
+    if (data !== undefined && data !== null) {
 
       if (isJson(data)) {
         data = JSON.parse(data.toString())
@@ -261,6 +241,11 @@ function init(){
 
         case "pointerPosition":
           drawRemotePointer(parseFloat(cmd[1]), parseFloat(cmd[2]), parseFloat(cmd[3]))
+          break;
+
+        case "notifyDocLink":
+          myState.pdf = cmd[1];
+          sendDataToServer(myState.pdf)
           break;
 
         default:

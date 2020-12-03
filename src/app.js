@@ -85,7 +85,10 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     const originalName = req.file.originalname
     const documentUrl = domain + '/uploads/' + req.file.originalname
     const roomNameReq = req.query.roomname
+    const socketID = req.query.socket
     //console.log('POST ROOM IS ' + req.query.roomname)
+
+    console.log('Request sent by user socketID ' + socketID)
 
     fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
       if (err) throw err;
@@ -93,10 +96,10 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
       fs.unlinkSync(uploadsDirectoryPath + '/' + originalName)
 
       rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
-      io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
+
+      //io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
+      io.to(socketID).emit('datachannel', 'notifyDocLink,' + documentUrl)
     });
-
-
   })
 
   let totalConnections = 0
@@ -117,7 +120,6 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     //console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
 
     const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
-
     const filePath = uploadsDirectoryPath + '/' + roomNameReq + '/' + fileName
     console.log('FETCH FILE PATH ' + filePath)
 
@@ -255,6 +257,12 @@ app.get('/uploads', (req, res) => {
     })
 
     socket.on('signalchannel', (room, data) => {
+      if (isJson(data)) {
+        data = JSON.parse(data.toString())
+      } else {
+        //console.log('sendData received non JSON data: ' + data)
+      }
+
       console.log('received socket change url request in room ' + room + ' url doc ' + data)
       io.to(room).emit('signalchannel', 'changeDocument,' + data)
       io.to(room).emit('datachannel', 'changePage,1')
