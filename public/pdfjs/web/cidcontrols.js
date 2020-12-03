@@ -144,8 +144,12 @@ function init(){
 
       //draw pointer
       ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
-      ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
+      //ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
 
+      ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
+      ctx.beginPath();
+      ctx.arc((posX * cidCanvas.width) - 8, (posY  * cidCanvas.height) - 8, 8, 0, 2 * Math.PI);
+      ctx.fill()
       //send remote pointer draw call
       sendDataToOthers("pointerPosition," + pageNumber + "," + posX + "," + posY)
     })
@@ -157,10 +161,15 @@ function init(){
       const ctx = page.getContext('2d');
       if(ctx !== undefined) {
         ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
-        ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height, 20, 20)
+        //ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height, 20, 20)
+        ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
+        ctx.beginPath();
+        ctx.arc((posX * cidPages[pageNumber].width) - 8, (posY  * cidPages[pageNumber].height) - 8, 8, 0, 2 * Math.PI);
+        ctx.fill()
       }
     }
   }
+
 
   //                                                                                                       REALTIME_COM
   const socket = io()
