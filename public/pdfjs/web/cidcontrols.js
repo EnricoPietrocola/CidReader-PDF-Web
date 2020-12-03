@@ -90,6 +90,7 @@ function init(){
       success: function(data){
       }
     });
+    sendDataToOthers("A user initiated a document change")
   });
 
   //this duplicated code should be refactored
