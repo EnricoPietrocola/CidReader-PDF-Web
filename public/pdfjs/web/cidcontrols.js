@@ -10,6 +10,12 @@ function init(){
 
   const roomName = window.location.pathname.substring(1)
 
+  //create text field to visualize some messages
+  const toolbar = document.getElementById("toolbarViewer")
+  const cidInfo = document.createElement('p');
+  document.body.appendChild(cidInfo); // adds the canvas to the body element
+  toolbar.appendChild(cidInfo); // adds the canvas to div
+
   let pdfPages = [];
   let cidPages = []
   visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
@@ -60,54 +66,45 @@ function init(){
       //if user is the one uploading a file, send to server, else simply fetch and visualize
 
       console.log('sending pdf to server')
-
       const formData = new FormData();
-
       formData.append('docUpload', file);
 
-    $.ajax({
-      xhr: function()
-      {
-        const xhr = new window.XMLHttpRequest();
-        //Upload progress
-        xhr.upload.addEventListener("progress", function(evt){
-          if (evt.lengthComputable) {
-            const percentComplete = evt.loaded / evt.total;
-            //Do something with upload progress
-            console.log(percentComplete);
-          }
-        }, false);
-        //Download progress
-        xhr.addEventListener("progress", function(evt){
-          if (evt.lengthComputable) {
-            const percentComplete = evt.loaded / evt.total;
-            //Do something with download progress
-            console.log(percentComplete);
-          }
-        }, false);
-        return xhr;
-      },
-      type: 'POST',
-      url: 'pdfUpload' + '?roomname=' + roomName,
-      processData: false, // important
-      contentType: false, // important
-      dataType : 'docUpload',
-      data: formData,
-      success: function(data){
-        //Do something success-ish
-      }
-    });
-
-
-
-
-
+      $.ajax({
+        xhr: function()
+        {
+          const xhr = new window.XMLHttpRequest();
+          //Upload progress
+          xhr.upload.addEventListener("progress", function(evt){
+            if (evt.lengthComputable) {
+              const percentComplete = evt.loaded / evt.total;
+              cidInfo.textContent = "Uploading " + percentComplete * 100.0;
+              //Do something with upload progress
+              //console.log(percentComplete + " on " + evt.total);
+            }
+          }, false);
+          //Download progress
+          xhr.addEventListener("progress", function(evt){
+            if (evt.lengthComputable) {
+              const percentComplete = evt.loaded / evt.total;
+              //Do something with download progress
+              //console.log(percentComplete);
+            }
+          }, false);
+          return xhr;
+        },
+        type: 'POST',
+        url: 'pdfUpload' + '?roomname=' + roomName,
+        processData: false, // important
+        contentType: false, // important
+        dataType : 'docUpload',
+        data: formData,
+        success: function(data){
+          //Do something success-ish
+        }
+      });
     }
     else{
     }
-
-
-
   });
 
   //this duplicated code should be refactored
