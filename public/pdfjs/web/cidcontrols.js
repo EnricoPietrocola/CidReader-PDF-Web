@@ -100,7 +100,7 @@ function init(){
       .catch(err => console.log(err))
       .then(res => res.blob())
       .then(res => {
-
+        console.log("Loading document " + documentLink)
         PDFViewerApplication.open({
           url: URL.createObjectURL(res),
           originalUrl: "CidReader",

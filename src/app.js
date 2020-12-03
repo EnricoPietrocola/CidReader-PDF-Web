@@ -99,6 +99,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
       //io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
       io.to(socketID).emit('datachannel', 'notifyDocLink,' + documentUrl)
+      res.send("Do i need this?");
     });
   })
 
