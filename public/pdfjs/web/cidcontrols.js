@@ -68,7 +68,7 @@ function init(){
         xhr.upload.addEventListener("progress", function(evt){
           if (evt.lengthComputable) {
             const percentComplete = evt.loaded / evt.total;
-            cidInfo.textContent = "Uploading " + (parseInt(percentComplete.toString()) * 100);
+            cidInfo.textContent = "Uploading " + Math.trunc(percentComplete * 100);
           }
         }, false);
         //Download progress
