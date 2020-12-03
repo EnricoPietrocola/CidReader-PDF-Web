@@ -65,17 +65,48 @@ function init(){
 
       formData.append('docUpload', file);
 
-      $.ajax({
-        url: 'pdfUpload' + '?roomname=' + roomName,
-        type: 'POST',
-        processData: false, // important
-        contentType: false, // important
-        dataType : 'docUpload',
-        data: formData
-      });
+    $.ajax({
+      xhr: function()
+      {
+        const xhr = new window.XMLHttpRequest();
+        //Upload progress
+        xhr.upload.addEventListener("progress", function(evt){
+          if (evt.lengthComputable) {
+            const percentComplete = evt.loaded / evt.total;
+            //Do something with upload progress
+            console.log(percentComplete);
+          }
+        }, false);
+        //Download progress
+        xhr.addEventListener("progress", function(evt){
+          if (evt.lengthComputable) {
+            const percentComplete = evt.loaded / evt.total;
+            //Do something with download progress
+            console.log(percentComplete);
+          }
+        }, false);
+        return xhr;
+      },
+      type: 'POST',
+      url: 'pdfUpload' + '?roomname=' + roomName,
+      processData: false, // important
+      contentType: false, // important
+      dataType : 'docUpload',
+      data: formData,
+      success: function(data){
+        //Do something success-ish
+      }
+    });
+
+
+
+
+
     }
     else{
     }
+
+
 
   });
 
