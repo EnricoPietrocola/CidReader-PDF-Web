@@ -92,10 +92,11 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
       console.log('moved doc to room folder, deleting doc from temp folder')
       fs.unlinkSync(uploadsDirectoryPath + '/' + originalName)
 
+      rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
+      io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
     });
 
-    rooms.changeRoomDocURL(roomNameReq, documentUrl) //this line is repeated in case a file stayed on the server after a reboot
-    io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
+
   })
 
   let totalConnections = 0
@@ -113,7 +114,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     const documentUrl = req.query.url
     const roomNameReq = req.query.roomname
 
-    console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
+    //console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
 
     const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
 
@@ -173,7 +174,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        ca: fs.readFileSync(ca, 'utf8')
+        ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
