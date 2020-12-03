@@ -59,7 +59,10 @@ function init(){
       isChangeLocal = false; //reset for next docs
       //if user is the one uploading a file, send to server, else simply fetch and visualize
 
+      console.log('sending pdf to server')
+
       const formData = new FormData();
+
       formData.append('docUpload', file);
 
       $.ajax({
