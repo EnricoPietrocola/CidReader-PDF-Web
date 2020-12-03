@@ -210,14 +210,12 @@ app.get('/uploads', (req, res) => {
         fs.mkdirSync(dir);
       }
 
-      const room = rooms.addRoom(roomName, '')
+      rooms.addRoom(roomName, '')
       rooms.setRoomPath(roomName, dir)
 
-      console.log('Current rooms are ' + rooms.rooms.length)
-
       if (rooms.getRoomURL(roomName) !== '') {
-        //disabled for dev
 
+        //document should be checked for integrity before sending this messages
         io.to(socket.id).emit('datachannel', 'changeDocument,' + rooms.getRoomURL(roomName))
         io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
 
@@ -233,7 +231,7 @@ app.get('/uploads', (req, res) => {
 
     socket.on('datachannel', (room, data) => {
       socket.to(room).broadcast.emit('datachannel', data)
-      if (data != undefined && data != null) {
+      if (data !== undefined && data !== null) {
 
         if (isJson(data)) {
           data = JSON.parse(data.toString())
