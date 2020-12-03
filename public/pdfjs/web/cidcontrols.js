@@ -192,7 +192,7 @@ function init(){
   //console.log('room name = ' + roomName)
   socket.emit('join', roomName)
 
-  socket.on('signalchannel', (data) => {
+  /*socket.on('signalchannel', (data) => {
     if (data !== undefined && data !== null) {
 
 
@@ -218,7 +218,7 @@ function init(){
           console.log('RECV unknown msg ' + data)
       }
     }
-  })
+  })*/
 
   socket.on('datachannel', (data) => {
 
@@ -245,9 +245,15 @@ function init(){
 
         case "notifyDocLink":
           myState.pdf = cmd[1];
-          sendDataToServer(myState.pdf)
+          sendDataToOthers('changeDocument,' + myState.pdf)
           break;
 
+        case "changeDocument":
+          myState.pdf = cmd[1];
+          //startDoc();
+          visualizeDoc(myState.pdf)
+          //console.log("RECV: Visualizing new document " + myState.pdf);
+          break;
         default:
           console.log('RECV unknown msg ' + data)
       }
@@ -258,9 +264,9 @@ function init(){
     socket.emit('datachannel', roomName, JSON.stringify(dataString))
   }
 
-  function sendDataToServer(dataString) {
+  /*function sendDataToServer(dataString) {
     socket.emit('signalchannel', roomName, JSON.stringify(dataString))
-  }
+  }*/
 
   function isJson(str) {
     try {

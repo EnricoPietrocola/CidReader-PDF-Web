@@ -218,7 +218,7 @@ app.get('/uploads', (req, res) => {
       if (rooms.getRoomURL(roomName) !== '') {
         //disabled for dev
 
-        io.to(socket.id).emit('signalchannel', 'changeDocument,' + rooms.getRoomURL(roomName))
+        io.to(socket.id).emit('datachannel', 'changeDocument,' + rooms.getRoomURL(roomName))
         io.to(socket.id).emit('datachannel', 'changePage,' + rooms.findRoomByName(roomName).currentPage)
 
         console.log('Sending room url to client ' + rooms.getRoomURL(roomName) + ' on page ' + rooms.findRoomByName(roomName).currentPage)
@@ -256,7 +256,7 @@ app.get('/uploads', (req, res) => {
       }
     })
 
-    socket.on('signalchannel', (room, data) => {
+    /*socket.on('signalchannel', (room, data) => {
       if (isJson(data)) {
         data = JSON.parse(data.toString())
       } else {
@@ -267,7 +267,7 @@ app.get('/uploads', (req, res) => {
       io.to(room).emit('signalchannel', 'changeDocument,' + data)
       io.to(room).emit('datachannel', 'changePage,1')
       rooms.setCurrentPageNumber(room, 0)
-    })
+    })*/
 
     socket.on('disconnecting', () => {
       const ioRooms = Object.keys(socket.rooms);
