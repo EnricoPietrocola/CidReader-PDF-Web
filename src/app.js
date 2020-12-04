@@ -154,8 +154,10 @@ app.get('/uploads', (req, res) => {
   })
 
   app.get('/about', (req, res) => {
-    //res.sendFile(path.join(publicDirectoryPath, '/player.html'))
-    res.send('Work in progress')
+    res.render('about', {
+      title: 'CidReader (Beta)',
+      name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
+    })
   })
 
   app.get('/help', (req, res) => {
