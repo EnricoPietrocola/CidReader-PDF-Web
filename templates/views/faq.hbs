@@ -16,6 +16,77 @@
     </div>
 
     <dl class="faq">
+
+        <dt>
+            <button aria-expanded="false" aria-controls="faq232_desc">
+                Why sharing PDF when you can screenshare a pdf through Zoom/Skype/Meets/JitsiMeet etc?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq232_desc" class="desc">
+                There are two main reasons: quality and bandwidth.
+                <ul>
+                <li>CidReader offers full PDF rendering, including the option to select and copy content. No more 480p compressed text, your eyes will be happy.
+                This is not possible with screensharing of course. Screensharing a document is unilateral, the only user able to point something on the document is the caster.
+                With CidReader all users are provided with a pointer and ability to switch pages.
+                </li>
+                <li>Sharing your screen is heavy. Most of the times you are sending videos of a static page that doesn't even need to be rendered twice, and by screensharing you are capturing it around 30 times per second, compressing it and sending it to other people.
+                CidReader works in a way that sends all the document data at once and then enables users to browse its content with a very low amount of data needed, allowing even users with poor connection to be able to participate.
+                </li>
+                </ul>
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq3_desc">
+                Is this for free?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq3_desc" class="desc">
+                Yes, open source as well. CidReader was born to provide Music Sheet reading between musicians on a distance in Networked Music Environments, but with Covid I decided to create a more flexible version for any possible use.
+                After some other features are completed I will provide full code to enable others to host their instance of CidReader.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq233_desc">
+                Does the web application work on mobile?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq233_desc" class="desc">
+                Full mobile support is being planned, opening the website from a web browser on a smartphone works but page turning is still unavailable from the mobile. Changing pages from a Desktop application would change page on mobile as well. Please do not mistake CidReader Web with the CidReaderPDF app you can found on the Android Playstore. The old Android App is a very fast tool for peer-to-peer connections.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq8_desc">
+                Is this related to the Mozilla Firefox built in viewer (or the one in Google Chrome)? They look very similar.
+            </button>
+        </dt>
+        <dd>
+            <p id="faq8_desc" class="desc">
+                It is, this version of CidReader is a modified branch of the (Awesome) Generic Web Viewer provided in PDF.JS, the pdf rendering library provided by Mozilla/Google.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq9_desc">
+                Does this mean that if something does not work I should be reporting issues to Mozilla?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq9_desc" class="desc">
+                Absolutely not. Refer to Cid Reader for any possible issue on the website, even regarding the pdf viewer. Feel free to look into the <a href="/contacts">contacts</a> page to know more of how to report issues.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq10_desc">
+                I have a feature suggestion, where can I write it?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq10_desc" class="desc">
+                You can head over to the <a href="/contacts">contacts</a> page and choose any of the options.
+            </p>
+        </dd>
         <dt>
             <button aria-expanded="false" aria-controls="faq1_desc">
                 Will I be able to highlight/select text in my pdfs?
@@ -34,16 +105,6 @@
         <dd>
             <p id="faq2_desc" class="desc">
                 Only the “A” and “W” keys are hooked up to remote interaction, changing page by wheel or arrow keys will not send other users the page change action
-            </p>
-        </dd>
-        <dt>
-            <button aria-expanded="false" aria-controls="faq233_desc">
-                Does the web application work on mobile?
-            </button>
-        </dt>
-        <dd>
-            <p id="faq233_desc" class="desc">
-                Full mobile support is being planned, opening the website from a web browser on a smartphone works but page turning is still unavailable from the mobile. Changing pages from a Desktop application would chang page on mobile as well.
             </p>
         </dd>
         <dt>
@@ -71,17 +132,6 @@
             </p>
         </dd>
         <dt>
-            <button aria-expanded="false" aria-controls="faq3_desc">
-                Is this for free?
-            </button>
-        </dt>
-        <dd>
-            <p id="faq3_desc" class="desc">
-                Yes, open source as well. CidReader was born to provide Music Sheet reading between musicians on a distance in Networked Music Environments, but with Covid I decided to create a more flexible version for any possible use.
-                After some other features are completed I will provide full code to enable others to host their instance of CidReader.
-            </p>
-        </dd>
-        <dt>
             <button aria-expanded="false" aria-controls="faq4_desc">
                 The reader stopped working after more than a user uploaded a document simultaneously, what do we do?
             </button>
@@ -93,12 +143,12 @@
         </dd>
         <dt>
             <button aria-expanded="false" aria-controls="faq5_desc">
-                Can I avoid one of my "funnier" students changing page while I am reading? That's annoying.
+                Can I prevent unruly users from changing page while I am reading? That's annoying.
             </button>
         </dt>
         <dd>
             <p id="faq5_desc" class="desc">
-                There are no permission settings at the moment, I suggest you use the application with as many other people as you like but keeping in mind that there is no way of banning or controlling other users at the moment. These features are going to be included as soon as possible.
+                There are no permission settings at the moment, as long as permissions are being developed, I suggest you use the application with as many others as you like but keeping in mind that there is no way of banning or controlling other users at the moment. These features are going to be included as soon as possible.
             </p>
         </dd>
         <dt>
@@ -122,47 +172,6 @@
             <p id="faq7_desc" class="desc">
                 Please keep in mind that loading a document implies a loading time. On top of the screen of the user uploading there is a small text notifying progress in the upload. Loading times mostly depend on network speed, the bigger the PDF, the bigger the wait.
                 The server is limiting uploads to 10MB as a safety measure. This is not a huge limit since a 300 pages book can fit in 10MB.
-            </p>
-        </dd>
-        <dt>
-            <button aria-expanded="false" aria-controls="faq8_desc">
-                The viewer looks like the Mozilla Firefox built in viewer (or the one in Google Chrome).
-            </button>
-        </dt>
-        <dd>
-            <p id="faq8_desc" class="desc">
-                It is, this version of CidReader is a modified branch of the (Awesome) Generic Web Viewer provided in PDF.JS, the pdf rendering library provided by Mozilla.
-            </p>
-        </dd>
-        <dt>
-            <button aria-expanded="false" aria-controls="faq9_desc">
-                Does this mean that if something does not work I should be reporting issues to Mozilla?
-            </button>
-        </dt>
-        <dd>
-            <p id="faq9_desc" class="desc">
-               Absolutely not. Refer to Cid Reader for any possible issue on the website, even regarding the pdf viewer. Feel free to look into the <a href="/contacts">contacts</a> page to know more of how to report issues.
-            </p>
-        </dd>
-        <dt>
-            <button aria-expanded="false" aria-controls="faq10_desc">
-                I have a feature suggestion, where can I write it?
-            </button>
-        </dt>
-        <dd>
-            <p id="faq10_desc" class="desc">
-                You can head over to the <a href="/contacts">contacts</a> page and choose any of the options.
-            </p>
-        </dd>
-        <dt>
-        <dt>
-            <button aria-expanded="false" aria-controls="faq11_desc">
-                I have a feature suggestion, where can I write it?
-            </button>
-        </dt>
-        <dd>
-            <p id="faq11_desc" class="desc">
-                You can head over to the <a href="/contacts">contacts</a> page and choose any of the options.
             </p>
         </dd>
         <dt>
