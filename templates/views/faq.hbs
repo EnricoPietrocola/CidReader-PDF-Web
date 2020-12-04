@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Frequently asked questions</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <!--<script src="https://www.w3.org/TR/wai-aria-practices-1.1/examples/disclosure/js/disclosureButton.js"></script>-->
+
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+    </div>
+
+    <dl class="faq">
+        <dt>
+            <button aria-expanded="false" aria-controls="faq1_desc">
+                Will I be able to highlight/select text in my pdfs?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq1_desc" class="desc">
+                The text layer is working, users will be able to select text and copy it, it is covered by the pointing layer at the moment and therefore not accessible.It will be fixed as soon as possible.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq2_desc">
+                I am scrolling / changing page with my arrow keys, the others don't see them changing
+            </button>
+        </dt>
+        <dd>
+            <p id="faq2_desc" class="desc">
+                Only the “A” and “W” keys are hooked up to remote interaction, changing page by wheel or arrow keys will not send other users the page change action
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq233_desc">
+                Does the web application work on mobile?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq233_desc" class="desc">
+                Full mobile support is being planned, opening the website from a web browser on a smartphone works but page turning is still unavailable from the mobile. Changing pages from a Desktop application would chang page on mobile as well.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq234_desc">
+                The web application does not work on my not-updated Internet Explorer browser from Windows XP, why?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq234_desc" class="desc">
+                Some of the features of the web app require a modern web browser to run. Any late version of Mozilla Firefox or Google Chrome should be fine.
+                Local tests seem to confirm slightly better performance on Google Chrome.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq235_desc">
+                Where does the app put my documents?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq235_desc" class="desc">
+                When opening a file on your reader, you will upload the document on a server, distributing it to the others connected to the same page (e.g cidreader.com/mypage).
+                The file will be kept on the server as long as somebody is in the room or as long as it is replaced by another document. By doing this, anybody joining the room after you uploaded your document will be able to load it automatically.
+                When the room is empty everything will be deleted.
+                The developer reserves the right to close rooms in case they stay open for too long.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq3_desc">
+                Is this for free?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq3_desc" class="desc">
+                Yes, open source as well. CidReader was born to provide Music Sheet reading between musicians on a distance in Networked Music Environments, but with Covid I decided to create a more flexible version for any possible use.
+                After some other features are completed I will provide full code to enable others to host their instance of CidReader.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq4_desc">
+                The reader stopped working after more than a user uploaded a document simultaneously, what do we do?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq4_desc" class="desc">
+                Reload the page. If more than a user uploads a document at the same time the application might break, in case that happens simply reloading the page should fix it for now.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq5_desc">
+                Can I avoid one of my "funnier" students changing page while I am reading? That's annoying.
+            </button>
+        </dt>
+        <dd>
+            <p id="faq5_desc" class="desc">
+                There are no permission settings at the moment, I suggest you use the application with as many other people as you like but keeping in mind that there is no way of banning or controlling other users at the moment. These features are going to be included as soon as possible.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq6_desc">
+                Can I only see one page at a time?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq6_desc" class="desc">
+                There are many viewer options with this new version. Feel free to hit the options button on the right and browse through the viewing options.
+                I personally suggest setting the zoom to “Page Fit” and enabling “Horizontal Scrolling” from the options menu. Pressing F1 the webapp will go full screen. In my opinion this combination is the most immersive set up possible.
+                As long as users press the keys "W" and "D" pages will scroll no matter the view options you choose.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq7_desc">
+                Why is my document not loading remotely?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq7_desc" class="desc">
+                Please keep in mind that loading a document implies a loading time. On top of the screen of the user uploading there is a small text notifying progress in the upload. Loading times mostly depend on network speed, the bigger the PDF, the bigger the wait.
+                The server is limiting uploads to 10MB as a safety measure. This is not a huge limit since a 300 pages book can fit in 10MB.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq8_desc">
+                The viewer looks like the Mozilla Firefox built in viewer (or the one in Google Chrome).
+            </button>
+        </dt>
+        <dd>
+            <p id="faq8_desc" class="desc">
+                It is, this version of CidReader is a modified branch of the (Awesome) Generic Web Viewer provided in PDF.JS, the pdf rendering library provided by Mozilla.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq9_desc">
+                Does this mean that if something does not work I should be reporting issues to Mozilla?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq9_desc" class="desc">
+               Absolutely not. Refer to Cid Reader for any possible issue on the website, even regarding the pdf viewer. Feel free to look into the <a href="/contacts">contacts</a> page to know more of how to report issues.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq10_desc">
+                I have a feature suggestion, where can I write it?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq10_desc" class="desc">
+                You can head over to the <a href="/contacts">contacts</a> page and choose any of the options.
+            </p>
+        </dd>
+        <dt>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq11_desc">
+                I have a feature suggestion, where can I write it?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq11_desc" class="desc">
+                You can head over to the <a href="/contacts">contacts</a> page and choose any of the options.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq11_desc">
+                Why the name Cid?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq11_desc" class="desc">
+                In each chapter of the Final Fantasy saga there always is a Character named Cid.
+                He is a different character every time but most of times he is the pilot or captain of an airship, flying the heroes around the world.
+            </p>
+        </dd>
+        <dt>
+            <button aria-expanded="false" aria-controls="faq20_desc">
+                I managed to read a story WITH my son who was on the other side of the planet thanks to CidReader, can I offer you coffe?
+            </button>
+        </dt>
+        <dd>
+            <p id="faq20_desc" class="desc">
+               First of all: THANK YOU, I really hope this little application could help as many as possible with their remote interactions.
+                I am not an expert in fundraising but this button seems a good start. There will likely be a Kickstarter in the future to fund development and expand the servers.
+            <form action="https://www.paypal.com/donate" method="post" target="_top">
+                <input type="hidden" name="hosted_button_id" value="3DUZ26U5ZPJ4N" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/IT/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                <img alt="" border="0" src="https://www.paypal.com/en_IT/i/scr/pixel.gif" width="1" height="1" />
+            </form>
+
+            In alternative there's a QR too, in case you have bionic eyes:
+            <a href="https://www.paypal.com/donate?hosted_button_id=3DUZ26U5ZPJ4N"> <img alt="" border="0" src="/img/qr.png" /></a>
+            </p>
+        </dd>
+    </dl>
+
+    {{>footer}}
+</body>
+
+</html>

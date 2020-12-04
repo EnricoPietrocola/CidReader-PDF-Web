@@ -11,7 +11,7 @@ body {
 }
 
 .main-content {
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
 footer {
@@ -29,6 +29,13 @@ header {
 h1 {
     font-size: 64px;
     margin-bottom: 16px;
+}
+
+a:link {
+    color: #2f2f2f
+}
+a:visited {
+    color: #2f2f2f
 }
 
 header a {
@@ -64,3 +71,4 @@ button {
     text-align: center;
     border: solid 3px;
 }
+

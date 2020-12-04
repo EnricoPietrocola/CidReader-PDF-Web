@@ -50,7 +50,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
   app.get('', (req, res) => {
     res.render('index', {
-      title: 'CidReader',
+      title: 'CidReader (Beta)',
       name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
     })
   })
@@ -160,6 +160,19 @@ app.get('/uploads', (req, res) => {
 
   app.get('/help', (req, res) => {
     res.sendFile(path.join(publicDirectoryPath, '/docs/welcometocidreader.pdf'))
+  })
+  app.get('/faq', (req, res) => {
+    res.render('faq', {
+      title: 'CidReader (Beta)',
+      name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
+    })
+  })
+
+  app.get('/contacts', (req, res) => {
+    res.render('contacts', {
+      title: 'CidReader (Beta)',
+      name: 'Enrico Pietrocola thanks to GARR and Conservatorio G.Verdi Milano'
+    })
   })
 
   app.get('/contact', (req, res) => {
