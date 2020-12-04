@@ -51,7 +51,6 @@ function init(){
   );
 
   PDFViewerApplication.eventBus.on('openfile', (evt)=>{
-
   })
   //triggered when user inputs a new document
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
@@ -93,6 +92,7 @@ function init(){
     sendDataToOthers("A user initiated a document change")
   });
 
+
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
     //console.log("VisualizeDoc " + documentLink)
@@ -100,11 +100,13 @@ function init(){
       .catch(err => console.log(err))
       .then(res => res.blob())
       .then(res => {
-        console.log("Loading document " + documentLink)
+        //console.log("Loading document " + documentLink)
         PDFViewerApplication.open({
           url: URL.createObjectURL(res),
           originalUrl: "CidReader",
-        }).catch(err => console.log(err))
+        }
+      ).catch(err => console.log(err))
+        PDFViewerApplication.initialBookmark = "page=1";
       });
   }
 
