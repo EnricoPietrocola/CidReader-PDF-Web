@@ -66,7 +66,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
   const upload = multer({
     storage: storage,
-
+    limits: { fileSize: 10485760 },
     fileFilter: function(req, file, cb) {
 
       const filetypes = /pdf|PDF/;
@@ -163,6 +163,7 @@ app.get('/uploads', (req, res) => {
   app.get('/help', (req, res) => {
     res.sendFile(path.join(publicDirectoryPath, '/docs/welcometocidreader.pdf'))
   })
+
   app.get('/faq', (req, res) => {
     res.render('faq', {
       title: 'CidReader (Beta)',
