@@ -55,41 +55,58 @@ function init(){
   //triggered when user inputs a new document
   PDFViewerApplication.eventBus.on("fileinputchange", (evt)=> {
     const file = evt.fileInput.files[0];
-    console.log('Sending pdf to server')
-    const formData = new FormData();
-    formData.append('docUpload', file);
+    if (file.size <= 10485760) {
+      console.log('Sending pdf to server')
+      const formData = new FormData();
+      formData.append('docUpload', file);
+      console.log('filesize is ', file.size)
+      $.ajax({
+        xhr: function () {
+          const xhr = new window.XMLHttpRequest();
+          //Upload progress
+          xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+              const percentComplete = evt.loaded / evt.total;
+              cidInfo.textContent = "Uploading " + Math.trunc(percentComplete * 100);
+            }
+          }, false);
+          //Download progress
+          xhr.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+              const percentComplete = evt.loaded / evt.total;
+              //Do something with download progress
+              //console.log(percentComplete);
+            }
+          }, false);
+          return xhr;
+        },
+        type: 'POST',
+        url: 'pdfUpload' + '?roomname=' + roomName + '&socket=' + socket.id,
+        processData: false, // important
+        contentType: false, // important
+        dataType: 'docUpload',
+        data: formData,
+        success: function (data) {
+        }
+      });
+      sendDataToOthers("A user initiated a document change")
+    }
+    else{
+      //file is too big, do you need a bigger file size cidreader upload? contact ciddistanceinteraction@gmail.com
 
-    $.ajax({
-      xhr: function()
-      {
-        const xhr = new window.XMLHttpRequest();
-        //Upload progress
-        xhr.upload.addEventListener("progress", function(evt){
-          if (evt.lengthComputable) {
-            const percentComplete = evt.loaded / evt.total;
-            cidInfo.textContent = "Uploading " + Math.trunc(percentComplete * 100);
+      $.alert({
+        title: 'File size exceeded',
+        content: 'File size exceedes allowed max dimension. Document loaded ONLY locally. Do you need a custom CidReader solution? Feel free to contact <a href="mailto: ciddistanceinteraction@gmail.com">ciddistanceinteraction@gmail.com</a>',
+        //columnClass: 'small',
+        boxWidth: '30%',
+        useBootstrap: false,
+        buttons: {
+          confirm: function () {
           }
-        }, false);
-        //Download progress
-        xhr.addEventListener("progress", function(evt){
-          if (evt.lengthComputable) {
-            const percentComplete = evt.loaded / evt.total;
-            //Do something with download progress
-            //console.log(percentComplete);
-          }
-        }, false);
-        return xhr;
-      },
-      type: 'POST',
-      url: 'pdfUpload' + '?roomname=' + roomName + '&socket=' + socket.id,
-      processData: false, // important
-      contentType: false, // important
-      dataType : 'docUpload',
-      data: formData,
-      success: function(data){
-      }
-    });
-    sendDataToOthers("A user initiated a document change")
+        }
+      });
+
+    }
   });
 
 
@@ -121,7 +138,6 @@ function init(){
   }
 
   function getPages(){
-
     pdfPages = document.querySelectorAll(".page");
   }
 
@@ -188,40 +204,9 @@ function init(){
       }
     }
   }
-
-
-  //                                                                                                       REALTIME_COM
-
+  //                                                                                                REALTIME_COM
   //console.log('room name = ' + roomName)
   socket.emit('join', roomName)
-
-  /*socket.on('signalchannel', (data) => {
-    if (data !== undefined && data !== null) {
-
-
-      //console.log(data)
-
-      const cmd = data.split(",");
-
-      switch (cmd[0]) {
-        case "changeDocument":
-          myState.pdf = cmd[1];
-          //startDoc();
-          visualizeDoc(myState.pdf)
-          //console.log("RECV: Visualizing new document " + myState.pdf);
-          break;
-        case "visualizePublic":
-          myState.pdf = cmd[1];
-          //startDoc();
-          //visualizePublicDoc(myState.pdf.toString())
-          //console.log("RECV: Visualizing new public document " + myState.pdf);
-          break;
-
-        default:
-          console.log('RECV unknown msg ' + data)
-      }
-    }
-  })*/
 
   socket.on('datachannel', (data) => {
 
