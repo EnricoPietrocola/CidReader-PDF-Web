@@ -18,7 +18,7 @@ function init(){
 
   let pdfPages = [];
   let cidPages = []
-  visualizePublicDoc(document.location.origin + '/docs/welcometocidreader.pdf')
+  visualizePublicDoc(/*document.location.origin +*/ '/docs/welcometocidreader.pdf')
 
   document.addEventListener(
     "keydown",
