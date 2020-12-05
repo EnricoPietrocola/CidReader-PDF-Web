@@ -10,14 +10,17 @@ function init(){
   const socket = io()
   const roomName = window.location.pathname.substring(1)
 
+  let pdfPages = [];
+  let cidPages = []
+  let pointBuffer = []
+
   //create text field to visualize some messages
   const toolbar = document.getElementById("toolbarViewer")
   const cidInfo = document.createElement('p');
   document.body.appendChild(cidInfo); // adds the canvas to the body element
   toolbar.appendChild(cidInfo); // adds the canvas to div
 
-  let pdfPages = [];
-  let cidPages = []
+
   visualizePublicDoc(/*document.location.origin +*/ '/docs/welcometocidreader.pdf')
 
   document.addEventListener(
@@ -181,35 +184,64 @@ function init(){
         const posX = canvasX / pdfPage.clientWidth
         const posY = canvasY / pdfPage.clientHeight
 
-        //draw pointer
-        ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
-        //ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
+        const point = pointBuffer.find(pointData => pointData.id === socket.id)
+        if(!point) {
+          pointBuffer.push(new pointData(socket.id, pageNumber, posX, posY))
+        }
+        else{
+          point.posX = posX;
+          point.posY = posY;
+        }
 
-        ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
-        ctx.beginPath();
-        ctx.arc((posX * cidCanvas.width) - 8, (posY * cidCanvas.height) - 8, 8, 0, 2 * Math.PI);
-        ctx.fill()
-        //send remote pointer draw call
-        sendDataToOthers("pointerPosition," + pageNumber + "," + posX + "," + posY)
+        sendDataToOthers("pointerPosition,"+ socket.id + ',' + pageNumber + "," + posX + "," + posY)
+        cidRender()
         lastMove = Date.now();
       }
     })
   });
 
-  function drawRemotePointer(pageNumber, posX, posY){
+  function drawRemotePointer(socketID, pageNumber, posX, posY){
     const page = cidPages[pageNumber]
     if(page !== undefined) {
-      const ctx = page.getContext('2d');
-      if(ctx !== undefined) {
-        ctx.clearRect(0, 0, cidPages[pageNumber].width, cidPages[pageNumber].height);  // (0,0) the top left of the canvas
-        //ctx.fillRect(posX * cidPages[pageNumber].width, posY * cidPages[pageNumber].height, 20, 20)
-        ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
-        ctx.beginPath();
-        ctx.arc((posX * cidPages[pageNumber].width) - 8, (posY  * cidPages[pageNumber].height) - 8, 8, 0, 2 * Math.PI);
-        ctx.fill()
+      //pointBuffer.push(new pointData(pageNumber, posX, posY))
+      const point = pointBuffer.find(pointData => pointData.id === socketID)
+      if(!point) {
+        pointBuffer.push(new pointData(socketID, pageNumber, posX, posY))
       }
+      else{
+        point.posX = posX;
+        point.posY = posY;
+      }
+      cidRender()
     }
   }
+
+  const pointData = function(id, pageNumber, posX, posY){
+    this.id = id;
+    this.pageNumber =  pageNumber;
+    this.posX = posX;
+    this.posY = posY;
+    return this;
+  };
+
+  function cidRender(){
+    pointBuffer.forEach((item)=> {
+      const page = cidPages[item.pageNumber]
+      const ctx = page.getContext('2d');
+      ctx.clearRect(0, 0, page.width, page.height);  // (0,0) the top left of the canvas
+    });
+    pointBuffer.forEach((item)=>{
+      const page = cidPages[item.pageNumber]
+      const ctx = page.getContext('2d');
+      //for each point in context
+      ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
+      ctx.beginPath();
+      ctx.arc((item.posX * page.width) - 8, (item.posY  * page.height) - 8, 8, 0, 2 * Math.PI);
+      ctx.fill()
+    });
+  }
+
+
   //                                                                                                REALTIME_COM
   //console.log('room name = ' + roomName)
   socket.emit('join', roomName)
@@ -234,7 +266,7 @@ function init(){
           break;
 
         case "pointerPosition":
-          drawRemotePointer(parseFloat(cmd[1]), parseFloat(cmd[2]), parseFloat(cmd[3]))
+          drawRemotePointer(cmd[1], parseFloat(cmd[2]), parseFloat(cmd[3]), parseFloat(cmd[4]))
           break;
 
         case "notifyDocLink":
