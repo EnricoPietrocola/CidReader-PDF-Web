@@ -170,23 +170,29 @@ function init(){
     cidCanvas.width = pdfPage.clientWidth;
     cidCanvas.height = pdfPage.clientHeight;
 
+    let lastMove = 0;
     pdfPage.addEventListener("mousemove", (e)=> {
-      const cRect = pdfPage.getBoundingClientRect();        // Gets CSS pos, and width/height
-      const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
-      const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
-      const posX = canvasX / pdfPage.clientWidth
-      const posY = canvasY / pdfPage.clientHeight
+      if(Date.now() - lastMove > 40) {
+        // Do stuff
 
-      //draw pointer
-      ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
-      //ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
+        const cRect = pdfPage.getBoundingClientRect();        // Gets CSS pos, and width/height
+        const canvasX = Math.round(e.clientX - cRect.left);  // Subtract the 'left' of the canvas
+        const canvasY = Math.round(e.clientY - cRect.top);   // from the X/Y positions to make
+        const posX = canvasX / pdfPage.clientWidth
+        const posY = canvasY / pdfPage.clientHeight
 
-      ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
-      ctx.beginPath();
-      ctx.arc((posX * cidCanvas.width) - 8, (posY  * cidCanvas.height) - 8, 8, 0, 2 * Math.PI);
-      ctx.fill()
-      //send remote pointer draw call
-      sendDataToOthers("pointerPosition," + pageNumber + "," + posX + "," + posY)
+        //draw pointer
+        ctx.clearRect(0, 0, cidCanvas.width, cidCanvas.height);  // (0,0) the top left of the canvas
+        //ctx.fillRect(posX * cidCanvas.width, posY * cidCanvas.height, 20, 20)
+
+        ctx.fillStyle = "rgba(255, 30, 30, 0.7)";
+        ctx.beginPath();
+        ctx.arc((posX * cidCanvas.width) - 8, (posY * cidCanvas.height) - 8, 8, 0, 2 * Math.PI);
+        ctx.fill()
+        //send remote pointer draw call
+        sendDataToOthers("pointerPosition," + pageNumber + "," + posX + "," + posY)
+        lastMove = Date.now();
+      }
     })
   });
 
