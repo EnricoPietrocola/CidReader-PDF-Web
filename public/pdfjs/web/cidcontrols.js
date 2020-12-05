@@ -189,6 +189,7 @@ function init(){
           pointBuffer.push(new pointData(socket.id, pageNumber, posX, posY))
         }
         else{
+          point.pageNumber = pageNumber;
           point.posX = posX;
           point.posY = posY;
         }
@@ -209,6 +210,7 @@ function init(){
         pointBuffer.push(new pointData(socketID, pageNumber, posX, posY))
       }
       else{
+        point.pageNumber = pageNumber;
         point.posX = posX;
         point.posY = posY;
       }
