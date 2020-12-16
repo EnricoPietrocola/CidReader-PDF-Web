@@ -91,7 +91,9 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     console.log('Request sent by user socketID ' + socketID)
     try {
       fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
-        if (err) throw err;
+        try{
+          if (err) throw err;
+
         console.log('moved doc to room folder, deleting doc from temp folder')
         fs.unlinkSync(uploadsDirectoryPath + '/' + originalName)
 
@@ -100,6 +102,10 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
         //io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
         io.to(socketID).emit('datachannel', 'notifyDocLink,' + documentUrl)
         res.send(" ");
+        }
+        catch(e){
+          console.log(e)
+        }
       });
     }
     catch (e){
