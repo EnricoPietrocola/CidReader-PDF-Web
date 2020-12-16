@@ -99,11 +99,11 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
 
         //io.to(roomNameReq).emit('signalchannel', 'changeDocument,' + documentUrl)
         io.to(socketID).emit('datachannel', 'notifyDocLink,' + documentUrl)
-        res.send("Do i need this?");
+        res.send(" ");
       });
     }
     catch (e){
-
+      console.log(e)
     }
   })
 
@@ -127,12 +127,16 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
     const filePath = uploadsDirectoryPath + '/' + roomNameReq + '/' + fileName
     console.log('FETCH FILE PATH ' + filePath)
+    try {
+      if (fs.existsSync(filePath)) {
+        console.log("The file exists. Sending file to client");
+        res.sendFile(filePath)
+      } else {
 
-    if (fs.existsSync(filePath)) {
-      console.log("The file exists. Sending file to client");
-      res.sendFile(filePath)
-    } else {
-
+      }
+    }
+    catch(e){
+      console.log(e)
     }
   })
 
@@ -197,7 +201,6 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
