@@ -83,14 +83,14 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
   app.post('/pdfupload', upload.single('docUpload'), function(req, res, next) {
     //get new uploaded file, move it in proper room folder path
     const originalName = req.file.originalname
-    const documentUrl = domain + '/uploads/' + req.file.originalname.replace(/#/g,"_").replace(/ /g,"_")
+    const documentUrl = domain + '/uploads/' + req.file.originalname
     const roomNameReq = req.query.roomname
     const socketID = req.query.socket
     //console.log('POST ROOM IS ' + req.query.roomname)
 
     console.log('Request sent by user socketID ' + socketID)
     try {
-      fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName, (err) => {
+      fs.copyFile(uploadsDirectoryPath + '/' + originalName, uploadsDirectoryPath + '/' + roomNameReq + '/' + originalName.replace(/#/g,"_").replace(/ /g,"_"), (err) => {
         try{
           if (err) throw err;
 
