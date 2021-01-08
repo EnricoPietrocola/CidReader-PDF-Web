@@ -116,7 +116,7 @@ function init(){
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
     //console.log("VisualizeDoc " + documentLink)
-    const url = '/get-document?url=' + documentLink + '&roomname=' + window.location.pathname.substring(1)
+    const url = '/get-document?url=' + documentLink.toString() + '&roomname=' + window.location.pathname.substring(1)
     console.log('requesting ' + url)
     fetch(url)
     /*fetch('/get-document?url=' + documentLink + new URLSearchParams({
