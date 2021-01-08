@@ -129,7 +129,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
     const roomNameReq = req.query.roomname
 
     //console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
-
+    console.log('req room ' + roomNameReq)
     const fileName = documentUrl.substring(documentUrl.lastIndexOf('/') + 1);
     const filePath = uploadsDirectoryPath + '/' + roomNameReq + '/' + fileName
     console.log('FETCH FILE PATH ' + filePath)
@@ -207,6 +207,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
+        //ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
