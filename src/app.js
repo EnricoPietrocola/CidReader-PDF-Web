@@ -83,7 +83,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
   app.post('/pdfupload', upload.single('docUpload'), function(req, res, next) {
     //get new uploaded file, move it in proper room folder path
     const originalName = req.file.originalname
-    const documentUrl = domain + '/uploads/' + req.file.originalname
+    const documentUrl = domain + '/uploads/' + req.file.originalname.replace(/#/g,"_").replace(/ /g,"_")
     const roomNameReq = req.query.roomname
     const socketID = req.query.socket
     //console.log('POST ROOM IS ' + req.query.roomname)
@@ -208,7 +208,7 @@ app.get('/uploads', (req, res) => {
       httpsServer = https.createServer({
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
-        ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
+        //ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
       }, app).listen(443)
       io = socketio(httpsServer)
       console.log('Https server running')
