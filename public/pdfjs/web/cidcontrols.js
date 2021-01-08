@@ -118,10 +118,10 @@ function init(){
     //console.log("VisualizeDoc " + documentLink)
     console.log(window.location.pathname)
 
-    //fetch('/get-document?url=' + documentLink + '&roomname=' + window.location.pathname.substring(1))
-    fetch('/get-document?url=' + documentLink + new URLSearchParams({
+    fetch('/get-document?url=' + documentLink + '&roomname=' + window.location.pathname.substring(1))
+    /*fetch('/get-document?url=' + documentLink + new URLSearchParams({
       roomname: window.location.pathname.substring(1),
-    }))
+    }))*/
       .catch(err => console.log(err))
       .then(res => res.blob())
       .then(res => {
