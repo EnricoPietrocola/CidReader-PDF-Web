@@ -127,6 +127,7 @@ app.use(express.static(__dirname + '/public')) //this might be removed, check la
   app.get('/get-document', (req, res) => {
     const documentUrl = req.query.url
     const roomNameReq = req.query.roomname
+    console.log(req.query)
 
     //console.log('Fetch request from ' + roomNameReq + ' url ' + documentUrl)
     console.log('req room ' + roomNameReq)
