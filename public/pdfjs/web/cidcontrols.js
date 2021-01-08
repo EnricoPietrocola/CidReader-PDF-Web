@@ -116,7 +116,7 @@ function init(){
   //this duplicated code should be refactored
   function visualizeDoc(documentLink) {
     //console.log("VisualizeDoc " + documentLink)
-    fetch('/get-document?url=' + documentLink + '&roomname=' + roomName)
+    fetch('/get-document?url=' + documentLink + '&roomname=' + window.location.pathname.substring(1))
       .catch(err => console.log(err))
       .then(res => res.blob())
       .then(res => {
