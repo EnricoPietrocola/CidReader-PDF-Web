@@ -27,7 +27,7 @@
 
   app.use(cors())
 
-app.use(express.static(__dirname + '/public')) //this might be removed, check later
+  app.use(express.static(__dirname + '/public')) //this might be removed, check later
 
   const PORT = process.env.PORT || 80
 

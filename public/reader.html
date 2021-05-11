@@ -48,7 +48,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     <!--#endif-->
 
 
-    <script defer src="./pdfjs/node_modules/es-module-shims/dist/es-module-shims.js"></script>
+    <!--<script defer src="./pdfjs/node_modules/es-module-shims/dist/es-module-shims.js"></script>
     <script type="importmap-shim">
       {
         "imports": {
@@ -59,7 +59,7 @@ See https://github.com/adobe-type-tools/cmap-resources
       }
     </script>
 
-    <script src="./pdfjs/web/viewer.js" type="module-shim"></script>
+    <script src="./pdfjs/web/viewer.js" type="module-shim"></script>-->
 
 
     <!--#if (GENERIC && !MINIFIED) -->
@@ -67,7 +67,9 @@ See https://github.com/adobe-type-tools/cmap-resources
     <!--#endif-->
 
     <!--#if !MINIFIED -->
-    <!--<script src="viewer.js"></script>-->
+    <script type="text/javascript" src="./pdfjs/build/minified/web/pdf.viewer.js"></script>
+    <script type="text/javascript" src="./pdfjs/build/minified/build/pdf.worker.js"></script>
+
     <!--#else-->
     <!--#include viewer-snippet-minified.html-->
     <!--#endif-->
@@ -442,7 +444,6 @@ See https://github.com/adobe-type-tools/cmap-resources
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script type="module" src="./pdfjs/web/cidcontrols.js"></script>
-<!--<script type="module" src="/public/pdfjs/web/viewer.js"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
