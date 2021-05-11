@@ -195,7 +195,7 @@ app.get('/uploads', (req, res) => {
   })
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(publicDirectoryPath, './pdfjs/build/generic/web/viewer.html'))
+    res.sendFile(path.join(publicDirectoryPath, 'viewer.html'))
   })
 
   let httpsServer;
