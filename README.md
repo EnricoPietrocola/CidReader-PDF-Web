@@ -1,5 +1,5 @@
 # CidReaderWeb 
-A room based open source cooperative realtime PDF annotation editor for the web.
+A room based open source cooperative realtime PDF reader for the web.
 
 Hosted at [https://www.cidreader.com/](https://www.cidreader.com/)
 
