@@ -40,7 +40,12 @@ function addRoom(name, docURL){
 
 function setCurrentPageNumber(roomName, pageNumber){
     //console.log('changing room page to ' + pageNumber)
-    findRoomByName(roomName).currentPage = pageNumber
+    try{
+        findRoomByName(roomName).currentPage = pageNumber
+    }
+    catch(e){
+        console.log(e)
+    }
 }
 
 function incrementRoomConnection(room){
