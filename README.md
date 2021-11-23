@@ -26,6 +26,8 @@ Useful things I am using to develop:
 
 * [GitHub awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs)
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X1740RS)
+
 This project was possible thanks to the "Orio Carlini" Scholarships from [Consortium GARR](https://www.garr.it/en/) and hosted by [Conservatorio Giuseppe Verdi di Milano](http://www.consmilano.it/en/)
 
 ![GarrLogo](https://owncloud.com/wp-content/uploads/2014/04/Garr-400x175.png)
