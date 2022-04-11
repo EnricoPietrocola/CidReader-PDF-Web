@@ -1,6 +1,9 @@
 # CidReaderWeb 
 A room based open source cooperative realtime PDF reader for the web.
 
+Join our Discord!
+[![Discord](https://theme.zdassets.com/theme_assets/678183/cc59daa07820943e943c2fc283b9079d7003ff76.svg)](https://discord.gg/AAe6rx6kbK )
+
 Hosted at [https://www.cidreader.com/](https://www.cidreader.com/)
 
 Here's the [previous Android version](https://github.com/EnricoPietrocola/CidReader-PDF) (using UDP sockets and MuPDF) 
