@@ -26,7 +26,7 @@
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "signalhub": "^4.9.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "tone": "^14.7.58",
     "webrtc-swarm": "^2.9.0"
   },
