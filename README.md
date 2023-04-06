@@ -14,18 +14,13 @@ Here's the [previous Android version](https://github.com/EnricoPietrocola/CidRea
 
 [Facebook Page](https://www.facebook.com/CidInteraction)
 
-Useful things I am using to develop:
-* [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-* [WebRTC Datachannel](https://www.html5rocks.com/en/tutorials/webrtc/datachannels/)
-* [Awesome P2P Repo](https://github.com/kgryte/awesome-peer-to-peer)
+Useful things:
 * [PDF.js](https://mozilla.github.io/pdf.js/)
 * [This video where I took the first lines of code (By Kile Robinson Young)](https://www.youtube.com/watch?v=IqPJb6o_S1Q)
 * [Nice (and updated) EnvatoTuts tutorial on building your pdfjs page](https://code.tutsplus.com/tutorials/how-to-create-a-pdf-viewer-in-javascript--cms-32505)
 
 * [NpmJS Express.js](https://www.npmjs.com/package/express)
 * [NpmJS hbs](https://www.npmjs.com/package/hbs)
-* [NpmJS Signalhub](https://www.npmjs.com/package/signalhub)
-* [NpmJS WebRTC-swarm](https://www.npmjs.com/package/webrtc-swarm)
 
 * [GitHub awesome-nodejs](https://github.com/sindresorhus/awesome-nodejs)
 
