@@ -209,7 +209,7 @@ app.get('/uploads', (req, res) => {
         key: fs.readFileSync(key, 'utf8'),
         cert: fs.readFileSync(cert, 'utf8'),
         //ca: fs.readFileSync(ca, 'utf8') //hide this if your ssl keys don't include ca
-      }, app).listen(443)
+      }, app).listen(PORT)
       io = socketio(httpsServer)
       console.log('Https server running')
     } else {
